@@ -1,94 +1,94 @@
 from pico2d import *
+from player import *
+from grass import *
+from background import *
 
-open_canvas()
+import game_framework
 
-grass= load_image('grass.png')
-character = load_image('character.png')
-character2 = load_image('character2.png')
 
-x_p1 = 800 // 2
-x_p2 = 750  # 시작 위치
-frame = 0
+name = "MainState"
 
-dir_x_p1 = 0
-dir_x_p2 = 0
 
-sheet_line1 = 120
-sheet_line2 = 180
+def collide_check():
+    global player1, grass, bubble
+    if player1.y <= grass.y + 40:
+        player1.y = grass.y + 40
+        player1.jumping = False
+    if player2.y <= grass.y + 40:
+        player2.y = grass.y + 40
+        player2.jumping = False
+
+    if player1.x > 1000:
+        player1.x = 0
+    if player1. x < 0:
+        player1.x = 1000
+    if player2.x > 1000:
+        player2.x = 0
+    if player2. x < 0:
+        player2.x = 1000
+
+
+def handle_events():
+    events = get_events()
+    for event in events:
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+                game_framework.quit()
+        else:
+            player1.handle_event(event)
+            player2.handle_event(event)
+
+
+background = None
+grass = None
+player1 = None
+player2 = None
+bubble = None
 
 running = True
 
 
-def handle_events():
-    global running, dir_x_p1, dir_x_p2, sheet_line1,sheet_line2, x_p1, x_p2
-    events = get_events()
-    for event in events:
-        if event.type == SDL_QUIT:
-            running = False
-        elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_RIGHT:  # 오른쪽이동 (플레이어1)
-                dir_x_p1 += 10
-                sheet_line1 = 0
-            if event.key == SDLK_d:  # 오른쪽이동 (플레이어2)
-                dir_x_p2 += 10
-                sheet_line2 = 0
+def enter():
+    global player1, player2, grass, background, bubble
+    player1 = Player1()
+    player2 = Player2()
+    grass = Grass()
+    bubble = Bubble()
+    background = Background()
 
-            elif event.key == SDLK_LEFT:  # 왼쪽이동 (플레이어1)
-                dir_x_p1 -= 10
-                sheet_line1 = 60
-            elif event.key == SDLK_a:  # 왼쪽이동 (플레이어2)
-                dir_x_p2 -= 10
-                sheet_line2 = 60
-
-            elif event.key == SDLK_ESCAPE:
-                running = False
-        elif event.type == SDL_KEYUP:
-            if event.key == SDLK_RIGHT:
-                dir_x_p1 -= 10
-                sheet_line1 = 120
-            if event.key == SDLK_d:
-                dir_x_p2 -= 10
-                sheet_line2 = 120
-
-            elif event.key == SDLK_LEFT:
-                dir_x_p1 += 10
-                sheet_line1 = 180
-            elif event.key == SDLK_a:
-                dir_x_p2 += 10
-                sheet_line2 = 180
+    game_world.add_object(background, 0)
+    game_world.add_object(grass, 1)
+    game_world.add_object(player1, 2)
+    game_world.add_object(player2, 3)
 
 
-def check_out_of_screen():
-    global x_p1, x_p2
-    if x_p1 <= 0:
-        x_p1 = 0
-    elif x_p2 <= 0:
-        x_p2 = 0
-    elif x_p1 >= 800:
-        x_p1 = 800
-    elif x_p2 >= 800:
-        x_p2 = 800
 
 
-while running:
+def exit():
+    global player1, player2, grass, background, bubble
+    del player1
+    del player2
+    del grass
+    del background
+    del bubble
+    game_world.clear()
+
+
+def update():
+    player1.update()
+    player2.update()
+    for game_object in game_world.all_objects():
+        game_object.update()
+        collide_check()
+
+
+def draw():
     clear_canvas()
-    grass.draw(400, 30)
-    character.clip_draw(frame * 60, sheet_line1, 60, 60, x_p1, 70)
-    character2.clip_draw(frame * 60, sheet_line2, 60, 60, x_p2, 70)
-    handle_events()
-
-    frame = (frame + 1) % 8
-
+    for game_object in game_world.all_objects():
+        game_object.draw()
 
     update_canvas()
 
-    x_p1 += dir_x_p1
-    x_p2 += dir_x_p2
 
 
-    check_out_of_screen()
-
-
-    delay(0.07)
-
-close_canvas()
