@@ -1,12 +1,13 @@
 from pico2d import *
 import game_world
+from platforms import Platforms
 
 class Bubble:
-    image = None
+    #image = None
 
     def __init__(self, x = 400, y = 300, velocity = 1):
-        if Bubble.image == None:
-            Bubble.image = load_image('bubble_p1.png')
+
+        self.image = load_image('bubble_p1.png')
 
         self.x, self.y, self.velocity = x, y, velocity
 
@@ -15,18 +16,27 @@ class Bubble:
 
     def update(self):
         self.x += self.velocity
+       # pt = Platforms() # 객체 불러오기
 
         if self.x < 25 or self.x > 1000 - 25:
             game_world.remove_object(self)
             print("Bubble Removed")
+      #  elif self.x == pt.px1 -25 and self.y == pt.py1:
+      #      game_world.remove_object(self)
+       #    print("Bubble Removed")
+
+    # 물방울 바운딩 박스
+    def get_bb_b1(self):
+        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
+
 
 
 class Bubble2:
-    image2 = None
+    #image2 = None
 
     def __init__(self, x=400, y=300, velocity=1):
-        if Bubble2.image2 == None:
-            Bubble2.image2 = load_image('bubble_p2.png')
+        #if self.image2 == None:
+        self.image2 = load_image('bubble_p2.png')
 
         self.x, self.y, self.velocity = x, y, velocity
 
@@ -39,4 +49,7 @@ class Bubble2:
         if self.x < 25 or self.x > 1000 - 25:
             game_world.remove_object(self)
             print("Bubble2 Removed")
+
+    def get_bb_b2(self):
+        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
 

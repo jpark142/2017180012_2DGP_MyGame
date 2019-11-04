@@ -8,9 +8,11 @@ class Grass:
     def update(self):
         pass
 
+
     def draw(self):
         self.image.draw(400, 30)
         self.image.draw(800, 30)
+
 
     #def get_bb(self):
     #    return self.x - 400, self.y, self.x + 400, self.y
