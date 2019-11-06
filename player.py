@@ -9,7 +9,7 @@ PLAYER_GRAVITY = -0.01
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
     RIGHT_DOWN_p2, LEFT_DOWN_p2, RIGHT_UP_p2, LEFT_UP_p2, UP_UP_p2, UP_DOWN_p2, BUBBLE_SHOT_p2,\
-    DOWN_DOWN_p1, DOWN_UP_p1 = range(16)
+    DOWN_DOWN_p1, DOWN_UP_p1, BUBBLE_HIT = range(17)
 
 key_event_table = {
     # 플레이어1 키 입력
@@ -51,6 +51,7 @@ class IdleState:
 
         elif event == LEFT_UP_p1:
             player1.vel_x += 0.5
+
         elif event == UP_DOWN_p1 and player1.jumping == False:
             player1.vel_y = 2
             player1.jumping = True
@@ -59,6 +60,7 @@ class IdleState:
             player1.jumping = True
         #elif event == BUBBLE_SHOT_p1:
         #    player1.isShot = True
+        
 
        # player1.timer = 1000
     @staticmethod
@@ -87,6 +89,7 @@ class IdleState:
         if event == BUBBLE_SHOT_p1:
             player1.bubble_shot()
 
+
     @staticmethod
     def exit_p2(player2, event2):
         if event2 == BUBBLE_SHOT_p2:
@@ -94,7 +97,6 @@ class IdleState:
 
     @staticmethod
     def do_p1(player1):
-        bubble2 = Bubble2()
 
         # 플레이어1
         player1.frame1 = (player1.frame1+1) % 16
@@ -103,6 +105,13 @@ class IdleState:
         player1.y += player1.vel_y
         player1.vel_y += player1.acc_y
 
+        if player1.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            player1.add_event(BUBBLE_HIT)
+            player1.isHit = False
+        #    pass
+        #if player1.isHit is True:
+        #    print("물발울에 히릿!")
 
 
     @staticmethod
@@ -207,12 +216,20 @@ class RunState:
 
     @staticmethod
     def do_p1(player1):
+
         # 플레이어1
         player1.frame1 = (player1.frame1 + 1) % 16
         # boy.timer -= 1
         player1.x += player1.vel_x
         player1.y += player1.vel_y
         player1.vel_y += player1.acc_y
+        if player1.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            player1.add_event(BUBBLE_HIT)
+            player1.isHit = False
+
+        #if player1.isHit is True:
+        #    print("inBubbleState 상태로 바뀌었습니다.")
        # player1.x = clamp(25, player1.x, 1000 - 25)
 
     @staticmethod
@@ -264,50 +281,78 @@ class InBubbleState:
     def enter_p1(player1, event):
         # 플레이어1
         if event == RIGHT_DOWN_p1:
-            player1.vel_x += 0.6
-            player1.dir = 1
-        elif event == LEFT_DOWN_p1:
-            player1.vel_x -= 0.6
-            player1.dir = -1
-        elif event == RIGHT_UP_p1:
-            player1.vel_x -= 0.6
-            player1.dir = -1
-        elif event == LEFT_UP_p1:
-            player1.vel_x += 0.6
-            player1.dir = 1
+            player1.vel_x += 0.5
 
-        # player1.PLAYER_GRAVITY = 0  # 중력은 없애준다
+        elif event == LEFT_DOWN_p1:
+            player1.vel_x -= 0.5
+
+        elif event == RIGHT_UP_p1:
+            player1.vel_x -= 0.5
+
+        elif event == LEFT_UP_p1:
+            player1.vel_x += 0.5
+
+
+        player1.acc_y = 0  # 중력은 없애준다
         #위아래
         if event == DOWN_DOWN_p1:
-            player1.vel_y -= 0.6
+            player1.vel_y = PLAYER_GRAVITY
+            player1.vel_y -= 0.5
         elif event == DOWN_UP_p1:
-            player1.vel_y += 0.6
-        elif event == UP_DOWN_p1:
-            player1.vel_y += 0.6
-        elif event == UP_UP_p1:
-            player1.vel_y -= 0.6
+            player1.vel_y = PLAYER_GRAVITY
 
-        player1.timer = 10000  # inBubbleState 지속시간
+            #player1.vel_y += 0.5
+        elif event == UP_DOWN_p1:
+            player1.vel_y = PLAYER_GRAVITY
+
+            player1.vel_y += 0.5
+
+
+        elif event == UP_UP_p1:
+            player1.vel_y = PLAYER_GRAVITY
+
+            #player1.vel_y -= 0.5
+
+
+        player1.timer = 300  # inBubbleState 지속시간
+        player1.frame1 = 0
 
 
     @staticmethod
     def exit_p1(player1, event):
+        player1.timer = 0
         pass
+
 
     @staticmethod
     def do_p1(player1):
         # 플레이어1
         player1.frame1 = (player1.frame1 + 1) % 6
         player1.timer -= 1
+
         if player1.timer == 0:  # 만약에 일정 시간이 다 되면
-            player1.cur_state = RunState   # 물방울에서 빠져나온다.
+            player1.acc_y = PLAYER_GRAVITY
+
+            player1.cur_state = RunState  # 물방울에서 빠져나온다.
+
+           # if event == RIGHT_UP_p1 and LEFT_UP_p1:
+            #elif event == RIGHT_DOWN_p1 or LEFT_DOWN_p1:
+             #   player1.cur_state = R
+        #    print('IdleState 입니다')
         player1.x += player1.vel_x
         player1.y += player1.vel_y
-        # player1.vel_y += player1.acc_y
+        player1.vel_y += player1.acc_y
+
+        if player1.y > 550:
+            player1.y = 550
 
     @staticmethod
     def draw_p1(player1):
-        player1.in_bubble.clip_draw(player1.frame2 * 80, 80, 80, 80, player1.x, player1.y)
+
+        player1.in_bubble.clip_draw(player1.frame1 * 80, 80, 80, 80, player1.x, player1.y)
+
+
+
 
 
 
@@ -316,14 +361,17 @@ next_state_table = {
     IdleState: {RIGHT_UP_p1: RunState, LEFT_UP_p1: RunState,
                 RIGHT_DOWN_p1: RunState, LEFT_DOWN_p1: RunState,
                 UP_UP_p1: RunState, UP_DOWN_p1: RunState,
-                BUBBLE_SHOT_p1: IdleState},
+                BUBBLE_SHOT_p1: IdleState, DOWN_UP_p1: IdleState,
+                BUBBLE_HIT: InBubbleState},
     RunState: {RIGHT_UP_p1: IdleState, LEFT_UP_p1: IdleState,
                LEFT_DOWN_p1: IdleState, RIGHT_DOWN_p1: IdleState,
                UP_UP_p1: IdleState, UP_DOWN_p1: IdleState,
-               BUBBLE_SHOT_p1: RunState},
+               BUBBLE_SHOT_p1: RunState,
+               BUBBLE_HIT: InBubbleState},
     InBubbleState: {RIGHT_UP_p1: InBubbleState, LEFT_UP_p1: InBubbleState,
                     LEFT_DOWN_p1: InBubbleState, RIGHT_DOWN_p1: InBubbleState,
-                    UP_UP_p1: InBubbleState, UP_DOWN_p1: InBubbleState}
+                    UP_UP_p1: InBubbleState, UP_DOWN_p1: InBubbleState,
+                    DOWN_UP_p1: InBubbleState, DOWN_DOWN_p1: InBubbleState}
 }
 next_state_table2 = {
     IdleState: {
@@ -342,13 +390,13 @@ next_state_table2 = {
 
 class Player1:
     def __init__(self):
-        self.x, self.y = (500, 600 / 2)
+        self.x, self.y = (850, 600 / 2)
         self.vel_x, self.vel_y = 0, 0
         self.acc_x, self.acc_y = 0, PLAYER_GRAVITY
         self.frame1 = 0
-        self.image = load_image('green.png')
-        self.attack = load_image('attack_p1.png')
-        self.in_bubble = load_image('in_bubble.png')
+        self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\green.png')
+        self.attack = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\attack_p1.png')
+        self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
         self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
@@ -357,8 +405,7 @@ class Player1:
         self.jumping = False
         self.sheet_line = 180
         self.isShot = False  # 어떻게 쓸 수 있을까 고민
-        self.isHit = False  # 물발울에 맞았냐
-
+        self.isHit = False # 물발울에 맞았냐
 
     def bubble_shot(self):
         print("Bubble shot")
@@ -367,6 +414,8 @@ class Player1:
         game_world.add_object(bubble, 2)
         if bubble.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble.y = grass.y + 40
+        #print(bubble.x,' ', bubble.y)
+        #print(self.x, '  ', self.y)
 
 
     def add_event(self, event):
@@ -379,6 +428,9 @@ class Player1:
             self.cur_state.exit_p1(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter_p1(self, event)
+
+
+
 
     def draw(self):
        # self.image.clip_composite_draw(self.frame1 * 60, self.sheet_line, 60, 60, 0,'v', self.x, self.y)
@@ -405,23 +457,32 @@ class Player2:
         self.vel_x, self.vel_y = 0, 0
         self.acc_x, self.acc_y = 0, PLAYER_GRAVITY
         self.frame2 = 0
-        self.image = load_image('character2.png')
+        self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character2.png')
         self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter_p2(self, None)
         self.dir = 1
         self.jumping = False
+        self.isHit = False
 
     def bubble_shot(self):
-        print("Bubble2 shot")
-        bubble2 = Bubble2(self.x, self.y, self.dir*3)
+        #print("Bubble2 shot")
+        bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
         grass = Grass()  # grass 객체를 가져옴
+        #player1 = Player1()
+        game_world.bubble2_objects.append(bubble2)
 
-        game_world.add_object(bubble2, 2)
         if bubble2.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble2.y = grass.y + 40
 
+
+
+
+
+        # 물방울2와 플레이어1 충돌처리
+        #if bubble2.x < player1.x + 30 and (player1.y + 30 > bubble2.y > player1.y - 30):
+        #    player1.isHit = True
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -433,6 +494,7 @@ class Player2:
             self.cur_state.exit_p2(self, event)
             self.cur_state = next_state_table2[self.cur_state][event]
             self.cur_state.enter_p2(self, event)
+
 
     def draw(self):
         self.cur_state.draw_p2(self)

@@ -169,16 +169,25 @@ def exit():
 
 
 def update():
+    global player1, bubble2
     player1.update()
     player2.update()
     for game_object in game_world.all_objects():
         game_object.update()
         collide_check()
 
+    for b2 in game_world.bubble2_objects:  # 버블2를 가져온다
+        b2.update(player1)
+
+
+
+
 
 def draw():
     clear_canvas()
     for game_object in game_world.all_objects():
+        game_object.draw()
+    for game_object in game_world.bubble2_objects:
         game_object.draw()
 
     update_canvas()

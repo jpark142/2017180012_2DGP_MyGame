@@ -2,7 +2,7 @@ from pico2d import *
 
 class Platforms:
     def __init__(self):
-        self.image = load_image('platform.png')
+        self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\platform.png')
         self.px1, self.py1 = 500, 150
         self.px2, self.py2 = 200, 300
         self.px3, self.py3 = 800, 300

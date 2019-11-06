@@ -2,6 +2,8 @@
 # layer 0: Background Objects
 # layer 1: Foreground Objects
 objects = [[], [], [], [], []]
+bubble1_objects = []
+bubble2_objects = []
 
 
 def add_object(o, layer):
