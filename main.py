@@ -14,6 +14,8 @@ def collide_check():
     global player1, grass, platforms
     if player1.y <= grass.y + 40:
         player1.y = grass.y + 40
+        if player1.vel_y < 0:
+            player1.vel_y = 0
         player1.jumping = False
 
     if player2.y <= grass.y + 40:

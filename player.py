@@ -319,14 +319,15 @@ class InBubbleState:
         # 플레이어1
         player1.frame1 = (player1.frame1 + 1) % 6
         player1.timer -= 1
+        print(player1.vel_y)
 
         if player1.timer == 0:  # 만약에 일정 시간이 다 되면
             player1.acc_y = PLAYER_GRAVITY
             print(player1.vel_x)
-            if player1.vel_x != 0.0:
+            if player1.vel_x != 0.0 or player1.vel_y != 0.0:
                 player1.cur_state = RunState
                 print('Runstate!') # 물방울에서 빠져나온다. -> Runstate로
-            if player1.vel_x == 0.0:
+            if player1.vel_x == 0.0 and player1.vel_y == 0.0:
                 player1.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
                 print('idlestate돌아왔습니다')
 
