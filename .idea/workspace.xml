@@ -3,27 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d2a7e8c1-2aba-4919-a90d-e0955e30df25" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/background.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/background.py" beforeDir="false" afterPath="$PROJECT_DIR$/background.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bubble.py" beforeDir="false" afterPath="$PROJECT_DIR$/bubble.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bubble_p1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bubble_p2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/character.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/character2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_world.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_world.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/giphy.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grass.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grass.py" beforeDir="false" afterPath="$PROJECT_DIR$/grass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/green.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/in_bubble.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platform.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms.py" beforeDir="false" afterPath="$PROJECT_DIR$/platforms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/standing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/standing_p2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/walking2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/walking_p2.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +34,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game_world.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
+            <state relative-caret-position="76">
               <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="20" />
             </state>
           </provider>
@@ -73,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bubble.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
+            <state relative-caret-position="1216">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -85,7 +65,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
+            <state relative-caret-position="3363">
               <caret line="183" selection-start-line="183" selection-end-line="183" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -97,8 +77,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mygame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+            <state relative-caret-position="95">
+              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -118,8 +98,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
+            <state relative-caret-position="323">
+              <caret line="401" lean-forward="true" selection-start-line="401" selection-end-line="401" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -130,7 +110,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game_framework.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-232">
+            <state relative-caret-position="228">
               <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
             </state>
           </provider>
@@ -175,16 +155,15 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="952" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+    <option name="x" value="950" />
+    <option name="width" value="979" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,6 +175,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -300,7 +280,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.102445476" />
@@ -308,8 +288,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32907802" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.20851064" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.35460994" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20851064" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.35460994" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -335,18 +315,10 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/settings.py" />
-    <entry file="file://$PROJECT_DIR$/walking2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/walking_p2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/background.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/in_bubble.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/walking2.png" />
+    <entry file="file://$PROJECT_DIR$/walking_p2.png" />
+    <entry file="file://$PROJECT_DIR$/background.png" />
+    <entry file="file://$PROJECT_DIR$/in_bubble.png" />
     <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/-991083293/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
@@ -354,61 +326,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/giphy.gif">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bubble_p2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/standing_p2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/character.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/standing.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/character2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/giphy.gif" />
+    <entry file="file://$PROJECT_DIR$/bubble_p2.png" />
+    <entry file="file://$PROJECT_DIR$/standing_p2.png" />
+    <entry file="file://$PROJECT_DIR$/character.png" />
+    <entry file="file://$PROJECT_DIR$/standing.png" />
+    <entry file="file://$PROJECT_DIR$/character2.png" />
     <entry file="file://$PROJECT_DIR$/spritesheet_jumper.xml" />
     <entry file="file://$PROJECT_DIR$/spritesheet_jumper.png" />
     <entry file="file://$PROJECT_DIR$/NO_JUMP.png" />
-    <entry file="file://$PROJECT_DIR$/grass.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/platform.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bubble_p1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/green.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_framework.py">
+    <entry file="file://$PROJECT_DIR$/grass.png" />
+    <entry file="file://$PROJECT_DIR$/platform.png" />
+    <entry file="file://$PROJECT_DIR$/bubble_p1.png" />
+    <entry file="file://$PROJECT_DIR$/green.png" />
+    <entry file="file://$PROJECT_DIR$/grass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-232">
-          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mygame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="76">
+          <caret line="4" column="84" selection-start-line="4" selection-start-column="84" selection-end-line="4" selection-end-column="84" />
         </state>
       </provider>
     </entry>
@@ -419,31 +353,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/platforms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="84" selection-start-line="4" selection-start-column="84" selection-end-line="4" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grass.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="84" selection-start-line="4" selection-start-column="84" selection-end-line="4" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game_world.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
+        <state relative-caret-position="76">
           <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bubble.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
+        <state relative-caret-position="1216">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -452,7 +380,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
+        <state relative-caret-position="3363">
           <caret line="183" selection-start-line="183" selection-end-line="183" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
@@ -460,10 +388,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mygame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/platforms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="84" selection-start-line="4" selection-start-column="84" selection-end-line="4" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_framework.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
+        <state relative-caret-position="323">
+          <caret line="401" lean-forward="true" selection-start-line="401" selection-end-line="401" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

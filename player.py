@@ -58,11 +58,12 @@ class IdleState:
 
         elif event == UP_UP_p1:
             player1.jumping = True
-        #elif event == BUBBLE_SHOT_p1:
-        #    player1.isShot = True
-        
 
-       # player1.timer = 1000
+        elif event == DOWN_DOWN_p1:
+            pass
+        elif event == DOWN_UP_p1:
+            pass
+
     @staticmethod
     def enter_p2(player2, event2):
         # 플레이어2
@@ -81,7 +82,6 @@ class IdleState:
         elif event2 == UP_UP_p2:
             player2.jumping = True
 
-       # player2.timer = 1000
 
 
     @staticmethod
@@ -109,16 +109,11 @@ class IdleState:
             print("inBubbleState 상태로 바뀌었습니다.")
             player1.add_event(BUBBLE_HIT)
             player1.isHit = False
-        #    pass
-        #if player1.isHit is True:
-        #    print("물발울에 히릿!")
-
 
     @staticmethod
     def do_p2(player2):
         # 플레이어2
         player2.frame2 = (player2.frame2+1) % 8
-       # player2.timer -= 1
         player2.x += player2.vel_x
         player2.y += player2.vel_y
         player2.vel_y += player2.acc_y
@@ -143,10 +138,6 @@ class IdleState:
             player1.isShot = False
 
 
-        #elif player1.vel_x == 1 and player1.dir == 1:
-        #    player1.image.clip_draw(player1.frame*60, 0, 60, 60, player1.x, player1.y)
-        #elif player1.vel_x == 1 and player1.dir == -1:
-        #    player1.image.clip_draw(player1.frame*60, 60, 60, 60, player1.x, player1.y)
     @staticmethod
     def draw_p2(player2):
         # 플레이어2
@@ -179,6 +170,11 @@ class RunState:
 
         elif event == UP_UP_p1:
             player1.jumping = True
+
+        elif event == DOWN_DOWN_p1:
+            pass
+        elif event == DOWN_UP_p1:
+            pass
 
     @staticmethod
     def enter_p2(player2, event2):
@@ -216,10 +212,9 @@ class RunState:
 
     @staticmethod
     def do_p1(player1):
-
         # 플레이어1
         player1.frame1 = (player1.frame1 + 1) % 16
-        # boy.timer -= 1
+
         player1.x += player1.vel_x
         player1.y += player1.vel_y
         player1.vel_y += player1.acc_y
@@ -228,34 +223,31 @@ class RunState:
             player1.add_event(BUBBLE_HIT)
             player1.isHit = False
 
-        #if player1.isHit is True:
-        #    print("inBubbleState 상태로 바뀌었습니다.")
-       # player1.x = clamp(25, player1.x, 1000 - 25)
 
     @staticmethod
     def do_p2(player2):
         # 플레이어2
         player2.frame2 = (player2.frame2 + 1) % 8
-        # player2.timer -= 1
+
         player2.x += player2.vel_x
         player2.y += player2.vel_y
         player2.vel_y += player2.acc_y
-       # player2.x = clamp(25, player2.x, 1000 - 25)
+
 
     @staticmethod
     def draw_p1(player1):
         # 플레이어1
         if player1.vel_x == 0 and player1.dir == -1:  # 왼쪽보고 가만히 있기
-           # player1.image.clip_draw(player1.frame1 * 60, sheet_line, 60, 60, player1.x, player1.y)
+
             player1.sheet_line = 180
         elif player1.vel_x == 0 and player1.dir == 1:  # 오른쪽보고 가만히 있기
             player1.sheet_line = 120
-            #player1.image.clip_draw(player1.frame1 * 60, sheet_line, 60, 60, player1.x, player1.y)
+
         if player1.vel_x > 0:
-            #player1.image.clip_draw(player1.frame1 * 60, 0, 60, 60, player1.x, player1.y)
+
             player1.sheet_line = 0
         elif player1.vel_x < 0:
-            #player1.image.clip_draw(player1.frame1 * 60, 60, 60, 60, player1.x, player1.y)
+
             player1.sheet_line = 60
         if player1.isShot == True:
             player1.attack.clip_draw(0, 0, 60, 60, player1.x, player1.y)
@@ -300,7 +292,6 @@ class InBubbleState:
             player1.vel_y -= 0.5
         elif event == DOWN_UP_p1:
             player1.vel_y = PLAYER_GRAVITY
-
             #player1.vel_y += 0.5
         elif event == UP_DOWN_p1:
             player1.vel_y = PLAYER_GRAVITY
@@ -310,7 +301,6 @@ class InBubbleState:
 
         elif event == UP_UP_p1:
             player1.vel_y = PLAYER_GRAVITY
-
             #player1.vel_y -= 0.5
 
 
@@ -335,10 +325,6 @@ class InBubbleState:
 
             player1.cur_state = RunState  # 물방울에서 빠져나온다.
 
-           # if event == RIGHT_UP_p1 and LEFT_UP_p1:
-            #elif event == RIGHT_DOWN_p1 or LEFT_DOWN_p1:
-             #   player1.cur_state = R
-        #    print('IdleState 입니다')
         player1.x += player1.vel_x
         player1.y += player1.vel_y
         player1.vel_y += player1.acc_y
@@ -348,11 +334,9 @@ class InBubbleState:
 
     @staticmethod
     def draw_p1(player1):
-
         player1.in_bubble.clip_draw(player1.frame1 * 80, 80, 80, 80, player1.x, player1.y)
 
-
-
+class InBubbleRunState:
 
 
 
@@ -361,13 +345,15 @@ next_state_table = {
     IdleState: {RIGHT_UP_p1: RunState, LEFT_UP_p1: RunState,
                 RIGHT_DOWN_p1: RunState, LEFT_DOWN_p1: RunState,
                 UP_UP_p1: RunState, UP_DOWN_p1: RunState,
-                BUBBLE_SHOT_p1: IdleState, DOWN_UP_p1: IdleState,
-                BUBBLE_HIT: InBubbleState},
+                BUBBLE_SHOT_p1: IdleState,
+                BUBBLE_HIT: InBubbleState,
+                DOWN_UP_p1: IdleState, DOWN_DOWN_p1: IdleState},
     RunState: {RIGHT_UP_p1: IdleState, LEFT_UP_p1: IdleState,
                LEFT_DOWN_p1: IdleState, RIGHT_DOWN_p1: IdleState,
                UP_UP_p1: IdleState, UP_DOWN_p1: IdleState,
                BUBBLE_SHOT_p1: RunState,
-               BUBBLE_HIT: InBubbleState},
+               BUBBLE_HIT: InBubbleState,
+               DOWN_UP_p1: RunState, DOWN_DOWN_p1: RunState},
     InBubbleState: {RIGHT_UP_p1: InBubbleState, LEFT_UP_p1: InBubbleState,
                     LEFT_DOWN_p1: InBubbleState, RIGHT_DOWN_p1: InBubbleState,
                     UP_UP_p1: InBubbleState, UP_DOWN_p1: InBubbleState,
@@ -384,7 +370,6 @@ next_state_table2 = {
         LEFT_DOWN_p2: IdleState, RIGHT_DOWN_p2: IdleState,
         UP_UP_p2: IdleState, UP_DOWN_p2: IdleState,
         BUBBLE_SHOT_p2: RunState}
-
 }
 
 
@@ -414,8 +399,6 @@ class Player1:
         game_world.add_object(bubble, 2)
         if bubble.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble.y = grass.y + 40
-        #print(bubble.x,' ', bubble.y)
-        #print(self.x, '  ', self.y)
 
 
     def add_event(self, event):
