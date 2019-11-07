@@ -322,8 +322,13 @@ class InBubbleState:
 
         if player1.timer == 0:  # 만약에 일정 시간이 다 되면
             player1.acc_y = PLAYER_GRAVITY
-
-            player1.cur_state = RunState  # 물방울에서 빠져나온다.
+            print(player1.vel_x)
+            if player1.vel_x != 0.0:
+                player1.cur_state = RunState
+                print('Runstate!') # 물방울에서 빠져나온다. -> Runstate로
+            if player1.vel_x == 0.0:
+                player1.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
+                print('idlestate돌아왔습니다')
 
         player1.x += player1.vel_x
         player1.y += player1.vel_y
@@ -336,7 +341,6 @@ class InBubbleState:
     def draw_p1(player1):
         player1.in_bubble.clip_draw(player1.frame1 * 80, 80, 80, 80, player1.x, player1.y)
 
-class InBubbleRunState:
 
 
 
