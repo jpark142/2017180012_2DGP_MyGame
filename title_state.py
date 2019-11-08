@@ -8,7 +8,7 @@ image = None
 
 def enter():
     global image
-    image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\title.png')
+    image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\my_title.png')
 
 
 def exit():
@@ -31,7 +31,7 @@ def handle_events():
 
 def draw():
     clear_canvas()
-    image.draw(500, 300, 1000, 600)
+    image.draw(500, 300)
     update_canvas()
 
 

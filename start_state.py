@@ -10,7 +10,7 @@ logo_time = 0.0
 
 def enter():
     global image
-    image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\kpu_credit.png')
+    image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\start_img.png')
 
 
 def exit():
@@ -33,7 +33,7 @@ def draw():
     global image
     clear_canvas()
 
-    image.draw(500, 300, 1000, 600)
+    image.draw(500, 300)
 
     update_canvas()
 

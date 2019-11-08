@@ -63,8 +63,9 @@ def collide_check():
             #print("충돌5!")
 
 
+#  충돌체크 함수s -p1
 def collide_p1_pf1(player1, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb()
+    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
     # 플랫폼1
     left_pf1, bottom_pf1, right_pf1, top_pf1 = platforms.get_bb()
 
@@ -76,7 +77,7 @@ def collide_p1_pf1(player1, platforms):
 
 
 def collide_p1_pf2(player1, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb()
+    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
     # 플랫폼2
     left_pf2, bottom_pf2, right_pf2, top_pf2 = platforms.get_bb2()
 
@@ -87,7 +88,7 @@ def collide_p1_pf2(player1, platforms):
     return True
 
 def collide_p1_pf3(player1, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb()
+    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
     # 플랫폼3
     left_pf3, bottom_pf3, right_pf3, top_pf3 = platforms.get_bb3()
     if left_p1 > right_pf3: return False
@@ -97,7 +98,7 @@ def collide_p1_pf3(player1, platforms):
     return True
 
 def collide_p1_pf4(player1, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb()
+    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
     # 플랫폼4
     left_pf4, bottom_pf4, right_pf4, top_pf4 = platforms.get_bb4()
     if left_p1 > right_pf4: return False
@@ -107,7 +108,7 @@ def collide_p1_pf4(player1, platforms):
     return True
 
 def collide_p1_pf5(player1, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb()
+    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
     # 플랫폼5
     left_pf5, bottom_pf5, right_pf5, top_pf5 = platforms.get_bb5()
     if left_p1 > right_pf5: return False
@@ -115,6 +116,9 @@ def collide_p1_pf5(player1, platforms):
     if top_p1 < bottom_pf5: return False
     if bottom_p1 > top_pf5: return False
     return True
+
+# 충돌체크 함수s -p2
+
 
 
 def handle_events():

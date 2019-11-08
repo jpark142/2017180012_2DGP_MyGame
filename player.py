@@ -3,8 +3,24 @@ from bubble import *
 from grass import Grass
 
 import game_world
+import game_framework
 
 PLAYER_GRAVITY = -0.01
+
+# Run Speed
+PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30cm
+RUN_SPEED_KMPH = 30.0  # km / hour
+RUN_SPEED_MPM = 0
+RUN_SPEED_MPS = 0
+RUN_SPEED_PPS = 250.0
+
+# Action Speed
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0
+FRAMES_PER_ACTION = 32
+
+STAND_FRAMES_PER_ACTION = 8
+
 
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
@@ -40,17 +56,17 @@ class IdleState:
     def enter_p1(player1, event):
         # 플레이어1
         if event == RIGHT_DOWN_p1:
-            player1.vel_x += 0.5
+            player1.vel_x += RUN_SPEED_PPS
             player1.dir = 1
         elif event == LEFT_DOWN_p1:
-            player1.vel_x -= 0.5
+            player1.vel_x -= RUN_SPEED_PPS
             player1.dir = -1
 
         elif event == RIGHT_UP_p1:
-            player1.vel_x -= 0.5
+            player1.vel_x -= RUN_SPEED_PPS
 
         elif event == LEFT_UP_p1:
-            player1.vel_x += 0.5
+            player1.vel_x += RUN_SPEED_PPS
 
         elif event == UP_DOWN_p1 and player1.jumping == False:
             player1.vel_y = 2
@@ -99,9 +115,9 @@ class IdleState:
     def do_p1(player1):
 
         # 플레이어1
-        player1.frame1 = (player1.frame1+1) % 16
-       # player1.timer -= 1
-        player1.x += player1.vel_x
+        player1.frame1 = (player1.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 16
+
+        player1.x += player1.vel_x * game_framework.frame_time
         player1.y += player1.vel_y
         player1.vel_y += player1.acc_y
 
@@ -118,22 +134,21 @@ class IdleState:
         player2.y += player2.vel_y
         player2.vel_y += player2.acc_y
 
-
     @staticmethod
     def draw_p1(player1):
         # 플레이어1
         if player1.vel_x == 0 and player1.dir == -1:  # 왼쪽보고 가만히 있기
-            #.image.clip_draw(player1.frame1*60, sheet_line, 60, 60, player1.x, player1.y)
+
             player1.sheet_line = 180
         elif player1.vel_x == 0 and player1.dir == 1: # 오른쪽보고 가만히 있기
-            #player1.image.clip_draw(player1.frame1*60, sheet_line, 60, 60, player1.x, player1.y)
+
             player1.sheet_line = 120
         elif player1.vel_y >= 0 and player1.dir == 1:
             player1.sheet_line = 120
         elif player1.vel_y >= 0 and player1.dir == -1:
             player1.sheet_line = 180
 
-        elif player1.isShot == True:
+        elif player1.isShot is True:
             player1.attack.clip_draw(0, 0, 60, 60, player1.x, player1.y)
             player1.isShot = False
 
@@ -152,16 +167,16 @@ class RunState:
     def enter_p1(player1, event):
         # 플레이어1
         if event == RIGHT_DOWN_p1:
-            player1.vel_x += 0.5
+            player1.vel_x += RUN_SPEED_PPS
             player1.dir = 1
         elif event == LEFT_DOWN_p1:
-            player1.vel_x -= 0.5
+            player1.vel_x -= RUN_SPEED_PPS
             player1.dir = -1
         elif event == RIGHT_UP_p1:
-            player1.vel_x -= 0.5
+            player1.vel_x -= RUN_SPEED_PPS
             player1.dir = -1
         elif event == LEFT_UP_p1:
-            player1.vel_x += 0.5
+            player1.vel_x += RUN_SPEED_PPS
             player1.dir = 1
 
         elif event == UP_DOWN_p1 and player1.jumping == False:
@@ -213,9 +228,9 @@ class RunState:
     @staticmethod
     def do_p1(player1):
         # 플레이어1
-        player1.frame1 = (player1.frame1 + 1) % 16
+        player1.frame1 = (player1.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 16
 
-        player1.x += player1.vel_x
+        player1.x += player1.vel_x * game_framework.frame_time
         player1.y += player1.vel_y
         player1.vel_y += player1.acc_y
         if player1.isHit is True:
@@ -392,6 +407,8 @@ class Player1:
         self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\green.png')
         self.attack = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\attack_p1.png')
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
+        self.font = load_font('ENCR10B.TTF', 16)
+
         self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
@@ -427,9 +444,11 @@ class Player1:
 
     def draw(self):
        # self.image.clip_composite_draw(self.frame1 * 60, self.sheet_line, 60, 60, 0,'v', self.x, self.y)
-       self.image.clip_draw(self.frame1 * 60, self.sheet_line, 60, 60, self.x, self.y)
+       self.image.clip_draw(int(self.frame1) * 60, self.sheet_line, 60, 60, self.x, self.y)
 
        self.cur_state.draw_p1(self)
+
+       self.font.draw(self.x - 60, self.y + 50, '(Time: %3.2f)' % get_time(), (255, 255, 0))
 
 
     def handle_event(self, event):
@@ -440,7 +459,7 @@ class Player1:
         #delay(0.03)
 
     # collide box
-    def get_bb(self):
+    def get_bb_green(self):
         return self.x - 30, self.y - 30, self.x + 30, self.y + 30
 
 

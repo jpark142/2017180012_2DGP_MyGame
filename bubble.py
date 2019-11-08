@@ -75,7 +75,7 @@ class Bubble2:
     # 만약에 is_bubble_hit == True 이면 idle->in_bubble, run->in_bubble
 def is_bubble_hit(player1, bubble2):
         # if 맞았으면 return True 안맞았으면 return False
-    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb()  # player1의 바운딩박스
+    left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()  # player1의 바운딩박스
     left_b2, bottom_b2, right_b2, top_b2 = bubble2.get_bb_b2()  # player2의 물방울 바운딩박스
 
     if left_p1 > right_b2:
