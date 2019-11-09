@@ -11,7 +11,7 @@ name = "MainState"
 
 
 def collide_check():
-    global player1, grass, platforms
+    global player1, player2, grass, platforms
     if player1.y <= grass.y + 40:
         player1.y = grass.y + 40
         if player1.vel_y < 0:
@@ -31,36 +31,58 @@ def collide_check():
     if player2. x < 0:
         player2.x = 1000
 
-    #if player1.y <= platforms.py1 + 40:
-    #    player1.y = platforms.py1 + 40
-
     # check if player hits a platform - only if falling
     if player1.vel_y < 0:
         if collide_p1_pf1(player1, platforms):
             player1.y = platforms.py1 + 45
             player1.vel_y = 0
             player1.jumping = False
-            #print("충돌!")
+
         if collide_p1_pf2(player1, platforms):
             player1.y = platforms.py2 + 45
             player1.vel_y = 0
             player1.jumping = False
-            #print("충돌2!")
+
         if collide_p1_pf3(player1, platforms):
             player1.y = platforms.py3 + 45
             player1.vel_y = 0
             player1.jumping = False
-            #print("충돌3!")
+
         if collide_p1_pf4(player1, platforms):
             player1.y = platforms.py4 + 45
             player1.vel_y = 0
             player1.jumping = False
-            #print("충돌4!")
+
         if collide_p1_pf5(player1, platforms):
             player1.y = platforms.py5 + 45
             player1.vel_y = 0
             player1.jumping = False
-            #print("충돌5!")
+
+    if player2.vel_y < 0:
+        if collide_p2_pf1(player2, platforms):
+            player2.y = platforms.py1 + 45
+            player2.vel_y = 0
+            player2.jumping = False
+
+        if collide_p2_pf2(player2, platforms):
+            player2.y = platforms.py2 + 45
+            player2.vel_y = 0
+            player2.jumping = False
+
+        if collide_p2_pf3(player2, platforms):
+            player2.y = platforms.py3 + 45
+            player2.vel_y = 0
+            player2.jumping = False
+
+        if collide_p2_pf4(player2, platforms):
+            player2.y = platforms.py4 + 45
+            player2.vel_y = 0
+            player2.jumping = False
+
+        if collide_p2_pf5(player2, platforms):
+            player2.y = platforms.py5 + 45
+            player2.vel_y = 0
+            player2.jumping = False
 
 
 #  충돌체크 함수s -p1
@@ -87,6 +109,7 @@ def collide_p1_pf2(player1, platforms):
     if bottom_p1 > top_pf2: return False
     return True
 
+
 def collide_p1_pf3(player1, platforms):
     left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
     # 플랫폼3
@@ -96,6 +119,7 @@ def collide_p1_pf3(player1, platforms):
     if top_p1 < bottom_pf3: return False
     if bottom_p1 > top_pf3: return False
     return True
+
 
 def collide_p1_pf4(player1, platforms):
     left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
@@ -107,6 +131,7 @@ def collide_p1_pf4(player1, platforms):
     if bottom_p1 > top_pf4: return False
     return True
 
+
 def collide_p1_pf5(player1, platforms):
     left_p1, bottom_p1, right_p1, top_p1 = player1.get_bb_green()
     # 플랫폼5
@@ -117,8 +142,63 @@ def collide_p1_pf5(player1, platforms):
     if bottom_p1 > top_pf5: return False
     return True
 
-# 충돌체크 함수s -p2
 
+# 충돌체크 함수s -p2
+def collide_p2_pf1(player2, platforms):
+    left_p1, bottom_p1, right_p1, top_p1 = player2.get_bb_blue()
+    # 플랫폼1
+    left_pf1, bottom_pf1, right_pf1, top_pf1 = platforms.get_bb()
+
+    if left_p1 > right_pf1: return False
+    if right_p1 < left_pf1: return False
+    if top_p1 < bottom_pf1: return False
+    if bottom_p1 > top_pf1: return False
+    return True
+
+
+def collide_p2_pf2(player2, platforms):
+    left_p1, bottom_p1, right_p1, top_p1 = player2.get_bb_blue()
+    # 플랫폼2
+    left_pf2, bottom_pf2, right_pf2, top_pf2 = platforms.get_bb2()
+
+    if left_p1 > right_pf2: return False
+    if right_p1 < left_pf2: return False
+    if top_p1 < bottom_pf2: return False
+    if bottom_p1 > top_pf2: return False
+    return True
+
+
+def collide_p2_pf3(player2, platforms):
+    left_p1, bottom_p1, right_p1, top_p1 = player2.get_bb_blue()
+    # 플랫폼3
+    left_pf3, bottom_pf3, right_pf3, top_pf3 = platforms.get_bb3()
+    if left_p1 > right_pf3: return False
+    if right_p1 < left_pf3: return False
+    if top_p1 < bottom_pf3: return False
+    if bottom_p1 > top_pf3: return False
+    return True
+
+
+def collide_p2_pf4(player2, platforms):
+    left_p1, bottom_p1, right_p1, top_p1 = player2.get_bb_blue()
+    # 플랫폼4
+    left_pf4, bottom_pf4, right_pf4, top_pf4 = platforms.get_bb4()
+    if left_p1 > right_pf4: return False
+    if right_p1 < left_pf4: return False
+    if top_p1 < bottom_pf4: return False
+    if bottom_p1 > top_pf4: return False
+    return True
+
+
+def collide_p2_pf5(player2, platforms):
+    left_p1, bottom_p1, right_p1, top_p1 = player2.get_bb_blue()
+    # 플랫폼5
+    left_pf5, bottom_pf5, right_pf5, top_pf5 = platforms.get_bb5()
+    if left_p1 > right_pf5: return False
+    if right_p1 < left_pf5: return False
+    if top_p1 < bottom_pf5: return False
+    if bottom_p1 > top_pf5: return False
+    return True
 
 
 def handle_events():

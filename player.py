@@ -4,6 +4,7 @@ from grass import Grass
 
 import game_world
 import game_framework
+import time
 
 PLAYER_GRAVITY = -0.01
 
@@ -161,6 +162,7 @@ class IdleState:
         elif player2.dir == -1:  # 왼쪽보고 가만히 있기
             player2.image.clip_draw(player2.frame2*60, 180, 60, 60, player2.x, player2.y)
 
+
 class RunState:
 
     @staticmethod
@@ -290,16 +292,16 @@ class InBubbleState:
     def enter_p1(player1, event):
         # 플레이어1
         if event == RIGHT_DOWN_p1:
-            player1.vel_x += 0.5
+            player1.vel_x += RUN_SPEED_PPS
 
         elif event == LEFT_DOWN_p1:
-            player1.vel_x -= 0.5
+            player1.vel_x -= RUN_SPEED_PPS
 
         elif event == RIGHT_UP_p1:
-            player1.vel_x -= 0.5
+            player1.vel_x -= RUN_SPEED_PPS
 
         elif event == LEFT_UP_p1:
-            player1.vel_x += 0.5
+            player1.vel_x += RUN_SPEED_PPS
 
 
         player1.acc_y = 0  # 중력은 없애준다
@@ -320,8 +322,7 @@ class InBubbleState:
             player1.vel_y = PLAYER_GRAVITY
             #player1.vel_y -= 0.5
 
-
-        player1.timer = 300  # inBubbleState 지속시간
+        player1.timer = 3000  # inBubbleState 지속시간
         player1.frame1 = 0
 
 
@@ -334,9 +335,10 @@ class InBubbleState:
     @staticmethod
     def do_p1(player1):
         # 플레이어1
-        player1.frame1 = (player1.frame1 + 1) % 6
+        player1.frame1 = (player1.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         player1.timer -= 1
-        print(player1.vel_x, ' ', player1.vel_y)
+        # print(player1.vel_x, ' ', player1.vel_y)
+        print(player1.timer)
 
         if player1.timer == 0:  # 만약에 일정 시간이 다 되면
             player1.acc_y = PLAYER_GRAVITY
@@ -349,9 +351,10 @@ class InBubbleState:
                 print('idlestate돌아왔습니다')
             elif player1.vel_x != 0.0 and player1.vel_y > 0.0:  # 어쩔 수가 없음(보류)
                 player1.cur_state = IdleState
+            elif player1.vel_x == 0.0 and player1.vel_y < 0.0:
+                player1.cur_state = IdleState
 
-
-        player1.x += player1.vel_x
+        player1.x += player1.vel_x * game_framework.frame_time
         player1.y += player1.vel_y
         player1.vel_y += player1.acc_y
 
@@ -360,7 +363,8 @@ class InBubbleState:
 
     @staticmethod
     def draw_p1(player1):
-        player1.in_bubble.clip_draw(player1.frame1 * 80, 80, 80, 80, player1.x, player1.y)
+        player1.in_bubble.clip_draw(int(player1.frame1) * 80, 80, 80, 80, player1.x, player1.y)
+        player1.font.draw(player1.x - 60, player1.y + 50, '(Time: %s)' % player1.timer, (255, 0, 0))
 
 
 
@@ -419,6 +423,8 @@ class Player1:
         self.isShot = False  # 어떻게 쓸 수 있을까 고민
         self.isHit = False # 물발울에 맞았냐
 
+
+
     def bubble_shot(self):
         print("Bubble shot")
         bubble = Bubble(self.x, self.y, self.dir*3)
@@ -439,16 +445,11 @@ class Player1:
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter_p1(self, event)
 
-
-
-
     def draw(self):
-       # self.image.clip_composite_draw(self.frame1 * 60, self.sheet_line, 60, 60, 0,'v', self.x, self.y)
-       self.image.clip_draw(int(self.frame1) * 60, self.sheet_line, 60, 60, self.x, self.y)
+        self.image.clip_draw(int(self.frame1) * 60, self.sheet_line, 60, 60, self.x, self.y)
 
-       self.cur_state.draw_p1(self)
+        self.cur_state.draw_p1(self)
 
-       self.font.draw(self.x - 60, self.y + 50, '(Time: %3.2f)' % get_time(), (255, 255, 0))
 
 
     def handle_event(self, event):
@@ -488,8 +489,9 @@ class Player2:
         if bubble2.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble2.y = grass.y + 40
 
-
-
+    # collide box
+    def get_bb_blue(self):
+        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
 
 
         # 물방울2와 플레이어1 충돌처리
