@@ -264,6 +264,8 @@ def update():
 
     for b2 in game_world.bubble2_objects:  # 버블2를 가져온다
         b2.update(player1)
+        if is_bubble_hit(player1, b2):
+            game_world.bubble2_objects.remove(b2)
 
 
 

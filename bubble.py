@@ -66,6 +66,7 @@ class Bubble2:
             player1.isHit = True
 
 
+
     def get_bb_b2(self):
         return self.updated_x - 20, self.updated_y - 20, self.updated_x + 20, self.updated_y + 20
 
