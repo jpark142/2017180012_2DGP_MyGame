@@ -268,9 +268,6 @@ def update():
             game_world.bubble2_objects.remove(b2)
 
 
-
-
-
 def draw():
     clear_canvas()
     for game_object in game_world.all_objects():

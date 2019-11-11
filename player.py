@@ -22,6 +22,7 @@ ACTION_PER_TIME = 1.0
 FRAMES_PER_ACTION = 32
 
 STAND_FRAMES_PER_ACTION = 8
+maintain = 2000
 
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
@@ -83,6 +84,7 @@ class IdleState:
         elif event == DOWN_UP_p1:
             pass
 
+
     @staticmethod
     def enter_p2(player2, event2):
         # 플레이어2
@@ -118,6 +120,8 @@ class IdleState:
 
     @staticmethod
     def do_p1(player1):
+        global maintain
+        maintain = 2000
 
         # 플레이어1
         player1.frame1 = (player1.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
@@ -169,9 +173,9 @@ class IdleState:
 
 
 class RunState:
-
     @staticmethod
     def enter_p1(player1, event):
+        global maintain
         # 플레이어1
         if event == RIGHT_DOWN_p1:
             player1.vel_x += RUN_SPEED_PPS
@@ -197,6 +201,8 @@ class RunState:
             pass
         elif event == DOWN_UP_p1:
             pass
+
+        maintain = 2000
 
     @staticmethod
     def enter_p2(player2, event2):
@@ -328,7 +334,7 @@ class InBubbleState:
             player1.vel_y = PLAYER_GRAVITY
             #player1.vel_y -= 0.5
 
-        player1.timer = 3000  # inBubbleState 지속시간
+       # player1.timer = 2000  # inBubbleState 지속시간
         player1.frame1 = 0
 
     @staticmethod
@@ -369,7 +375,7 @@ class InBubbleState:
 
     @staticmethod
     def exit_p1(player1, event):
-        player1.timer = 0
+        # player1.timer = 0
         pass
 
     @staticmethod
@@ -379,13 +385,14 @@ class InBubbleState:
 
     @staticmethod
     def do_p1(player1):
+        global maintain
         # 플레이어1
         player1.frame1 = (player1.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        player1.timer -= 1
+        maintain -= 1
         # print(player1.vel_x, ' ', player1.vel_y)
-        print(player1.timer)
+        print(maintain)
 
-        if player1.timer == 0:  # 만약에 일정 시간이 다 되면
+        if maintain == 0:  # 만약에 일정 시간이 다 되면
             player1.acc_y = PLAYER_GRAVITY
             print(player1.vel_x)
             if player1.vel_x != 0.0 or player1.vel_y != 0.0:
@@ -438,7 +445,7 @@ class InBubbleState:
     @staticmethod
     def draw_p1(player1):
         player1.in_bubble.clip_draw(int(player1.frame1) * 80, 80, 80, 80, player1.x, player1.y)
-        player1.font.draw(player1.x - 60, player1.y + 50, '(Time: %s)' % player1.timer, (255, 0, 0))
+        player1.font.draw(player1.x - 60, player1.y + 50, '(Time: %3.2f)' % maintain, (255, 0, 0))
 
     @staticmethod
     def draw_p2(player2):
@@ -493,7 +500,7 @@ class Player1:
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
         self.font = load_font('ENCR10B.TTF', 16)
 
-        # self.timer = 0
+        self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter_p1(self, None)
