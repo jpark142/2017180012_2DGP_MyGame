@@ -57,27 +57,27 @@ key_event_table2 = {
 
 class IdleState:
     @staticmethod
-    def enter_p1(player1, event):
+    def enter_p1(green, event):
         # 플레이어1
         if event == RIGHT_DOWN_p1:
-            player1.vel_x += RUN_SPEED_PPS
-            player1.dir = 1
+            green.vel_x += RUN_SPEED_PPS
+            green.dir = 1
         elif event == LEFT_DOWN_p1:
-            player1.vel_x -= RUN_SPEED_PPS
-            player1.dir = -1
+            green.vel_x -= RUN_SPEED_PPS
+            green.dir = -1
 
         elif event == RIGHT_UP_p1:
-            player1.vel_x -= RUN_SPEED_PPS
+            green.vel_x -= RUN_SPEED_PPS
 
         elif event == LEFT_UP_p1:
-            player1.vel_x += RUN_SPEED_PPS
+            green.vel_x += RUN_SPEED_PPS
 
-        elif event == UP_DOWN_p1 and player1.jumping is False:
-            player1.vel_y = 2
-            player1.jumping = True
+        elif event == UP_DOWN_p1 and green.jumping is False:
+            green.vel_y = 2
+            green.jumping = True
 
         elif event == UP_UP_p1:
-            player1.jumping = True
+            green.jumping = True
 
         elif event == DOWN_DOWN_p1:
             pass
@@ -86,22 +86,22 @@ class IdleState:
 
 
     @staticmethod
-    def enter_p2(player2, event2):
+    def enter_p2(blue, event2):
         # 플레이어2
         if event2 == RIGHT_DOWN_p2:
-            player2.vel_x += RUN_SPEED_PPS
+            blue.vel_x += RUN_SPEED_PPS
         elif event2 == LEFT_DOWN_p2:
-            player2.vel_x -= RUN_SPEED_PPS
+            blue.vel_x -= RUN_SPEED_PPS
         elif event2 == RIGHT_UP_p2:
-            player2.vel_x -= RUN_SPEED_PPS
+            blue.vel_x -= RUN_SPEED_PPS
         elif event2 == LEFT_UP_p2:
-            player2.vel_x += RUN_SPEED_PPS
-        elif event2 == UP_DOWN_p2 and player2.jumping is False:
-            player2.vel_y = 2
-            player2.jumping = True
+            blue.vel_x += RUN_SPEED_PPS
+        elif event2 == UP_DOWN_p2 and blue.jumping is False:
+            blue.vel_y = 2
+            blue.jumping = True
 
         elif event2 == UP_UP_p2:
-            player2.jumping = True
+            blue.jumping = True
 
         elif event2 == DOWN_DOWN_p2:
             pass
@@ -109,93 +109,93 @@ class IdleState:
             pass
 
     @staticmethod
-    def exit_p1(player1, event):
+    def exit_p1(green, event):
         if event == BUBBLE_SHOT_p1:
-            player1.bubble_shot()
+            green.bubble_shot()
 
     @staticmethod
-    def exit_p2(player2, event2):
+    def exit_p2(blue, event2):
         if event2 == BUBBLE_SHOT_p2:
-            player2.bubble_shot()
+            blue.bubble_shot()
 
     @staticmethod
-    def do_p1(player1):
+    def do_p1(green):
         global maintain
         maintain = 2000
 
         # 플레이어1
-        player1.frame1 = (player1.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        green.frame1 = (green.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
-        player1.x += player1.vel_x * game_framework.frame_time
-        player1.y += player1.vel_y
-        player1.vel_y += player1.acc_y
+        green.x += green.vel_x * game_framework.frame_time
+        green.y += green.vel_y
+        green.vel_y += green.acc_y
 
-        if player1.isHit is True:
+        if green.isHit is True:
             print("inBubbleState 상태로 바뀌었습니다.")
-            player1.add_event(BUBBLE_HIT)
-            player1.isHit = False
+            green.add_event(BUBBLE_HIT)
+            green.isHit = False
 
     @staticmethod
-    def do_p2(player2):
+    def do_p2(blue):
         # 플레이어2
-        player2.frame2 = (player2.frame2 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        player2.x += player2.vel_x * game_framework.frame_time
-        player2.y += player2.vel_y
-        player2.vel_y += player2.acc_y
+        blue.frame2 = (blue.frame2 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        blue.x += blue.vel_x * game_framework.frame_time
+        blue.y += blue.vel_y
+        blue.vel_y += blue.acc_y
 
     @staticmethod
-    def draw_p1(player1):
+    def draw_p1(green):
 
         # 플레이어1
-        if player1.vel_x == 0 and player1.dir == -1:  # 왼쪽보고 가만히 있기
+        if green.vel_x == 0 and green.dir == -1:  # 왼쪽보고 가만히 있기
 
-            player1.sheet_line = 180
-        elif player1.vel_x == 0 and player1.dir == 1:  # 오른쪽보고 가만히 있기
+            green.sheet_line = 180
+        elif green.vel_x == 0 and green.dir == 1:  # 오른쪽보고 가만히 있기
 
-            player1.sheet_line = 120
-        elif player1.vel_y >= 0 and player1.dir == 1:
-            player1.sheet_line = 120
-        elif player1.vel_y >= 0 and player1.dir == -1:
-            player1.sheet_line = 180
+            green.sheet_line = 120
+        elif green.vel_y >= 0 and green.dir == 1:
+            green.sheet_line = 120
+        elif green.vel_y >= 0 and green.dir == -1:
+            green.sheet_line = 180
 
-        elif player1.isShot is True:
-            player1.attack.clip_draw(0, 0, 60, 60, player1.x, player1.y)
-            player1.isShot = False
+        elif green.isShot is True:
+            green.attack.clip_draw(0, 0, 60, 60, green.x, green.y)
+            green.isShot = False
 
     @staticmethod
-    def draw_p2(player2):
+    def draw_p2(blue):
         # 플레이어2
-        if player2.dir == 1:  # 오른쪽보고 가만히 있기
-            player2.sheet_line = 120
+        if blue.dir == 1:  # 오른쪽보고 가만히 있기
+            blue.sheet_line = 120
 
-        elif player2.dir == -1:  # 왼쪽보고 가만히 있기
-            player2.sheet_line = 180
+        elif blue.dir == -1:  # 왼쪽보고 가만히 있기
+            blue.sheet_line = 180
 
 
 class RunState:
     @staticmethod
-    def enter_p1(player1, event):
+    def enter_p1(green, event):
         global maintain
         # 플레이어1
         if event == RIGHT_DOWN_p1:
-            player1.vel_x += RUN_SPEED_PPS
-            player1.dir = 1
+            green.vel_x += RUN_SPEED_PPS
+            green.dir = 1
         elif event == LEFT_DOWN_p1:
-            player1.vel_x -= RUN_SPEED_PPS
-            player1.dir = -1
+            green.vel_x -= RUN_SPEED_PPS
+            green.dir = -1
         elif event == RIGHT_UP_p1:
-            player1.vel_x -= RUN_SPEED_PPS
-            player1.dir = -1
+            green.vel_x -= RUN_SPEED_PPS
+            green.dir = -1
         elif event == LEFT_UP_p1:
-            player1.vel_x += RUN_SPEED_PPS
-            player1.dir = 1
+            green.vel_x += RUN_SPEED_PPS
+            green.dir = 1
 
-        elif event == UP_DOWN_p1 and player1.jumping is False:
-            player1.vel_y = 2
-            player1.jumping = True
+        elif event == UP_DOWN_p1 and green.jumping is False:
+            green.vel_y = 2
+            green.jumping = True
 
         elif event == UP_UP_p1:
-            player1.jumping = True
+            green.jumping = True
 
         elif event == DOWN_DOWN_p1:
             pass
@@ -205,27 +205,27 @@ class RunState:
         maintain = 2000
 
     @staticmethod
-    def enter_p2(player2, event2):
+    def enter_p2(blue, event2):
         # 플레이어2
         if event2 == RIGHT_DOWN_p2:
-            player2.vel_x += RUN_SPEED_PPS
-            player2.dir = 1
+            blue.vel_x += RUN_SPEED_PPS
+            blue.dir = 1
         elif event2 == LEFT_DOWN_p2:
-            player2.vel_x -= RUN_SPEED_PPS
-            player2.dir = -1
+            blue.vel_x -= RUN_SPEED_PPS
+            blue.dir = -1
 
         elif event2 == RIGHT_UP_p2:
-            player2.vel_x -= RUN_SPEED_PPS
-            player2.dir = -1
+            blue.vel_x -= RUN_SPEED_PPS
+            blue.dir = -1
         elif event2 == LEFT_UP_p2:
-            player2.vel_x += RUN_SPEED_PPS
-            player2.dir = 1
-        elif event2 == UP_DOWN_p2 and player2.jumping is False:
-            player2.vel_y = 2
-            player2.jumping = True
+            blue.vel_x += RUN_SPEED_PPS
+            blue.dir = 1
+        elif event2 == UP_DOWN_p2 and blue.jumping is False:
+            blue.vel_y = 2
+            blue.jumping = True
 
         elif event2 == UP_UP_p2:
-            player2.jumping = True
+            blue.jumping = True
 
         elif event2 == DOWN_DOWN_p2:
             pass
@@ -233,224 +233,233 @@ class RunState:
             pass
 
     @staticmethod
-    def exit_p1(player1, event):
+    def exit_p1(green, event):
         if event == BUBBLE_SHOT_p1:
-            player1.bubble_shot()
+            green.bubble_shot()
 
     @staticmethod
-    def exit_p2(player2, event2):
+    def exit_p2(blue, event2):
         if event2 == BUBBLE_SHOT_p2:
-            player2.bubble_shot()
+            blue.bubble_shot()
 
     @staticmethod
-    def do_p1(player1):
+    def do_p1(green):
         # 플레이어1
-        player1.frame1 = (player1.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
-        player1.x += player1.vel_x * game_framework.frame_time
-        player1.y += player1.vel_y
-        player1.vel_y += player1.acc_y
-        if player1.isHit is True:
+        green.x += green.vel_x * game_framework.frame_time
+        green.y += green.vel_y
+        green.vel_y += green.acc_y
+        if green.isHit is True:
             print("inBubbleState 상태로 바뀌었습니다.")
-            player1.add_event(BUBBLE_HIT)
-            player1.isHit = False
+            green.add_event(BUBBLE_HIT)
+            green.isHit = False
 
     @staticmethod
-    def do_p2(player2):
+    def do_p2(blue):
         # 플레이어2
-        player2.frame2 = (player2.frame2 + + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        blue.frame2 = (blue.frame2 + + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
-        player2.x += player2.vel_x * game_framework.frame_time
-        player2.y += player2.vel_y
-        player2.vel_y += player2.acc_y
+        blue.x += blue.vel_x * game_framework.frame_time
+        blue.y += blue.vel_y
+        blue.vel_y += blue.acc_y
 
     @staticmethod
-    def draw_p1(player1):
+    def draw_p1(green):
         # 플레이어1
-        if player1.vel_x == 0 and player1.dir == -1:  # 왼쪽보고 가만히 있기
+        if green.vel_x == 0 and green.dir == -1:  # 왼쪽보고 가만히 있기
 
-            player1.sheet_line = 180
-        elif player1.vel_x == 0 and player1.dir == 1:  # 오른쪽보고 가만히 있기
-            player1.sheet_line = 120
+            green.sheet_line = 180
+        elif green.vel_x == 0 and green.dir == 1:  # 오른쪽보고 가만히 있기
+            green.sheet_line = 120
 
-        if player1.vel_x > 0:
+        if green.vel_x > 0:
 
-            player1.sheet_line = 0
-        elif player1.vel_x < 0:
+            green.sheet_line = 0
+        elif green.vel_x < 0:
 
-            player1.sheet_line = 60
+            green.sheet_line = 60
 
-        if player1.isShot is True:
-            player1.attack.clip_draw(0, 0, 60, 60, player1.x, player1.y)
-            player1.isShot = False
+        if green.isShot is True:
+            green.attack.clip_draw(0, 0, 60, 60, green.x, green.y)
+            green.isShot = False
 
     @staticmethod
-    def draw_p2(player2):
+    def draw_p2(blue):
         # 플레이어2
-        if player2.vel_x > 0:
-            player2.sheet_line = 0
+        if blue.vel_x > 0:
+            blue.sheet_line = 0
 
-        elif player2.vel_x < 0:
-            player2.sheet_line = 60
+        elif blue.vel_x < 0:
+            blue.sheet_line = 60
 
-        if player2.vel_x == 0 and player2.dir == 1:  # 오른쪽보고 가만히 있기
-            player2.sheet_line = 120
+        if blue.vel_x == 0 and blue.dir == 1:  # 오른쪽보고 가만히 있기
+            blue.sheet_line = 120
 
-        elif player2.vel_x == 0 and player2.dir == -1:  # 왼쪽보고 가만히 있기
-            player2.sheet_line = 180
+        elif blue.vel_x == 0 and blue.dir == -1:  # 왼쪽보고 가만히 있기
+            blue.sheet_line = 180
 
 
 class InBubbleState:
     @staticmethod
-    def enter_p1(player1, event):
+    def enter_p1(green, event):
         # 플레이어1
         if event == RIGHT_DOWN_p1:
-            player1.vel_x += RUN_SPEED_PPS
+            green.vel_x += RUN_SPEED_PPS
 
         elif event == LEFT_DOWN_p1:
-            player1.vel_x -= RUN_SPEED_PPS
+            green.vel_x -= RUN_SPEED_PPS
 
         elif event == RIGHT_UP_p1:
-            player1.vel_x -= RUN_SPEED_PPS
+            green.vel_x -= RUN_SPEED_PPS
 
         elif event == LEFT_UP_p1:
-            player1.vel_x += RUN_SPEED_PPS
+            green.vel_x += RUN_SPEED_PPS
 
-        player1.acc_y = 0  # 중력은 없애준다
+        green.acc_y = 0  # 중력은 없애준다
 
         # 위아래
         if event == DOWN_DOWN_p1:
-            player1.vel_y = PLAYER_GRAVITY
-            player1.vel_y -= 0.5
+            green.vel_y = PLAYER_GRAVITY
+            green.vel_y -= 0.5
         elif event == DOWN_UP_p1:
-            player1.vel_y = PLAYER_GRAVITY
+            green.vel_y = PLAYER_GRAVITY
             #player1.vel_y += 0.5
         elif event == UP_DOWN_p1:
-            player1.vel_y = PLAYER_GRAVITY
+            green.vel_y = PLAYER_GRAVITY
 
-            player1.vel_y += 0.5
+            green.vel_y += 0.5
 
         elif event == UP_UP_p1:
-            player1.vel_y = PLAYER_GRAVITY
+            green.vel_y = PLAYER_GRAVITY
             #player1.vel_y -= 0.5
 
-       # player1.timer = 2000  # inBubbleState 지속시간
-        player1.frame1 = 0
+        elif event == BUBBLE_SHOT_p1:
+            pass
+
+
+        green.frame1 = 0
 
     @staticmethod
-    def enter_p2(player2, event):
+    def enter_p2(blue, event):
         # 플레이어2
         if event == RIGHT_DOWN_p2:
-            player2.vel_x += RUN_SPEED_PPS
+            blue.vel_x += RUN_SPEED_PPS
 
         elif event == LEFT_DOWN_p2:
-            player2.vel_x -= RUN_SPEED_PPS
+            blue.vel_x -= RUN_SPEED_PPS
 
         elif event == RIGHT_UP_p2:
-            player2.vel_x -= RUN_SPEED_PPS
+            blue.vel_x -= RUN_SPEED_PPS
 
         elif event == LEFT_UP_p2:
-            player2.vel_x += RUN_SPEED_PPS
+            blue.vel_x += RUN_SPEED_PPS
 
-        player2.acc_y = 0  # 중력은 없애준다
+        blue.acc_y = 0  # 중력은 없애준다
 
         # 위아래
         if event == DOWN_DOWN_p2:
-            player2.vel_y = PLAYER_GRAVITY
-            player2.vel_y -= 0.5
+            blue.vel_y = PLAYER_GRAVITY
+            blue.vel_y -= 0.5
         elif event == DOWN_UP_p2:
-            player2.vel_y = PLAYER_GRAVITY
+            blue.vel_y = PLAYER_GRAVITY
             # player1.vel_y += 0.5
         elif event == UP_DOWN_p2:
-            player2.vel_y = PLAYER_GRAVITY
+            blue.vel_y = PLAYER_GRAVITY
 
-            player2.vel_y += 0.5
+            blue.vel_y += 0.5
 
         elif event == UP_UP_p2:
-            player2.vel_y = PLAYER_GRAVITY
+            blue.vel_y = PLAYER_GRAVITY
             # player1.vel_y -= 0.5
 
-        player2.timer = 3000  # inBubbleState 지속시간
-        player2.frame2 = 0
+        elif event == BUBBLE_SHOT_p2:
+            pass
+
+        blue.timer = 3000  # inBubbleState 지속시간
+        blue.frame2 = 0
 
     @staticmethod
-    def exit_p1(player1, event):
-        # player1.timer = 0
+    def exit_p1(green, event):
+        global maintain
+        # green.timer = 0
+        # maintain = 0
         pass
 
     @staticmethod
-    def exit_p2(player2, event):
-        player2.timer = 0
+    def exit_p2(blue, event):
+        #blue.timer = 0
         pass
 
     @staticmethod
-    def do_p1(player1):
+    def do_p1(green):
         global maintain
         # 플레이어1
-        player1.frame1 = (player1.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
+        green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         maintain -= 1
+
         # print(player1.vel_x, ' ', player1.vel_y)
         print(maintain)
 
-        if maintain == 0:  # 만약에 일정 시간이 다 되면
-            player1.acc_y = PLAYER_GRAVITY
-            print(player1.vel_x)
-            if player1.vel_x != 0.0 or player1.vel_y != 0.0:
-                player1.cur_state = RunState
+        if maintain < 0:  # 만약에 일정 시간이 다 되면
+            green.acc_y = PLAYER_GRAVITY
+            print(green.vel_x)
+            if green.vel_x != 0.0 or green.vel_y != 0.0:
+                green.cur_state = RunState
                 # print('Runstate!') # 물방울에서 빠져나온다. -> Runstate로
-            if player1.vel_x == 0.0 and player1.vel_y == 0.0:
-                player1.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
+            if green.vel_x == 0.0 and green.vel_y == 0.0:
+                green.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
                 # print('idlestate돌아왔습니다')
-            elif player1.vel_x != 0.0 and player1.vel_y > 0.0:  # 어쩔 수가 없음(보류)
-                player1.cur_state = IdleState
-            elif player1.vel_x == 0.0 and player1.vel_y < 0.0:
-                player1.cur_state = IdleState
+            elif green.vel_x != 0.0 and green.vel_y > 0.0:  # 어쩔 수가 없음(보류)
+                green.cur_state = IdleState
+            elif green.vel_x == 0.0 and green.vel_y < 0.0:
+                green.cur_state = IdleState
 
-        player1.x += player1.vel_x * game_framework.frame_time
-        player1.y += player1.vel_y
-        player1.vel_y += player1.acc_y
+        green.x += green.vel_x * game_framework.frame_time
+        green.y += green.vel_y
+        green.vel_y += green.acc_y
 
-        if player1.y > 550:
-            player1.y = 550
+        if green.y > 550:
+            green.y = 550
 
     @staticmethod
-    def do_p2(player2):
+    def do_p2(blue):
         # 플레이어2
-        player2.frame2 = (player2.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        player2.timer -= 1
+        blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
+        blue.timer -= 1
 
-        print(player2.timer)
+        print(blue.timer)
 
-        if player2.timer == 0:  # 만약에 일정 시간이 다 되면
-            player2.acc_y = PLAYER_GRAVITY
-            print(player2.vel_x)
-            if player2.vel_x != 0.0 or player2.vel_y != 0.0:
-                player2.cur_state = RunState
+        if blue.timer == 0:  # 만약에 일정 시간이 다 되면
+            blue.acc_y = PLAYER_GRAVITY
+            print(blue.vel_x)
+            if blue.vel_x != 0.0 or blue.vel_y != 0.0:
+                blue.cur_state = RunState
                 print('Runstate!')  # 물방울에서 빠져나온다. -> Runstate로
-            if player2.vel_x == 0.0 and player2.vel_y == 0.0:
-                player2.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
+            if blue.vel_x == 0.0 and blue.vel_y == 0.0:
+                blue.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
                 print('idlestate돌아왔습니다')
-            elif player2.vel_x != 0.0 and player2.vel_y > 0.0:
-                player2.cur_state = IdleState
-            elif player2.vel_x == 0.0 and player2.vel_y < 0.0:
-                player2.cur_state = IdleState
+            elif blue.vel_x != 0.0 and blue.vel_y > 0.0:
+                blue.cur_state = IdleState
+            elif blue.vel_x == 0.0 and blue.vel_y < 0.0:
+                blue.cur_state = IdleState
 
-        player2.x += player2.vel_x * game_framework.frame_time
-        player2.y += player2.vel_y
-        player2.vel_y += player2.acc_y
+        blue.x += blue.vel_x * game_framework.frame_time
+        blue.y += blue.vel_y
+        blue.vel_y += blue.acc_y
 
-        if player2.y > 550:
-            player2.y = 550
-
-    @staticmethod
-    def draw_p1(player1):
-        player1.in_bubble.clip_draw(int(player1.frame1) * 80, 80, 80, 80, player1.x, player1.y)
-        player1.font.draw(player1.x - 60, player1.y + 50, '(Time: %3.2f)' % maintain, (255, 0, 0))
+        if blue.y > 550:
+            blue.y = 550
 
     @staticmethod
-    def draw_p2(player2):
-        player2.in_bubble.clip_draw(int(player2.frame2) * 80, 80, 80, 80, player2.x, player2.y)
-        player2.font.draw(player2.x - 60, player2.y + 50, '(Time: %s)' % player2.timer, (255, 0, 0))
+    def draw_p1(green):
+        green.in_bubble.clip_draw(int(green.frame1) * 80, 80, 80, 80, green.x, green.y)
+        green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % maintain, (255, 0, 0))
+
+    @staticmethod
+    def draw_p2(blue):
+        blue.in_bubble.clip_draw(int(blue.frame2) * 80, 80, 80, 80, blue.x, blue.y)
+        blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % blue.timer, (255, 0, 0))
 
 
 next_state_table = {
@@ -469,7 +478,8 @@ next_state_table = {
     InBubbleState: {RIGHT_UP_p1: InBubbleState, LEFT_UP_p1: InBubbleState,
                     LEFT_DOWN_p1: InBubbleState, RIGHT_DOWN_p1: InBubbleState,
                     UP_UP_p1: InBubbleState, UP_DOWN_p1: InBubbleState,
-                    DOWN_UP_p1: InBubbleState, DOWN_DOWN_p1: InBubbleState}
+                    DOWN_UP_p1: InBubbleState, DOWN_DOWN_p1: InBubbleState,
+                    BUBBLE_SHOT_p1: InBubbleState}
 }
 next_state_table2 = {
     IdleState: {
@@ -489,9 +499,9 @@ next_state_table2 = {
 }
 
 
-class Player1:
+class Green:
     def __init__(self):
-        self.x, self.y = (850, 600 / 2)
+        self.x, self.y = (950, 600 / 2)
         self.vel_x, self.vel_y = 0, 0
         self.acc_x, self.acc_y = 0, PLAYER_GRAVITY
         self.frame1 = 0
@@ -504,7 +514,7 @@ class Player1:
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter_p1(self, None)
-        self.dir = 1
+        self.dir = -1
         self.jumping = False
         self.sheet_line = 180
         self.isShot = False  # 어떻게 쓸 수 있을까 고민
@@ -543,7 +553,7 @@ class Player1:
         return self.x - 30, self.y - 30, self.x + 30, self.y + 30
 
 
-class Player2:
+class Blue:
     def __init__(self):
         self.x, self.y = (50, 600 / 2)
         self.vel_x, self.vel_y = 0, 0
