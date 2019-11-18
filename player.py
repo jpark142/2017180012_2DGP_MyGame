@@ -434,8 +434,10 @@ class InBubbleState:
 
         blue = main.get_blue()
         if final_collide(green, blue):
-            green.cur_state = DefeatState
+            green.cur_state = GreenDefeatState
+            blue.cur_state = GreenDefeatState
             print("Blue Win!!")
+            blue.win = True
 
         green.x += green.vel_x * game_framework.frame_time
         green.y += green.vel_y
@@ -485,7 +487,7 @@ class InBubbleState:
         blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 0, 0))
 
 
-class DefeatState:
+class GreenDefeatState:
     @staticmethod
     def enter_p1(green, event):
         print("Game Over..")
@@ -493,20 +495,37 @@ class DefeatState:
         pass
 
     @staticmethod
+    def enter_p2(blue, event):
+        pass
+
+    @staticmethod
     def exit_p1(green, event):
+        pass
+
+    @staticmethod
+    def exit_p2(blue, event):
         pass
 
     @staticmethod
     def do_p1(green):
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        green.y -= 1
+        green.y -= 0.1
         green.collide_check = False
+
+    @staticmethod
+    def do_p2(blue):
+        blue.frame2 = (blue.frame2 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 12
 
 
     @staticmethod
     def draw_p1(green):
         green.die.clip_draw(int(green.frame1)*60, 60, 60, 60, green.x, green.y)
         pass
+
+    @staticmethod
+    def draw_p2(blue):
+        blue.win_ceremony.clip_draw(int(blue.frame2)*60, 0, 60, 60, blue.x, blue.y)
+        blue.font.draw(blue.x - 40, blue.y + 40, 'Oh Yeah!', (0, 255, 255))
 
 
 
@@ -537,11 +556,11 @@ next_state_table = {
                     UP_UP_p1: InBubbleState, UP_DOWN_p1: InBubbleState,
                     DOWN_UP_p1: InBubbleState, DOWN_DOWN_p1: InBubbleState,
                     BUBBLE_SHOT_p1: InBubbleState},
-    DefeatState: {RIGHT_UP_p1: DefeatState, LEFT_UP_p1: DefeatState,
-                    LEFT_DOWN_p1: DefeatState, RIGHT_DOWN_p1: DefeatState,
-                    UP_UP_p1: DefeatState, UP_DOWN_p1: DefeatState,
-                    DOWN_UP_p1: DefeatState, DOWN_DOWN_p1: DefeatState,
-                    BUBBLE_SHOT_p1: DefeatState}
+    GreenDefeatState: {RIGHT_UP_p1: GreenDefeatState, LEFT_UP_p1: GreenDefeatState,
+                       LEFT_DOWN_p1: GreenDefeatState, RIGHT_DOWN_p1: GreenDefeatState,
+                       UP_UP_p1: GreenDefeatState, UP_DOWN_p1: GreenDefeatState,
+                       DOWN_UP_p1: GreenDefeatState, DOWN_DOWN_p1: GreenDefeatState,
+                       BUBBLE_SHOT_p1: GreenDefeatState}
 }
 next_state_table2 = {
     IdleState: {
@@ -562,7 +581,12 @@ next_state_table2 = {
                     LEFT_DOWN_p2: InBubbleState, RIGHT_DOWN_p2: InBubbleState,
                     UP_UP_p2: InBubbleState, UP_DOWN_p2: InBubbleState,
                     DOWN_UP_p2: InBubbleState, DOWN_DOWN_p2: InBubbleState,
-                    BUBBLE_SHOT_p2: InBubbleState}
+                    BUBBLE_SHOT_p2: InBubbleState},
+    GreenDefeatState: {RIGHT_UP_p2: GreenDefeatState, LEFT_UP_p2: GreenDefeatState,
+                       LEFT_DOWN_p2: GreenDefeatState, RIGHT_DOWN_p2: GreenDefeatState,
+                       UP_UP_p2: GreenDefeatState, UP_DOWN_p2: GreenDefeatState,
+                       DOWN_UP_p2: GreenDefeatState, DOWN_DOWN_p2: GreenDefeatState,
+                       BUBBLE_SHOT_p2: GreenDefeatState}
 }
 
 
@@ -633,6 +657,7 @@ class Blue:
         self.frame2 = 0
         self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character2.png')
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
+        self.win_ceremony = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\blue_win.png')
 
         self.font = load_font('ENCR10B.TTF', 16)
         self.timer = 0
@@ -644,6 +669,8 @@ class Blue:
         self.sheet_line = 120
         self.isHit = False
         self.collide_check = True
+        self.win = False
+        self.defeat = False
 
     def bubble_shot(self):
         bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
@@ -670,7 +697,8 @@ class Blue:
             self.cur_state.enter_p2(self, event)
 
     def draw(self):
-        self.image.clip_draw(int(self.frame2) * 60, self.sheet_line, 60, 60, self.x, self.y)
+        if self.win is False:
+            self.image.clip_draw(int(self.frame2) * 60, self.sheet_line, 60, 60, self.x, self.y)
         self.cur_state.draw_p2(self)
 
     def handle_event(self, event):
