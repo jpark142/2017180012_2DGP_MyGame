@@ -8,9 +8,14 @@ class Platforms:
         self.px3, self.py3 = 800, 300
         self.px4, self.py4 = 350, 450
         self.px5, self.py5 = 650, 450
+        self.dx = 1
 
     def update(self):
-        pass
+        self.px1 += self.dx
+        if self.px1 > 820:
+            self.dx = -1
+        if self.px1 < 180:
+            self.dx = 1
 
     def draw(self):
         # 플랫폼1의 크기는 가로400 세로50 / 위치는 (500, 150)

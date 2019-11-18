@@ -37,6 +37,7 @@ def collide_check():
             green.y = platforms.py1 + 45
             green.vel_y = 0
             green.jumping = False
+            green.x += platforms.dx / 2
 
         if collide_p1_pf2(green, platforms):
             green.y = platforms.py2 + 45
@@ -63,6 +64,7 @@ def collide_check():
             blue.y = platforms.py1 + 45
             blue.vel_y = 0
             blue.jumping = False
+            blue.x += platforms.dx / 2
 
         if collide_p2_pf2(blue, platforms):
             blue.y = platforms.py2 + 45
