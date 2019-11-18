@@ -16,79 +16,87 @@ def get_blue():
 
 def collide_check():
     global green, blue, grass, platforms
-    if green.y <= grass.y + 40:
-        green.y = grass.y + 40
+    if blue.collide_check is True:
+        if blue.y <= grass.y + 40:
+            blue.y = grass.y + 40
+            if blue.vel_y < 0:
+                blue.vel_y = 0
+            blue.jumping = False
+
+        if blue.x > 1000:
+            blue.x = 0
+        if blue.x < 0:
+            blue.x = 1000
+
+        if blue.vel_y < 0:
+            if collide_p2_pf1(blue, platforms):
+                blue.y = platforms.py1 + 45
+                blue.vel_y = 0
+                blue.jumping = False
+                blue.x += platforms.dx / 2
+
+            if collide_p2_pf2(blue, platforms):
+                blue.y = platforms.py2 + 45
+                blue.vel_y = 0
+                blue.jumping = False
+
+            if collide_p2_pf3(blue, platforms):
+                blue.y = platforms.py3 + 45
+                blue.vel_y = 0
+                blue.jumping = False
+
+            if collide_p2_pf4(blue, platforms):
+                blue.y = platforms.py4 + 45
+                blue.vel_y = 0
+                blue.jumping = False
+
+            if collide_p2_pf5(blue, platforms):
+                blue.y = platforms.py5 + 45
+                blue.vel_y = 0
+                blue.jumping = False
+
+    if green.collide_check is True:
+        if green.y <= grass.y + 40:
+            green.y = grass.y + 40
+            if green.vel_y < 0:
+                green.vel_y = 0
+            green.jumping = False
+
+        if green.x > 1000:
+            green.x = 0
+        if green.x < 0:
+            green.x = 1000
+
         if green.vel_y < 0:
-            green.vel_y = 0
-        green.jumping = False
+            if collide_p1_pf1(green, platforms):
+                green.y = platforms.py1 + 45
+                green.vel_y = 0
+                green.jumping = False
+                green.x += platforms.dx / 2
 
-    if blue.y <= grass.y + 40:
-        blue.y = grass.y + 40
-        blue.jumping = False
+            if collide_p1_pf2(green, platforms):
+                green.y = platforms.py2 + 45
+                green.vel_y = 0
+                green.jumping = False
 
-    if green.x > 1000:
-        green.x = 0
-    if green. x < 0:
-        green.x = 1000
-    if blue.x > 1000:
-        blue.x = 0
-    if blue. x < 0:
-        blue.x = 1000
+            if collide_p1_pf3(green, platforms):
+                green.y = platforms.py3 + 45
+                green.vel_y = 0
+                green.jumping = False
 
-    # check if player hits a platform - only if falling
-    if green.vel_y < 0:
-        if collide_p1_pf1(green, platforms):
-            green.y = platforms.py1 + 45
-            green.vel_y = 0
-            green.jumping = False
-            green.x += platforms.dx / 2
+            if collide_p1_pf4(green, platforms):
+                green.y = platforms.py4 + 45
+                green.vel_y = 0
+                green.jumping = False
 
-        if collide_p1_pf2(green, platforms):
-            green.y = platforms.py2 + 45
-            green.vel_y = 0
-            green.jumping = False
+            if collide_p1_pf5(green, platforms):
+                green.y = platforms.py5 + 45
+                green.vel_y = 0
+                green.jumping = False
 
-        if collide_p1_pf3(green, platforms):
-            green.y = platforms.py3 + 45
-            green.vel_y = 0
-            green.jumping = False
 
-        if collide_p1_pf4(green, platforms):
-            green.y = platforms.py4 + 45
-            green.vel_y = 0
-            green.jumping = False
 
-        if collide_p1_pf5(green, platforms):
-            green.y = platforms.py5 + 45
-            green.vel_y = 0
-            green.jumping = False
 
-    if blue.vel_y < 0:
-        if collide_p2_pf1(blue, platforms):
-            blue.y = platforms.py1 + 45
-            blue.vel_y = 0
-            blue.jumping = False
-            blue.x += platforms.dx / 2
-
-        if collide_p2_pf2(blue, platforms):
-            blue.y = platforms.py2 + 45
-            blue.vel_y = 0
-            blue.jumping = False
-
-        if collide_p2_pf3(blue, platforms):
-            blue.y = platforms.py3 + 45
-            blue.vel_y = 0
-            blue.jumping = False
-
-        if collide_p2_pf4(blue, platforms):
-            blue.y = platforms.py4 + 45
-            blue.vel_y = 0
-            blue.jumping = False
-
-        if collide_p2_pf5(blue, platforms):
-            blue.y = platforms.py5 + 45
-            blue.vel_y = 0
-            blue.jumping = False
 
 
 #  충돌체크 함수s -p1

@@ -434,6 +434,7 @@ class InBubbleState:
 
         blue = main.get_blue()
         if final_collide(green, blue):
+            green.cur_state = DefeatState
             print("Blue Win!!")
 
         green.x += green.vel_x * game_framework.frame_time
@@ -484,6 +485,31 @@ class InBubbleState:
         blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 0, 0))
 
 
+class DefeatState:
+    @staticmethod
+    def enter_p1(green, event):
+        print("Game Over..")
+
+        pass
+
+    @staticmethod
+    def exit_p1(green, event):
+        pass
+
+    @staticmethod
+    def do_p1(green):
+        green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
+        green.y -= 1
+        green.collide_check = False
+
+
+    @staticmethod
+    def draw_p1(green):
+        green.die.clip_draw(int(green.frame1)*60, 60, 60, 60, green.x, green.y)
+        pass
+
+
+
 def final_collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb_green()
     left_b, bottom_b, right_b, top_b = b.get_bb_blue()
@@ -510,7 +536,12 @@ next_state_table = {
                     LEFT_DOWN_p1: InBubbleState, RIGHT_DOWN_p1: InBubbleState,
                     UP_UP_p1: InBubbleState, UP_DOWN_p1: InBubbleState,
                     DOWN_UP_p1: InBubbleState, DOWN_DOWN_p1: InBubbleState,
-                    BUBBLE_SHOT_p1: InBubbleState}
+                    BUBBLE_SHOT_p1: InBubbleState},
+    DefeatState: {RIGHT_UP_p1: DefeatState, LEFT_UP_p1: DefeatState,
+                    LEFT_DOWN_p1: DefeatState, RIGHT_DOWN_p1: DefeatState,
+                    UP_UP_p1: DefeatState, UP_DOWN_p1: DefeatState,
+                    DOWN_UP_p1: DefeatState, DOWN_DOWN_p1: DefeatState,
+                    BUBBLE_SHOT_p1: DefeatState}
 }
 next_state_table2 = {
     IdleState: {
@@ -540,10 +571,12 @@ class Green:
         self.x, self.y = (950, 600 / 2)
         self.vel_x, self.vel_y = 0, 0
         self.acc_x, self.acc_y = 0, PLAYER_GRAVITY
+        self.dy = 0
         self.frame1 = 0
         self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character.png')
         self.attack = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\attack_p1.png')
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
+        self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
         self.font = load_font('ENCR10B.TTF', 16)
 
         self.timer = 0
@@ -555,6 +588,7 @@ class Green:
         self.sheet_line = 180
         self.isShot = False  # 어떻게 쓸 수 있을까 고민
         self.isHit = False  # 물발울에 맞았냐
+        self.collide_check = True
 
     def bubble_shot(self):
         # print("Bubble shot")
@@ -609,6 +643,7 @@ class Blue:
         self.jumping = False
         self.sheet_line = 120
         self.isHit = False
+        self.collide_check = True
 
     def bubble_shot(self):
         bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
