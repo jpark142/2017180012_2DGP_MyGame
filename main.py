@@ -10,6 +10,10 @@ import game_framework
 name = "MainState"
 
 
+def get_blue():
+    return blue
+
+
 def collide_check():
     global green, blue, grass, platforms
     if green.y <= grass.y + 40:
@@ -147,59 +151,59 @@ def collide_p1_pf5(green, platforms):
 
 # 충돌체크 함수s -p2
 def collide_p2_pf1(blue, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = blue.get_bb_blue()
+    left_p2, bottom_p2, right_p2, top_p2 = blue.get_bb_blue()
     # 플랫폼1
     left_pf1, bottom_pf1, right_pf1, top_pf1 = platforms.get_bb()
 
-    if left_p1 > right_pf1: return False
-    if right_p1 < left_pf1: return False
-    if top_p1 < bottom_pf1: return False
-    if bottom_p1 > top_pf1: return False
+    if left_p2 > right_pf1: return False
+    if right_p2 < left_pf1: return False
+    if top_p2 < bottom_pf1: return False
+    if bottom_p2 > top_pf1: return False
     return True
 
 
 def collide_p2_pf2(blue, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = blue.get_bb_blue()
+    left_p2, bottom_p2, right_p2, top_p2 = blue.get_bb_blue()
     # 플랫폼2
     left_pf2, bottom_pf2, right_pf2, top_pf2 = platforms.get_bb2()
 
-    if left_p1 > right_pf2: return False
-    if right_p1 < left_pf2: return False
-    if top_p1 < bottom_pf2: return False
-    if bottom_p1 > top_pf2: return False
+    if left_p2 > right_pf2: return False
+    if right_p2 < left_pf2: return False
+    if top_p2 < bottom_pf2: return False
+    if bottom_p2 > top_pf2: return False
     return True
 
 
 def collide_p2_pf3(blue, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = blue.get_bb_blue()
+    left_p2, bottom_p2, right_p2, top_p2 = blue.get_bb_blue()
     # 플랫폼3
     left_pf3, bottom_pf3, right_pf3, top_pf3 = platforms.get_bb3()
-    if left_p1 > right_pf3: return False
-    if right_p1 < left_pf3: return False
-    if top_p1 < bottom_pf3: return False
-    if bottom_p1 > top_pf3: return False
+    if left_p2 > right_pf3: return False
+    if right_p2 < left_pf3: return False
+    if top_p2 < bottom_pf3: return False
+    if bottom_p2 > top_pf3: return False
     return True
 
 
 def collide_p2_pf4(blue, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = blue.get_bb_blue()
+    left_p2, bottom_p2, right_p2, top_p2 = blue.get_bb_blue()
     # 플랫폼4
     left_pf4, bottom_pf4, right_pf4, top_pf4 = platforms.get_bb4()
-    if left_p1 > right_pf4: return False
-    if right_p1 < left_pf4: return False
-    if top_p1 < bottom_pf4: return False
-    if bottom_p1 > top_pf4: return False
+    if left_p2 > right_pf4: return False
+    if right_p2 < left_pf4: return False
+    if top_p2 < bottom_pf4: return False
+    if bottom_p2 > top_pf4: return False
     return True
 
 
 def collide_p2_pf5(blue, platforms):
-    left_p1, bottom_p1, right_p1, top_p1 = blue.get_bb_blue()
+    left_p2, bottom_p2, right_p2, top_p2 = blue.get_bb_blue()
     # 플랫폼5
     left_pf5, bottom_pf5, right_pf5, top_pf5 = platforms.get_bb5()
-    if left_p1 > right_pf5: return False
-    if right_p1 < left_pf5: return False
-    if top_p1 < bottom_pf5: return False
-    if bottom_p1 > top_pf5: return False
+    if left_p2 > right_pf5: return False
+    if right_p2 < left_pf5: return False
+    if top_p2 < bottom_pf5: return False
+    if bottom_p2 > top_pf5: return False
     return True
 
 
@@ -249,7 +253,7 @@ def exit():
 
 
 def update():
-    global green, bubble2
+    global green, bubble2, blue, bubble
     green.update()
     blue.update()
     for game_object in game_world.all_objects():
@@ -258,9 +262,13 @@ def update():
 
     for b2 in game_world.bubble2_objects:  # 버블2를 가져온다
         b2.update(green)
-        if is_bubble_hit(green, b2):
+        if is_bubble_hit_green(green, b2):
             game_world.bubble2_objects.remove(b2)
 
+    for b1 in game_world.bubble1_objects:
+        b1.update(blue)
+        if is_bubble_hit_blue(blue, b1):
+            game_world.bubble1_objects.remove(b1)
 
 
 def draw():
@@ -268,6 +276,8 @@ def draw():
     for game_object in game_world.all_objects():
         game_object.draw()
     for game_object in game_world.bubble2_objects:
+        game_object.draw()
+    for game_object in game_world.bubble1_objects:
         game_object.draw()
 
     update_canvas()

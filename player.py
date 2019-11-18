@@ -5,6 +5,7 @@ from grass import Grass
 import game_world
 import game_framework
 import time
+import main
 
 PLAYER_GRAVITY = -0.01
 
@@ -22,7 +23,9 @@ ACTION_PER_TIME = 1.0
 FRAMES_PER_ACTION = 32
 
 STAND_FRAMES_PER_ACTION = 8
-maintain = 2000
+
+bubble_maintain_time_green = 2000
+bubble_maintain_time_blue = 2000
 
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
@@ -120,8 +123,8 @@ class IdleState:
 
     @staticmethod
     def do_p1(green):
-        global maintain
-        maintain = 2000
+        global bubble_maintain_time_green
+        bubble_maintain_time_green = 2000
 
         # 플레이어1
         green.frame1 = (green.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
@@ -137,11 +140,19 @@ class IdleState:
 
     @staticmethod
     def do_p2(blue):
+        global bubble_maintain_time_blue
+        bubble_maintain_time_blue = 2000
+
         # 플레이어2
         blue.frame2 = (blue.frame2 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         blue.x += blue.vel_x * game_framework.frame_time
         blue.y += blue.vel_y
         blue.vel_y += blue.acc_y
+
+        if blue.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            blue.add_event(BUBBLE_HIT)
+            blue.isHit = False
 
     @staticmethod
     def draw_p1(green):
@@ -175,7 +186,7 @@ class IdleState:
 class RunState:
     @staticmethod
     def enter_p1(green, event):
-        global maintain
+        global bubble_maintain_time_green
         # 플레이어1
         if event == RIGHT_DOWN_p1:
             green.vel_x += RUN_SPEED_PPS
@@ -202,10 +213,11 @@ class RunState:
         elif event == DOWN_UP_p1:
             pass
 
-        maintain = 2000
+        bubble_maintain_time_green = 2000
 
     @staticmethod
     def enter_p2(blue, event2):
+        global bubble_maintain_time_blue
         # 플레이어2
         if event2 == RIGHT_DOWN_p2:
             blue.vel_x += RUN_SPEED_PPS
@@ -231,6 +243,9 @@ class RunState:
             pass
         elif event2 == DOWN_UP_p2:
             pass
+
+        bubble_maintain_time_blue = 2000
+
 
     @staticmethod
     def exit_p1(green, event):
@@ -263,6 +278,10 @@ class RunState:
         blue.x += blue.vel_x * game_framework.frame_time
         blue.y += blue.vel_y
         blue.vel_y += blue.acc_y
+        if blue.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            blue.add_event(BUBBLE_HIT)
+            blue.isHit = False
 
     @staticmethod
     def draw_p1(green):
@@ -337,7 +356,6 @@ class InBubbleState:
         elif event == BUBBLE_SHOT_p1:
             pass
 
-
         green.frame1 = 0
 
     @staticmethod
@@ -381,7 +399,6 @@ class InBubbleState:
 
     @staticmethod
     def exit_p1(green, event):
-        global maintain
         # green.timer = 0
         # maintain = 0
         pass
@@ -393,15 +410,15 @@ class InBubbleState:
 
     @staticmethod
     def do_p1(green):
-        global maintain
+        global bubble_maintain_time_green
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        maintain -= 1
+        bubble_maintain_time_green -= 1
 
         # print(player1.vel_x, ' ', player1.vel_y)
-        print(maintain)
+        print(bubble_maintain_time_green)
 
-        if maintain < 0:  # 만약에 일정 시간이 다 되면
+        if bubble_maintain_time_green < 0:  # 만약에 일정 시간이 다 되면
             green.acc_y = PLAYER_GRAVITY
             print(green.vel_x)
             if green.vel_x != 0.0 or green.vel_y != 0.0:
@@ -415,6 +432,10 @@ class InBubbleState:
             elif green.vel_x == 0.0 and green.vel_y < 0.0:
                 green.cur_state = IdleState
 
+        blue = main.get_blue()
+        if final_collide(green, blue):
+            print("Blue Win!!")
+
         green.x += green.vel_x * game_framework.frame_time
         green.y += green.vel_y
         green.vel_y += green.acc_y
@@ -424,13 +445,14 @@ class InBubbleState:
 
     @staticmethod
     def do_p2(blue):
+        global bubble_maintain_time_blue
         # 플레이어2
         blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        blue.timer -= 1
+        bubble_maintain_time_blue -= 1
 
-        print(blue.timer)
+        #print(blue.timer)
 
-        if blue.timer == 0:  # 만약에 일정 시간이 다 되면
+        if bubble_maintain_time_blue < 0:  # 만약에 일정 시간이 다 되면
             blue.acc_y = PLAYER_GRAVITY
             print(blue.vel_x)
             if blue.vel_x != 0.0 or blue.vel_y != 0.0:
@@ -454,13 +476,22 @@ class InBubbleState:
     @staticmethod
     def draw_p1(green):
         green.in_bubble.clip_draw(int(green.frame1) * 80, 80, 80, 80, green.x, green.y)
-        green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % maintain, (255, 0, 0))
+        green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 0, 0))
 
     @staticmethod
     def draw_p2(blue):
-        blue.in_bubble.clip_draw(int(blue.frame2) * 80, 80, 80, 80, blue.x, blue.y)
-        blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % blue.timer, (255, 0, 0))
+        blue.in_bubble.clip_draw(int(blue.frame2) * 80, 0, 80, 80, blue.x, blue.y)
+        blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 0, 0))
 
+
+def final_collide(a, b):
+    left_a, bottom_a, right_a, top_a = a.get_bb_green()
+    left_b, bottom_b, right_b, top_b = b.get_bb_blue()
+    if left_a > right_b: return False
+    if right_a < left_b: return False
+    if top_a < bottom_b: return False
+    if bottom_a > top_b: return False
+    return True
 
 next_state_table = {
     IdleState: {RIGHT_UP_p1: RunState, LEFT_UP_p1: RunState,
@@ -495,7 +526,12 @@ next_state_table2 = {
         UP_UP_p2: IdleState, UP_DOWN_p2: IdleState,
         BUBBLE_SHOT_p2: RunState,
         BUBBLE_HIT: InBubbleState,
-        DOWN_UP_p2: RunState, DOWN_DOWN_p2: RunState}
+        DOWN_UP_p2: RunState, DOWN_DOWN_p2: RunState},
+    InBubbleState: {RIGHT_UP_p2: InBubbleState, LEFT_UP_p2: InBubbleState,
+                    LEFT_DOWN_p2: InBubbleState, RIGHT_DOWN_p2: InBubbleState,
+                    UP_UP_p2: InBubbleState, UP_DOWN_p2: InBubbleState,
+                    DOWN_UP_p2: InBubbleState, DOWN_DOWN_p2: InBubbleState,
+                    BUBBLE_SHOT_p2: InBubbleState}
 }
 
 
@@ -521,10 +557,12 @@ class Green:
         self.isHit = False  # 물발울에 맞았냐
 
     def bubble_shot(self):
-        print("Bubble shot")
+        # print("Bubble shot")
         bubble = Bubble(self.x, self.y, self.dir*3)
-        grass = Grass()
-        game_world.add_object(bubble, 2)
+        grass = Grass()  # grass 객체를 가져옴
+
+        game_world.bubble1_objects.append(bubble)
+
         if bubble.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble.y = grass.y + 40
 
@@ -562,6 +600,7 @@ class Blue:
         self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character2.png')
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
 
+        self.font = load_font('ENCR10B.TTF', 16)
         self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
@@ -603,7 +642,6 @@ class Blue:
         if (event.type, event.key) in key_event_table2:
             key_event2 = key_event_table2[(event.type, event.key)]
             self.add_event(key_event2)
-
 
 
 
