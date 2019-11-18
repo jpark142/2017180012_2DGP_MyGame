@@ -24,8 +24,8 @@ FRAMES_PER_ACTION = 32
 
 STAND_FRAMES_PER_ACTION = 8
 
-bubble_maintain_time_green = 2000
-bubble_maintain_time_blue = 2000
+bubble_maintain_time_green = 3000
+bubble_maintain_time_blue = 3000
 
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
@@ -124,7 +124,7 @@ class IdleState:
     @staticmethod
     def do_p1(green):
         global bubble_maintain_time_green
-        bubble_maintain_time_green = 2000
+        bubble_maintain_time_green = 3000
 
         # 플레이어1
         green.frame1 = (green.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
@@ -141,7 +141,7 @@ class IdleState:
     @staticmethod
     def do_p2(blue):
         global bubble_maintain_time_blue
-        bubble_maintain_time_blue = 2000
+        bubble_maintain_time_blue = 3000
 
         # 플레이어2
         blue.frame2 = (blue.frame2 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
@@ -213,7 +213,7 @@ class RunState:
         elif event == DOWN_UP_p1:
             pass
 
-        bubble_maintain_time_green = 2000
+        bubble_maintain_time_green = 3000
 
     @staticmethod
     def enter_p2(blue, event2):
@@ -244,7 +244,7 @@ class RunState:
         elif event2 == DOWN_UP_p2:
             pass
 
-        bubble_maintain_time_blue = 2000
+        bubble_maintain_time_blue = 3000
 
 
     @staticmethod
@@ -394,18 +394,15 @@ class InBubbleState:
         elif event == BUBBLE_SHOT_p2:
             pass
 
-        blue.timer = 3000  # inBubbleState 지속시간
-        blue.frame2 = 0
+        #blue.timer = 3000  # inBubbleState 지속시간
+        #blue.frame2 = 0
 
     @staticmethod
     def exit_p1(green, event):
-        # green.timer = 0
-        # maintain = 0
         pass
 
     @staticmethod
     def exit_p2(blue, event):
-        #blue.timer = 0
         pass
 
     @staticmethod
@@ -453,7 +450,7 @@ class InBubbleState:
         blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         bubble_maintain_time_blue -= 1
 
-        #print(blue.timer)
+        print(bubble_maintain_time_blue)
 
         if bubble_maintain_time_blue < 0:  # 만약에 일정 시간이 다 되면
             blue.acc_y = PLAYER_GRAVITY
@@ -479,12 +476,23 @@ class InBubbleState:
     @staticmethod
     def draw_p1(green):
         green.in_bubble.clip_draw(int(green.frame1) * 80, 80, 80, 80, green.x, green.y)
-        green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 0, 0))
+        if 2000 > bubble_maintain_time_green > 1000:
+            green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 255, 0))
+        elif 1000 > bubble_maintain_time_green > 0:
+            green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 125, 0))
+        else:
+            green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (0, 255, 0))
+
 
     @staticmethod
     def draw_p2(blue):
         blue.in_bubble.clip_draw(int(blue.frame2) * 80, 0, 80, 80, blue.x, blue.y)
-        blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 0, 0))
+        if 2000 > bubble_maintain_time_blue > 1000:
+            blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 255, 0))
+        elif 1000 > bubble_maintain_time_blue > 0:
+            blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 125, 0))
+        else:
+            blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (0, 255, 0))
 
 
 class GreenDefeatState:
