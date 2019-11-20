@@ -14,6 +14,10 @@ def get_blue():
     return blue
 
 
+def get_green():
+    return green
+
+
 def collide_check():
     global green, blue, grass, platforms
     if blue.collide_check is True:
