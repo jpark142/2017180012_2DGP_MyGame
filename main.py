@@ -99,10 +99,6 @@ def collide_check():
                 green.jumping = False
 
 
-
-
-
-
 #  충돌체크 함수s -p1
 def collide_p1_pf1(green, platforms):
     left_p1, bottom_p1, right_p1, top_p1 = green.get_bb_green()
@@ -257,7 +253,6 @@ def enter():
     game_world.add_object(platforms, 2)
     game_world.add_object(green, 3)
     game_world.add_object(blue, 4)
-
 
 
 def exit():

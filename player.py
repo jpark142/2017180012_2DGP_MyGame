@@ -6,6 +6,7 @@ import game_world
 import game_framework
 import time
 import main
+from time import sleep
 
 PLAYER_GRAVITY = -0.01
 
@@ -557,6 +558,7 @@ class BlueDefeatState:
 
     @staticmethod
     def exit_p1(green, event):
+
         pass
 
     @staticmethod
