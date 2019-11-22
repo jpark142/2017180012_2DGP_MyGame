@@ -31,7 +31,7 @@ bubble_maintain_time_blue = 3000
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
     RIGHT_DOWN_p2, LEFT_DOWN_p2, RIGHT_UP_p2, LEFT_UP_p2, UP_UP_p2, UP_DOWN_p2, BUBBLE_SHOT_p2,\
-    DOWN_DOWN_p1, DOWN_UP_p1, DOWN_DOWN_p2, DOWN_UP_p2, BUBBLE_HIT = range(19)
+    DOWN_DOWN_p1, DOWN_UP_p1, DOWN_DOWN_p2, DOWN_UP_p2, BUBBLE_HIT, BUBBLE_SHOT_p1_UP = range(20)
 
 key_event_table = {
     # 플레이어1 키 입력
@@ -42,6 +42,7 @@ key_event_table = {
     (SDL_KEYDOWN, SDLK_UP): UP_DOWN_p1,
     (SDL_KEYUP, SDLK_UP): UP_UP_p1,
     (SDL_KEYDOWN, SDLK_RSHIFT): BUBBLE_SHOT_p1,
+    (SDL_KEYUP, SDLK_RSHIFT): BUBBLE_SHOT_p1_UP,
     (SDL_KEYDOWN, SDLK_DOWN): DOWN_DOWN_p1,
     (SDL_KEYUP, SDLK_DOWN): DOWN_UP_p1
 }
@@ -62,6 +63,7 @@ key_event_table2 = {
 class IdleState:
     @staticmethod
     def enter_p1(green, event):
+        green.isShot = False
         # 플레이어1
         if event == RIGHT_DOWN_p1:
             green.vel_x += RUN_SPEED_PPS
@@ -188,7 +190,6 @@ class RunState:
     @staticmethod
     def enter_p1(green, event):
         global bubble_maintain_time_green
-        # 플레이어1
         if event == RIGHT_DOWN_p1:
             green.vel_x += RUN_SPEED_PPS
             green.dir = 1
@@ -587,6 +588,108 @@ class BlueDefeatState:
         blue.die.clip_draw(int(blue.frame2) * 60, 0, 60, 60, blue.x, blue.y)
 
 
+class GreenAttackIdleState:
+    @staticmethod
+    def enter_p1(green, event):
+        green.isShot = True
+        if event == RIGHT_DOWN_p1:
+            green.vel_x += RUN_SPEED_PPS
+            green.dir = 1
+        elif event == LEFT_DOWN_p1:
+            green.vel_x -= RUN_SPEED_PPS
+            green.dir = -1
+        elif event == RIGHT_UP_p1:
+            green.vel_x -= RUN_SPEED_PPS
+            green.dir = -1
+        elif event == LEFT_UP_p1:
+            green.vel_x += RUN_SPEED_PPS
+            green.dir = 1
+
+        elif event == UP_DOWN_p1 and green.jumping is False:
+            green.vel_y = 2
+            green.jumping = True
+
+        elif event == UP_UP_p1:
+            green.jumping = True
+
+        elif event == DOWN_DOWN_p1:
+            pass
+        elif event == DOWN_UP_p1:
+            pass
+
+    @staticmethod
+    def exit_p1(green, event):
+        pass
+
+    @staticmethod
+    def do_p1(green):
+        green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 1
+        green.x += green.vel_x * game_framework.frame_time
+        green.y += green.vel_y
+        green.vel_y += green.acc_y
+        pass
+
+    @staticmethod
+    def draw_p1(green):
+        if green.dir == 1:
+            green.attack.clip_draw(int(green.frame1) * 60, 0, 60, 60, green.x, green.y)
+        elif green.dir == -1:
+            green.attack.clip_draw(int(green.frame1) * 60, 60, 60, 60, green.x, green.y)
+
+        pass
+
+
+class GreenAttackRunState:
+    @staticmethod
+    def enter_p1(green, event):
+        green.isShot = True
+        if event == RIGHT_DOWN_p1:
+            green.vel_x += RUN_SPEED_PPS
+            green.dir = 1
+        elif event == LEFT_DOWN_p1:
+            green.vel_x -= RUN_SPEED_PPS
+            green.dir = -1
+        elif event == RIGHT_UP_p1:
+            green.vel_x -= RUN_SPEED_PPS
+            green.dir = -1
+        elif event == LEFT_UP_p1:
+            green.vel_x += RUN_SPEED_PPS
+            green.dir = 1
+
+        elif event == UP_DOWN_p1 and green.jumping is False:
+            green.vel_y = 2
+            green.jumping = True
+
+        elif event == UP_UP_p1:
+            green.jumping = True
+
+        elif event == DOWN_DOWN_p1:
+            pass
+        elif event == DOWN_UP_p1:
+            pass
+
+    @staticmethod
+    def exit_p1(green, event):
+        pass
+
+    @staticmethod
+    def do_p1(green):
+        green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 1
+        green.x += green.vel_x * game_framework.frame_time
+        green.y += green.vel_y
+        green.vel_y += green.acc_y
+        pass
+
+    @staticmethod
+    def draw_p1(green):
+        if green.dir == 1:
+            green.attack.clip_draw(int(green.frame1) * 60, 0, 60, 60, green.x, green.y)
+        elif green.dir == -1:
+            green.attack.clip_draw(int(green.frame1) * 60, 60, 60, 60, green.x, green.y)
+
+        pass
+
+
 def final_collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb_green()
     left_b, bottom_b, right_b, top_b = b.get_bb_blue()
@@ -601,13 +704,15 @@ next_state_table = {
     IdleState: {RIGHT_UP_p1: RunState, LEFT_UP_p1: RunState,
                 RIGHT_DOWN_p1: RunState, LEFT_DOWN_p1: RunState,
                 UP_UP_p1: RunState, UP_DOWN_p1: RunState,
-                BUBBLE_SHOT_p1: IdleState,
+                BUBBLE_SHOT_p1: GreenAttackIdleState,
+                BUBBLE_SHOT_p1_UP: IdleState,
                 BUBBLE_HIT: InBubbleState,
                 DOWN_UP_p1: IdleState, DOWN_DOWN_p1: IdleState},
     RunState: {RIGHT_UP_p1: IdleState, LEFT_UP_p1: IdleState,
                LEFT_DOWN_p1: IdleState, RIGHT_DOWN_p1: IdleState,
                UP_UP_p1: IdleState, UP_DOWN_p1: IdleState,
-               BUBBLE_SHOT_p1: RunState,
+               BUBBLE_SHOT_p1: GreenAttackRunState,
+               BUBBLE_SHOT_p1_UP: RunState,
                BUBBLE_HIT: InBubbleState,
                DOWN_UP_p1: RunState, DOWN_DOWN_p1: RunState},
     InBubbleState: {RIGHT_UP_p1: InBubbleState, LEFT_UP_p1: InBubbleState,
@@ -624,7 +729,19 @@ next_state_table = {
                       LEFT_DOWN_p1: BlueDefeatState, RIGHT_DOWN_p1: BlueDefeatState,
                       UP_UP_p1: BlueDefeatState, UP_DOWN_p1: BlueDefeatState,
                       DOWN_UP_p1: BlueDefeatState, DOWN_DOWN_p1: BlueDefeatState,
-                      BUBBLE_SHOT_p1: BlueDefeatState}
+                      BUBBLE_SHOT_p1: BlueDefeatState},
+    GreenAttackIdleState: {BUBBLE_SHOT_p1_UP: IdleState,
+                           RIGHT_UP_p1: RunState, LEFT_UP_p1: RunState,
+                           LEFT_DOWN_p1: RunState, RIGHT_DOWN_p1: RunState,
+                           UP_UP_p1: RunState, UP_DOWN_p1: RunState,
+                           DOWN_UP_p1: GreenAttackIdleState, DOWN_DOWN_p1: GreenAttackIdleState,
+                           BUBBLE_SHOT_p1: GreenAttackIdleState},
+    GreenAttackRunState: {BUBBLE_SHOT_p1_UP: RunState,
+                          RIGHT_UP_p1: IdleState, LEFT_UP_p1: IdleState,
+                          LEFT_DOWN_p1: IdleState, RIGHT_DOWN_p1: IdleState,
+                          UP_UP_p1: IdleState, UP_DOWN_p1: IdleState,
+                          DOWN_UP_p1: GreenAttackRunState, DOWN_DOWN_p1: GreenAttackRunState,
+                          BUBBLE_SHOT_p1: GreenAttackRunState}
 }
 next_state_table2 = {
     IdleState: {
@@ -709,7 +826,7 @@ class Green:
             self.cur_state.enter_p1(self, event)
 
     def draw(self):
-        if self.defeat is False and self.win is False:
+        if self.defeat is False and self.win is False and self.isShot is False:
             self.image.clip_draw(int(self.frame1) * 60, self.sheet_line, 60, 60, self.x, self.y)
         self.cur_state.draw_p1(self)
 
