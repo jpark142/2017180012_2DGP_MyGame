@@ -25,7 +25,10 @@ def remove_object(o):
 def clear():
     for o in all_objects():
         del o
-    objects.clear()
+    for l in objects:
+        l.clear()
+    bubble1_objects.clear()
+    bubble2_objects.clear()
 
 
 def all_objects():

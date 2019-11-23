@@ -256,6 +256,12 @@ def enter():
 
 
 def exit():
+    global background, grass, green, blue, platforms
+    del green
+    del blue
+    del background
+    del platforms
+    del grass
     game_world.clear()
 
 
@@ -276,6 +282,10 @@ def update():
         b1.update(blue)
         if is_bubble_hit_blue(blue, b1):
             game_world.bubble1_objects.remove(b1)
+
+    if blue.ceremony_time > 30.0:
+        blue.ceremony_time = 0
+        game_framework.change_state(blue_win_state)
 
 
 def draw():

@@ -7,6 +7,7 @@ import game_framework
 import time
 import main
 from time import sleep
+import blue_win_state
 
 PLAYER_GRAVITY = -0.01
 
@@ -27,6 +28,8 @@ STAND_FRAMES_PER_ACTION = 8
 
 bubble_maintain_time_green = 3000
 bubble_maintain_time_blue = 3000
+
+blue_ceremony_time = 0.0
 
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
@@ -510,6 +513,7 @@ class InBubbleState:
             blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (0, 255, 0))
 
 
+
 class GreenDefeatState:
     @staticmethod
     def enter_p1(green, event):
@@ -534,11 +538,14 @@ class GreenDefeatState:
         green.y -= 0.2
         green.collide_check = False
 
+
     @staticmethod
     def do_p2(blue):
+        global blue_ceremony_time
         blue.frame2 = (blue.frame2 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 12
         blue.y -= 0.1
 
+        blue.ceremony_time += 0.01
 
     @staticmethod
     def draw_p1(green):
@@ -984,6 +991,7 @@ class Blue:
         self.collide_check = True
         self.win = False
         self.defeat = False
+        self.ceremony_time = 0.0
 
     def bubble_shot(self):
         bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
