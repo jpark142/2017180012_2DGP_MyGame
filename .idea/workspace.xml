@@ -65,8 +65,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="637">
-              <caret line="741" column="68" selection-start-line="741" selection-start-column="68" selection-end-line="741" selection-end-column="68" />
+            <state relative-caret-position="2244">
+              <caret line="905" column="103" selection-start-line="905" selection-start-column="103" selection-end-line="905" selection-end-column="103" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -155,9 +155,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="953" />
-    <option name="y" value="-8" />
     <option name="width" value="974" />
-    <option name="height" value="1055" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -285,15 +284,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="-8" width="974" height="1055" extended-state="0" />
+    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.032051284" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18696581" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.17155266" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.17305586" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.22978723" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -451,8 +450,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="741" column="68" selection-start-line="741" selection-start-column="68" selection-end-line="741" selection-end-column="68" />
+        <state relative-caret-position="2244">
+          <caret line="905" column="103" selection-start-line="905" selection-start-column="103" selection-end-line="905" selection-end-column="103" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

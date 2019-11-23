@@ -31,7 +31,8 @@ bubble_maintain_time_blue = 3000
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
     RIGHT_DOWN_p2, LEFT_DOWN_p2, RIGHT_UP_p2, LEFT_UP_p2, UP_UP_p2, UP_DOWN_p2, BUBBLE_SHOT_p2,\
-    DOWN_DOWN_p1, DOWN_UP_p1, DOWN_DOWN_p2, DOWN_UP_p2, BUBBLE_HIT, BUBBLE_SHOT_p1_UP = range(20)
+    DOWN_DOWN_p1, DOWN_UP_p1, DOWN_DOWN_p2, DOWN_UP_p2, BUBBLE_HIT, BUBBLE_SHOT_p1_UP,\
+    BUBBLE_SHOT_p2_UP = range(21)
 
 key_event_table = {
     # 플레이어1 키 입력
@@ -55,6 +56,7 @@ key_event_table2 = {
     (SDL_KEYDOWN, SDLK_w): UP_DOWN_p2,
     (SDL_KEYUP, SDLK_w): UP_UP_p2,
     (SDL_KEYDOWN, SDLK_LSHIFT): BUBBLE_SHOT_p2,
+    (SDL_KEYUP, SDLK_LSHIFT): BUBBLE_SHOT_p2_UP,
     (SDL_KEYDOWN, SDLK_s): DOWN_DOWN_p2,
     (SDL_KEYUP, SDLK_s): DOWN_UP_p2
 }
@@ -93,7 +95,7 @@ class IdleState:
 
     @staticmethod
     def enter_p2(blue, event2):
-        # 플레이어2
+        blue.isShot = False
         if event2 == RIGHT_DOWN_p2:
             blue.vel_x += RUN_SPEED_PPS
         elif event2 == LEFT_DOWN_p2:
@@ -190,6 +192,7 @@ class RunState:
     @staticmethod
     def enter_p1(green, event):
         global bubble_maintain_time_green
+        green.isShot = False
         if event == RIGHT_DOWN_p1:
             green.vel_x += RUN_SPEED_PPS
             green.dir = 1
@@ -220,6 +223,7 @@ class RunState:
     @staticmethod
     def enter_p2(blue, event2):
         global bubble_maintain_time_blue
+        blue.isShot = False
         # 플레이어2
         if event2 == RIGHT_DOWN_p2:
             blue.vel_x += RUN_SPEED_PPS
@@ -690,6 +694,108 @@ class GreenAttackRunState:
         pass
 
 
+class BlueAttackIdleState:
+    @staticmethod
+    def enter_p2(blue, event):
+        blue.isShot = True
+        if event == RIGHT_DOWN_p2:
+            blue.vel_x += RUN_SPEED_PPS
+            blue.dir = 1
+        elif event == LEFT_DOWN_p2:
+            blue.vel_x -= RUN_SPEED_PPS
+            blue.dir = -1
+        elif event == RIGHT_UP_p2:
+            blue.vel_x -= RUN_SPEED_PPS
+            blue.dir = -1
+        elif event == LEFT_UP_p2:
+            blue.vel_x += RUN_SPEED_PPS
+            blue.dir = 1
+
+        elif event == UP_DOWN_p2 and blue.jumping is False:
+            blue.vel_y = 2
+            blue.jumping = True
+
+        elif event == UP_UP_p2:
+            blue.jumping = True
+
+        elif event == DOWN_DOWN_p2:
+            pass
+        elif event == DOWN_UP_p2:
+            pass
+
+    @staticmethod
+    def exit_p2(blue, event):
+        pass
+
+    @staticmethod
+    def do_p2(blue):
+        blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 1
+        blue.x += blue.vel_x * game_framework.frame_time
+        blue.y += blue.vel_y
+        blue.vel_y += blue.acc_y
+        pass
+
+    @staticmethod
+    def draw_p2(blue):
+        if blue.dir == 1:
+            blue.attack.clip_draw(int(blue.frame2) * 60, 0, 60, 60, blue.x, blue.y)
+        elif blue.dir == -1:
+            blue.attack.clip_draw(int(blue.frame2) * 60, 60, 60, 60, blue.x, blue.y)
+
+        pass
+
+
+class BlueAttackRunState:
+    @staticmethod
+    def enter_p2(blue, event):
+        blue.isShot = True
+        if event == RIGHT_DOWN_p2:
+            blue.vel_x += RUN_SPEED_PPS
+            blue.dir = 1
+        elif event == LEFT_DOWN_p2:
+            blue.vel_x -= RUN_SPEED_PPS
+            blue.dir = -1
+        elif event == RIGHT_UP_p2:
+            blue.vel_x -= RUN_SPEED_PPS
+            blue.dir = -1
+        elif event == LEFT_UP_p2:
+            blue.vel_x += RUN_SPEED_PPS
+            blue.dir = 1
+
+        elif event == UP_DOWN_p2 and blue.jumping is False:
+            blue.vel_y = 2
+            blue.jumping = True
+
+        elif event == UP_UP_p2:
+            blue.jumping = True
+
+        elif event == DOWN_DOWN_p2:
+            pass
+        elif event == DOWN_UP_p2:
+            pass
+
+    @staticmethod
+    def exit_p2(blue, event):
+        pass
+
+    @staticmethod
+    def do_p2(blue):
+        blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 1
+        blue.x += blue.vel_x * game_framework.frame_time
+        blue.y += blue.vel_y
+        blue.vel_y += blue.acc_y
+        pass
+
+    @staticmethod
+    def draw_p2(blue):
+        if blue.dir == 1:
+            blue.attack.clip_draw(int(blue.frame1) * 60, 0, 60, 60, blue.x, blue.y)
+        elif blue.dir == -1:
+            blue.attack.clip_draw(int(blue.frame1) * 60, 60, 60, 60, blue.x, blue.y)
+
+        pass
+
+
 def final_collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb_green()
     left_b, bottom_b, right_b, top_b = b.get_bb_blue()
@@ -748,7 +854,8 @@ next_state_table2 = {
         RIGHT_UP_p2: RunState, LEFT_UP_p2: RunState,
         RIGHT_DOWN_p2: RunState, LEFT_DOWN_p2: RunState,
         UP_UP_p2: RunState, UP_DOWN_p2: RunState,
-        BUBBLE_SHOT_p2: IdleState,
+        BUBBLE_SHOT_p2: BlueAttackIdleState,
+        BUBBLE_SHOT_p2_UP: IdleState,
         BUBBLE_HIT: InBubbleState,
         DOWN_UP_p2: IdleState, DOWN_DOWN_p2: IdleState},
     RunState: {
@@ -756,6 +863,7 @@ next_state_table2 = {
         LEFT_DOWN_p2: IdleState, RIGHT_DOWN_p2: IdleState,
         UP_UP_p2: IdleState, UP_DOWN_p2: IdleState,
         BUBBLE_SHOT_p2: RunState,
+        BUBBLE_SHOT_p2_UP: RunState,
         BUBBLE_HIT: InBubbleState,
         DOWN_UP_p2: RunState, DOWN_DOWN_p2: RunState},
     InBubbleState: {RIGHT_UP_p2: InBubbleState, LEFT_UP_p2: InBubbleState,
@@ -772,7 +880,19 @@ next_state_table2 = {
                       LEFT_DOWN_p2: BlueDefeatState, RIGHT_DOWN_p2: BlueDefeatState,
                       UP_UP_p2: BlueDefeatState, UP_DOWN_p2: BlueDefeatState,
                       DOWN_UP_p2: BlueDefeatState, DOWN_DOWN_p2: BlueDefeatState,
-                      BUBBLE_SHOT_p2: BlueDefeatState}
+                      BUBBLE_SHOT_p2: BlueDefeatState},
+    BlueAttackIdleState: {BUBBLE_SHOT_p2_UP: IdleState,
+                          RIGHT_UP_p2: RunState, LEFT_UP_p2: RunState,
+                          LEFT_DOWN_p2: RunState, RIGHT_DOWN_p2: RunState,
+                          UP_UP_p2: RunState, UP_DOWN_p2: RunState,
+                          DOWN_UP_p2: BlueAttackIdleState, DOWN_DOWN_p2: BlueAttackIdleState,
+                          BUBBLE_SHOT_p2: BlueAttackIdleState},
+    BlueAttackRunState: {BUBBLE_SHOT_p2_UP: RunState,
+                         RIGHT_UP_p2: IdleState, LEFT_UP_p2: IdleState,
+                         LEFT_DOWN_p2: IdleState, RIGHT_DOWN_p2: IdleState,
+                         UP_UP_p2: IdleState, UP_DOWN_p2: IdleState,
+                         DOWN_UP_p2: BlueAttackRunState, DOWN_DOWN_p2: BlueAttackRunState,
+                         BUBBLE_SHOT_p2: BlueAttackRunState}
 }
 
 
@@ -786,7 +906,6 @@ class Green:
         self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character.png')
         self.attack = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\attack_p1.png')
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
-
         self.win_ceremony = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\green_win_ceremony.png')
         self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
         self.font = load_font('ENCR10B.TTF', 16)
@@ -798,7 +917,7 @@ class Green:
         self.dir = -1
         self.jumping = False
         self.sheet_line = 180
-        self.isShot = False  # 어떻게 쓸 수 있을까 고민
+        self.isShot = False
         self.isHit = False  # 물발울에 맞았냐
         self.collide_check = True
         self.win = False
@@ -848,6 +967,7 @@ class Blue:
         self.frame2 = 0
         self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character2.png')
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
+        self.attack = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\attack_p2.png')
         self.win_ceremony = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\blue_win_ceremony.png')
         self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
 
@@ -859,6 +979,7 @@ class Blue:
         self.dir = 1
         self.jumping = False
         self.sheet_line = 120
+        self.isShot = False
         self.isHit = False
         self.collide_check = True
         self.win = False
@@ -889,7 +1010,7 @@ class Blue:
             self.cur_state.enter_p2(self, event)
 
     def draw(self):
-        if self.defeat is False and self.win is False:
+        if self.defeat is False and self.win is False and self.isShot is False:
             self.image.clip_draw(int(self.frame2) * 60, self.sheet_line, 60, 60, self.x, self.y)
         self.cur_state.draw_p2(self)
 
