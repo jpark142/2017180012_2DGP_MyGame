@@ -512,22 +512,22 @@ class InBubbleState:
     def draw_p1(green):
         green.in_bubble.clip_draw(int(green.frame1) * 80, 80, 80, 80, green.x, green.y)
         if 2000 > bubble_maintain_time_green > 1000:
-            green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 255, 0))
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 255, 0))
         elif 1000 > bubble_maintain_time_green > 0:
-            green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 125, 0))
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 125, 0))
         else:
-            green.font.draw(green.x - 60, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (0, 255, 0))
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (0, 255, 0))
 
 
     @staticmethod
     def draw_p2(blue):
         blue.in_bubble.clip_draw(int(blue.frame2) * 80, 0, 80, 80, blue.x, blue.y)
         if 2000 > bubble_maintain_time_blue > 1000:
-            blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 255, 0))
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 255, 0))
         elif 1000 > bubble_maintain_time_blue > 0:
-            blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 125, 0))
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 125, 0))
         else:
-            blue.font.draw(blue.x - 60, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (0, 255, 0))
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (0, 255, 0))
 
 
 
@@ -932,7 +932,7 @@ class Green:
         self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
         self.win_ceremony = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\green_win_ceremony.png')
         self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
-        self.font = load_font('ENCR10B.TTF', 16)
+        self.font = load_font('Baloo-Regular.ttf', 16)
 
         self.timer = 0
         self.event_que = []
@@ -941,11 +941,12 @@ class Green:
         self.dir = -1
         self.jumping = False
         self.sheet_line = 180
-        self.isShot = False # 물방울을 발사 했냐
+        self.isShot = False  # 물방울을 발사 했냐
         self.isHit = False  # 물발울에 맞았냐
         self.collide_check = True
         self.win = False
         self.defeat = False
+        self.ceremony_time = 0.0
         self.is_in_bubble = False
 
     def bubble_shot(self):
@@ -996,7 +997,7 @@ class Blue:
         self.win_ceremony = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\blue_win_ceremony.png')
         self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
 
-        self.font = load_font('ENCR10B.TTF', 16)
+        self.font = load_font('Baloo-Regular.ttf', 16)
         self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
@@ -1011,7 +1012,6 @@ class Blue:
         self.defeat = False
         self.ceremony_time = 0.0
         self.is_in_bubble = False
-
 
     def bubble_shot(self):
         bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치

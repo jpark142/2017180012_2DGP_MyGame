@@ -39,6 +39,5 @@ def draw():
 
 
 def update():
-    game_framework.frame_time = 1
     pass
 
