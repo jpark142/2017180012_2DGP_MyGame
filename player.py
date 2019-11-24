@@ -6,8 +6,7 @@ import game_world
 import game_framework
 import time
 import main
-from time import sleep
-import blue_win_state
+
 
 PLAYER_GRAVITY = -0.01
 
@@ -28,8 +27,6 @@ STAND_FRAMES_PER_ACTION = 8
 
 bubble_maintain_time_green = 3000
 bubble_maintain_time_blue = 3000
-
-blue_ceremony_time = 0.0
 
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
@@ -514,10 +511,9 @@ class InBubbleState:
         if 2000 > bubble_maintain_time_green > 1000:
             green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 255, 0))
         elif 1000 > bubble_maintain_time_green > 0:
-            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 125, 0))
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 0, 0))
         else:
             green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (0, 255, 0))
-
 
     @staticmethod
     def draw_p2(blue):
@@ -525,7 +521,7 @@ class InBubbleState:
         if 2000 > bubble_maintain_time_blue > 1000:
             blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 255, 0))
         elif 1000 > bubble_maintain_time_blue > 0:
-            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 125, 0))
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 0, 0))
         else:
             blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (0, 255, 0))
 
@@ -558,7 +554,6 @@ class GreenDefeatState:
 
     @staticmethod
     def do_p2(blue):
-        global blue_ceremony_time
         blue.frame2 = (blue.frame2 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 12
         blue.y -= 0.1
 
@@ -598,6 +593,8 @@ class BlueDefeatState:
     def do_p1(green):
         green.frame1 = (green.frame1 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 12
         green.y -= 0.1
+        green.ceremony_time += 0.01
+
 
     @staticmethod
     def do_p2(blue):

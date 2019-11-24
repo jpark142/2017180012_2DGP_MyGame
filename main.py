@@ -5,7 +5,8 @@ from background import *
 
 from platforms import *
 import game_framework
-
+import blue_win_state
+import green_win_state
 
 name = "MainState"
 
@@ -283,9 +284,13 @@ def update():
         if is_bubble_hit_blue(blue, b1):
             game_world.bubble1_objects.remove(b1)
 
-    if blue.ceremony_time > 30.0:
+    if blue.ceremony_time > 40.0:
         blue.ceremony_time = 0
         game_framework.change_state(blue_win_state)
+
+    elif green.ceremony_time > 40.0:
+        green.ceremony_time = 0
+        game_framework.change_state(green_win_state)
 
 
 def draw():
