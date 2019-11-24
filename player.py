@@ -69,6 +69,8 @@ class IdleState:
     @staticmethod
     def enter_p1(green, event):
         green.isShot = False
+        green.is_in_bubble = False
+
         # 플레이어1
         if event == RIGHT_DOWN_p1:
             green.vel_x += RUN_SPEED_PPS
@@ -99,6 +101,8 @@ class IdleState:
     @staticmethod
     def enter_p2(blue, event2):
         blue.isShot = False
+        blue.is_in_bubble = False
+
         if event2 == RIGHT_DOWN_p2:
             blue.vel_x += RUN_SPEED_PPS
         elif event2 == LEFT_DOWN_p2:
@@ -145,6 +149,8 @@ class IdleState:
             print("inBubbleState 상태로 바뀌었습니다.")
             green.add_event(BUBBLE_HIT)
             green.isHit = False
+            green.is_in_bubble = True
+
 
     @staticmethod
     def do_p2(blue):
@@ -161,6 +167,8 @@ class IdleState:
             print("inBubbleState 상태로 바뀌었습니다.")
             blue.add_event(BUBBLE_HIT)
             blue.isHit = False
+            blue.is_in_bubble = True
+
 
     @staticmethod
     def draw_p1(green):
@@ -196,6 +204,7 @@ class RunState:
     def enter_p1(green, event):
         global bubble_maintain_time_green
         green.isShot = False
+        green.is_in_bubble = False
         if event == RIGHT_DOWN_p1:
             green.vel_x += RUN_SPEED_PPS
             green.dir = 1
@@ -227,6 +236,8 @@ class RunState:
     def enter_p2(blue, event2):
         global bubble_maintain_time_blue
         blue.isShot = False
+        blue.is_in_bubble = False
+
         # 플레이어2
         if event2 == RIGHT_DOWN_p2:
             blue.vel_x += RUN_SPEED_PPS
@@ -278,6 +289,7 @@ class RunState:
             print("inBubbleState 상태로 바뀌었습니다.")
             green.add_event(BUBBLE_HIT)
             green.isHit = False
+            green.is_in_bubble = True
 
     @staticmethod
     def do_p2(blue):
@@ -291,6 +303,7 @@ class RunState:
             print("inBubbleState 상태로 바뀌었습니다.")
             blue.add_event(BUBBLE_HIT)
             blue.isHit = False
+            blue.is_in_bubble = True
 
     @staticmethod
     def draw_p1(green):
@@ -408,10 +421,12 @@ class InBubbleState:
 
     @staticmethod
     def exit_p1(green, event):
+
         pass
 
     @staticmethod
     def exit_p2(blue, event):
+
         pass
 
     @staticmethod
@@ -439,12 +454,13 @@ class InBubbleState:
                 green.cur_state = IdleState
 
         blue = main.get_blue()
-        if final_collide(green, blue):
-            green.cur_state = GreenDefeatState
-            blue.cur_state = GreenDefeatState
-            print("Blue Win!!")
-            blue.win = True
-            green.defeat = True
+        if blue.is_in_bubble is False and green.is_in_bubble is True:
+            if final_collide(green, blue):
+                green.cur_state = GreenDefeatState
+                blue.cur_state = GreenDefeatState
+                print("Blue Win!!")
+                blue.win = True
+                green.defeat = True
 
         green.x += green.vel_x * game_framework.frame_time
         green.y += green.vel_y
@@ -477,12 +493,13 @@ class InBubbleState:
                 blue.cur_state = IdleState
 
         green = main.get_green()
-        if final_collide(green, blue):
-            blue.cur_state = BlueDefeatState
-            green.cur_state = BlueDefeatState
-            print("Green Win!!")
-            green.win = True
-            blue.defeat = True
+        if green.is_in_bubble is False and blue.is_in_bubble is True:
+            if final_collide(green, blue):
+                blue.cur_state = BlueDefeatState
+                green.cur_state = BlueDefeatState
+                print("Green Win!!")
+                green.win = True
+                blue.defeat = True
 
         blue.x += blue.vel_x * game_framework.frame_time
         blue.y += blue.vel_y
@@ -924,11 +941,12 @@ class Green:
         self.dir = -1
         self.jumping = False
         self.sheet_line = 180
-        self.isShot = False
+        self.isShot = False # 물방울을 발사 했냐
         self.isHit = False  # 물발울에 맞았냐
         self.collide_check = True
         self.win = False
         self.defeat = False
+        self.is_in_bubble = False
 
     def bubble_shot(self):
         # print("Bubble shot")
@@ -992,6 +1010,8 @@ class Blue:
         self.win = False
         self.defeat = False
         self.ceremony_time = 0.0
+        self.is_in_bubble = False
+
 
     def bubble_shot(self):
         bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
@@ -1001,10 +1021,6 @@ class Blue:
 
         if bubble2.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble2.y = grass.y + 40
-
-    # collide box
-    def get_bb_blue(self):
-        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -1026,6 +1042,11 @@ class Blue:
         if (event.type, event.key) in key_event_table2:
             key_event2 = key_event_table2[(event.type, event.key)]
             self.add_event(key_event2)
+
+    # collide box
+    def get_bb_blue(self):
+        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
+
 
 
 
