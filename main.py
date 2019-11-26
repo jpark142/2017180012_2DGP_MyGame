@@ -10,6 +10,7 @@ import green_win_state
 
 name = "MainState"
 
+bgm_main = None
 
 def get_blue():
     return blue
@@ -240,7 +241,7 @@ running = True
 
 
 def enter():
-    global green, blue, grass, background, bubble, bubble2, platforms
+    global green, blue, grass, background, bubble, bubble2, platforms, bgm_main
     green = Green()
     blue = Blue()
     grass = Grass()
@@ -255,14 +256,20 @@ def enter():
     game_world.add_object(green, 3)
     game_world.add_object(blue, 4)
 
+    bgm_main = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy2.mp3')
+    bgm_main.set_volume(64)
+    bgm_main.repeat_play()
+
 
 def exit():
-    global background, grass, green, blue, platforms
+    global background, grass, green, blue, platforms, bgm_main
+    bgm_main.stop()
     del green
     del blue
     del background
     del platforms
     del grass
+    del bgm_main
     game_world.clear()
 
 

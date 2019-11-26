@@ -4,19 +4,23 @@ import main
 
 name = "TitleState"
 image = None
-bgm = None
+bgm_title = None
+
 
 def enter():
-    global image, bgm
+    global image, bgm_title
     image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\my_title.png')
-    bgm = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\Christmas synths.ogg')
-    bgm.set_volume(64)
-    bgm.repeat_play()
+    bgm_title = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\Christmas synths.ogg')
+    bgm_title.set_volume(64)
+    bgm_title.repeat_play()
 
 
 def exit():
-    global image
-    del(image)
+    global image, bgm_title
+
+    bgm_title.stop()
+    del image
+    del bgm_title
 
 
 
