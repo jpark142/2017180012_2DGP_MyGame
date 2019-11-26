@@ -94,7 +94,6 @@ class IdleState:
         elif event == DOWN_UP_p1:
             pass
 
-
     @staticmethod
     def enter_p2(blue, event2):
         blue.isShot = False
@@ -374,6 +373,8 @@ class InBubbleState:
 
         elif event == BUBBLE_SHOT_p1:
             pass
+        elif event == BUBBLE_SHOT_p1_UP:
+            pass
 
         green.frame1 = 0
 
@@ -411,6 +412,8 @@ class InBubbleState:
             # player1.vel_y -= 0.5
 
         elif event == BUBBLE_SHOT_p2:
+            pass
+        elif event == BUBBLE_SHOT_p2_UP:
             pass
 
         #blue.timer = 3000  # inBubbleState 지속시간
@@ -846,7 +849,8 @@ next_state_table = {
                     LEFT_DOWN_p1: InBubbleState, RIGHT_DOWN_p1: InBubbleState,
                     UP_UP_p1: InBubbleState, UP_DOWN_p1: InBubbleState,
                     DOWN_UP_p1: InBubbleState, DOWN_DOWN_p1: InBubbleState,
-                    BUBBLE_SHOT_p1: InBubbleState},
+                    BUBBLE_SHOT_p1: InBubbleState,
+                    BUBBLE_SHOT_p1_UP: InBubbleState},
     GreenDefeatState: {RIGHT_UP_p1: GreenDefeatState, LEFT_UP_p1: GreenDefeatState,
                        LEFT_DOWN_p1: GreenDefeatState, RIGHT_DOWN_p1: GreenDefeatState,
                        UP_UP_p1: GreenDefeatState, UP_DOWN_p1: GreenDefeatState,
@@ -891,7 +895,8 @@ next_state_table2 = {
                     LEFT_DOWN_p2: InBubbleState, RIGHT_DOWN_p2: InBubbleState,
                     UP_UP_p2: InBubbleState, UP_DOWN_p2: InBubbleState,
                     DOWN_UP_p2: InBubbleState, DOWN_DOWN_p2: InBubbleState,
-                    BUBBLE_SHOT_p2: InBubbleState},
+                    BUBBLE_SHOT_p2: InBubbleState,
+                    BUBBLE_SHOT_p2_UP: InBubbleState},
     GreenDefeatState: {RIGHT_UP_p2: GreenDefeatState, LEFT_UP_p2: GreenDefeatState,
                        LEFT_DOWN_p2: GreenDefeatState, RIGHT_DOWN_p2: GreenDefeatState,
                        UP_UP_p2: GreenDefeatState, UP_DOWN_p2: GreenDefeatState,
