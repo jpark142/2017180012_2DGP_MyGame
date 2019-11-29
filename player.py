@@ -20,7 +20,7 @@ RUN_SPEED_PPS = 250.0
 
 # Action Speed
 TIME_PER_ACTION = 0.5
-ACTION_PER_TIME = 1.0
+ACTION_PER_TIME = 0.5
 FRAMES_PER_ACTION = 32
 
 STAND_FRAMES_PER_ACTION = 8
@@ -514,22 +514,22 @@ class InBubbleState:
     @staticmethod
     def draw_p1(green):
         green.in_bubble.clip_draw(int(green.frame1) * 80, 80, 80, 80, green.x, green.y)
-        if 2000 > bubble_maintain_time_green > 1000:
-            green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (255, 255, 0))
-        elif 1000 > bubble_maintain_time_green > 0:
-            green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (255, 0, 0))
-        else:
+        if 10 > green.timer > 6:
             green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (0, 255, 0))
+        elif 6 > green.timer > 3:
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (255, 255, 0))
+        else:
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (255, 0, 0))
 
     @staticmethod
     def draw_p2(blue):
         blue.in_bubble.clip_draw(int(blue.frame2) * 80, 0, 80, 80, blue.x, blue.y)
-        if 2000 > bubble_maintain_time_blue > 1000:
-            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (255, 255, 0))
-        elif 1000 > bubble_maintain_time_blue > 0:
-            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (255, 0, 0))
-        else:
+        if 10 > blue.timer > 6:
             blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (0, 255, 0))
+        elif 6 > blue.timer > 3:
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (255, 255, 0))
+        else:
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (255, 0, 0))
 
 
 
