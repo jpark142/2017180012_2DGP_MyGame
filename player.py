@@ -670,6 +670,12 @@ class GreenAttackIdleState:
         green.x += green.vel_x * game_framework.frame_time
         green.y += green.vel_y
         green.vel_y += green.acc_y
+
+        if green.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            green.add_event(BUBBLE_HIT)
+            green.isHit = False
+            green.is_in_bubble = True
         pass
 
     @staticmethod
@@ -726,6 +732,12 @@ class GreenAttackRunState:
         green.x += green.vel_x * game_framework.frame_time
         green.y += green.vel_y
         green.vel_y += green.acc_y
+
+        if green.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            green.add_event(BUBBLE_HIT)
+            green.isHit = False
+            green.is_in_bubble = True
         pass
 
     @staticmethod
@@ -782,6 +794,13 @@ class BlueAttackIdleState:
         blue.x += blue.vel_x * game_framework.frame_time
         blue.y += blue.vel_y
         blue.vel_y += blue.acc_y
+
+        if blue.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            blue.add_event(BUBBLE_HIT)
+            blue.isHit = False
+            blue.is_in_bubble = True
+
         pass
 
     @staticmethod
@@ -838,6 +857,13 @@ class BlueAttackRunState:
         blue.x += blue.vel_x * game_framework.frame_time
         blue.y += blue.vel_y
         blue.vel_y += blue.acc_y
+
+        if blue.isHit is True:
+            print("inBubbleState 상태로 바뀌었습니다.")
+            blue.add_event(BUBBLE_HIT)
+            blue.isHit = False
+            blue.is_in_bubble = True
+
         pass
 
     @staticmethod
