@@ -655,6 +655,11 @@ class GreenAttackIdleState:
         elif event == DOWN_UP_p1:
             pass
 
+        elif event == BUBBLE_SHOT_p1:
+            pass
+        elif event == BUBBLE_SHOT_p1_UP:
+            pass
+
     @staticmethod
     def exit_p1(green, event):
         pass
@@ -704,6 +709,11 @@ class GreenAttackRunState:
         elif event == DOWN_DOWN_p1:
             pass
         elif event == DOWN_UP_p1:
+            pass
+
+        elif event == BUBBLE_SHOT_p1:
+            pass
+        elif event == BUBBLE_SHOT_p1_UP:
             pass
 
     @staticmethod
@@ -757,6 +767,11 @@ class BlueAttackIdleState:
         elif event == DOWN_UP_p2:
             pass
 
+        elif event == BUBBLE_SHOT_p2:
+            pass
+        elif event == BUBBLE_SHOT_p2_UP:
+            pass
+
     @staticmethod
     def exit_p2(blue, event):
         pass
@@ -806,6 +821,11 @@ class BlueAttackRunState:
         elif event == DOWN_DOWN_p2:
             pass
         elif event == DOWN_UP_p2:
+            pass
+
+        elif event == BUBBLE_SHOT_p2:
+            pass
+        elif event == BUBBLE_SHOT_p2_UP:
             pass
 
     @staticmethod
@@ -865,24 +885,28 @@ next_state_table = {
                        LEFT_DOWN_p1: GreenDefeatState, RIGHT_DOWN_p1: GreenDefeatState,
                        UP_UP_p1: GreenDefeatState, UP_DOWN_p1: GreenDefeatState,
                        DOWN_UP_p1: GreenDefeatState, DOWN_DOWN_p1: GreenDefeatState,
-                       BUBBLE_SHOT_p1: GreenDefeatState},
+                       BUBBLE_SHOT_p1: GreenDefeatState,
+                       BUBBLE_SHOT_p1_UP: GreenDefeatState},
     BlueDefeatState: {RIGHT_UP_p1: BlueDefeatState, LEFT_UP_p1: BlueDefeatState,
                       LEFT_DOWN_p1: BlueDefeatState, RIGHT_DOWN_p1: BlueDefeatState,
                       UP_UP_p1: BlueDefeatState, UP_DOWN_p1: BlueDefeatState,
                       DOWN_UP_p1: BlueDefeatState, DOWN_DOWN_p1: BlueDefeatState,
-                      BUBBLE_SHOT_p1: BlueDefeatState},
+                      BUBBLE_SHOT_p1: BlueDefeatState,
+                      BUBBLE_SHOT_p1_UP: BlueDefeatState},
     GreenAttackIdleState: {BUBBLE_SHOT_p1_UP: IdleState,
                            RIGHT_UP_p1: RunState, LEFT_UP_p1: RunState,
                            LEFT_DOWN_p1: RunState, RIGHT_DOWN_p1: RunState,
                            UP_UP_p1: RunState, UP_DOWN_p1: RunState,
                            DOWN_UP_p1: GreenAttackIdleState, DOWN_DOWN_p1: GreenAttackIdleState,
-                           BUBBLE_SHOT_p1: GreenAttackIdleState},
+                           BUBBLE_SHOT_p1: GreenAttackIdleState,
+                           BUBBLE_HIT: InBubbleState},
     GreenAttackRunState: {BUBBLE_SHOT_p1_UP: RunState,
                           RIGHT_UP_p1: IdleState, LEFT_UP_p1: IdleState,
                           LEFT_DOWN_p1: IdleState, RIGHT_DOWN_p1: IdleState,
                           UP_UP_p1: IdleState, UP_DOWN_p1: IdleState,
                           DOWN_UP_p1: GreenAttackRunState, DOWN_DOWN_p1: GreenAttackRunState,
-                          BUBBLE_SHOT_p1: GreenAttackRunState}
+                          BUBBLE_SHOT_p1: GreenAttackRunState,
+                          BUBBLE_HIT: InBubbleState}
 }
 next_state_table2 = {
     IdleState: {
@@ -911,24 +935,28 @@ next_state_table2 = {
                        LEFT_DOWN_p2: GreenDefeatState, RIGHT_DOWN_p2: GreenDefeatState,
                        UP_UP_p2: GreenDefeatState, UP_DOWN_p2: GreenDefeatState,
                        DOWN_UP_p2: GreenDefeatState, DOWN_DOWN_p2: GreenDefeatState,
-                       BUBBLE_SHOT_p2: GreenDefeatState},
+                       BUBBLE_SHOT_p2: GreenDefeatState,
+                       BUBBLE_SHOT_p2_UP: GreenDefeatState},
     BlueDefeatState: {RIGHT_UP_p2: BlueDefeatState, LEFT_UP_p2: BlueDefeatState,
                       LEFT_DOWN_p2: BlueDefeatState, RIGHT_DOWN_p2: BlueDefeatState,
                       UP_UP_p2: BlueDefeatState, UP_DOWN_p2: BlueDefeatState,
                       DOWN_UP_p2: BlueDefeatState, DOWN_DOWN_p2: BlueDefeatState,
-                      BUBBLE_SHOT_p2: BlueDefeatState},
+                      BUBBLE_SHOT_p2: BlueDefeatState,
+                      BUBBLE_SHOT_p2_UP: BlueDefeatState},
     BlueAttackIdleState: {BUBBLE_SHOT_p2_UP: IdleState,
                           RIGHT_UP_p2: RunState, LEFT_UP_p2: RunState,
                           LEFT_DOWN_p2: RunState, RIGHT_DOWN_p2: RunState,
                           UP_UP_p2: RunState, UP_DOWN_p2: RunState,
                           DOWN_UP_p2: BlueAttackIdleState, DOWN_DOWN_p2: BlueAttackIdleState,
-                          BUBBLE_SHOT_p2: BlueAttackIdleState},
+                          BUBBLE_SHOT_p2: BlueAttackIdleState,
+                          BUBBLE_HIT: InBubbleState},
     BlueAttackRunState: {BUBBLE_SHOT_p2_UP: RunState,
                          RIGHT_UP_p2: IdleState, LEFT_UP_p2: IdleState,
                          LEFT_DOWN_p2: IdleState, RIGHT_DOWN_p2: IdleState,
                          UP_UP_p2: IdleState, UP_DOWN_p2: IdleState,
                          DOWN_UP_p2: BlueAttackRunState, DOWN_DOWN_p2: BlueAttackRunState,
-                         BUBBLE_SHOT_p2: BlueAttackRunState}
+                         BUBBLE_SHOT_p2: BlueAttackRunState,
+                         BUBBLE_HIT: InBubbleState}
 }
 
 
