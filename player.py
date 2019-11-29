@@ -132,7 +132,8 @@ class IdleState:
     @staticmethod
     def do_p1(green):
         global bubble_maintain_time_green
-        bubble_maintain_time_green = 3000
+       # bubble_maintain_time_green = 3000
+        green.timer = 10
 
         # 플레이어1
         green.frame1 = (green.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
@@ -151,7 +152,8 @@ class IdleState:
     @staticmethod
     def do_p2(blue):
         global bubble_maintain_time_blue
-        bubble_maintain_time_blue = 3000
+       # bubble_maintain_time_blue = 3000
+        blue.timer = 10
 
         # 플레이어2
         blue.frame2 = (blue.frame2 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
@@ -198,7 +200,7 @@ class IdleState:
 class RunState:
     @staticmethod
     def enter_p1(green, event):
-        global bubble_maintain_time_green
+        #global bubble_maintain_time_green
         green.isShot = False
         green.is_in_bubble = False
         if event == RIGHT_DOWN_p1:
@@ -226,11 +228,12 @@ class RunState:
         elif event == DOWN_UP_p1:
             pass
 
-        bubble_maintain_time_green = 3000
+        #bubble_maintain_time_green = 3000
+        green.timer = 10
 
     @staticmethod
     def enter_p2(blue, event2):
-        global bubble_maintain_time_blue
+        #global bubble_maintain_time_blue
         blue.isShot = False
         blue.is_in_bubble = False
 
@@ -260,7 +263,8 @@ class RunState:
         elif event2 == DOWN_UP_p2:
             pass
 
-        bubble_maintain_time_blue = 3000
+        #bubble_maintain_time_blue = 3000
+        blue.timer = 10
 
 
     @staticmethod
@@ -416,8 +420,6 @@ class InBubbleState:
         elif event == BUBBLE_SHOT_p2_UP:
             pass
 
-        #blue.timer = 3000  # inBubbleState 지속시간
-        #blue.frame2 = 0
 
     @staticmethod
     def exit_p1(green, event):
@@ -434,12 +436,10 @@ class InBubbleState:
         global bubble_maintain_time_green
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        bubble_maintain_time_green -= 1
-        green.timer -= 1/1000
-        # time.sleep(1)
+        # bubble_maintain_time_green -= 1
+        green.timer -= 1.5/1000
 
-        # print(player1.vel_x, ' ', player1.vel_y)
-        print(bubble_maintain_time_green)
+        print(green.timer)
 
         if green.timer < 0:  # 만약에 일정 시간이 다 되면
             green.acc_y = PLAYER_GRAVITY
@@ -476,11 +476,12 @@ class InBubbleState:
         global bubble_maintain_time_blue
         # 플레이어2
         blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        bubble_maintain_time_blue -= 1
+        # bubble_maintain_time_blue -= 1
+        blue.timer -= 1.5/1000
 
-        print(bubble_maintain_time_blue)
+        print(blue.timer)
 
-        if bubble_maintain_time_blue < 0:  # 만약에 일정 시간이 다 되면
+        if blue.timer < 0:  # 만약에 일정 시간이 다 되면
             blue.acc_y = PLAYER_GRAVITY
             print(blue.vel_x)
             if blue.vel_x != 0.0 or blue.vel_y != 0.0:
@@ -524,11 +525,11 @@ class InBubbleState:
     def draw_p2(blue):
         blue.in_bubble.clip_draw(int(blue.frame2) * 80, 0, 80, 80, blue.x, blue.y)
         if 2000 > bubble_maintain_time_blue > 1000:
-            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 255, 0))
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (255, 255, 0))
         elif 1000 > bubble_maintain_time_blue > 0:
-            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (255, 0, 0))
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (255, 0, 0))
         else:
-            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %s)' % bubble_maintain_time_blue, (0, 255, 0))
+            blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (0, 255, 0))
 
 
 
@@ -1003,7 +1004,7 @@ class Blue:
         self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
 
         self.font = load_font('Baloo-Regular.ttf', 16)
-        self.timer = 0
+        self.timer = 10
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter_p2(self, None)
