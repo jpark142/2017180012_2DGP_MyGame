@@ -25,8 +25,8 @@ FRAMES_PER_ACTION = 32
 
 STAND_FRAMES_PER_ACTION = 8
 
-bubble_maintain_time_green = 3000
-bubble_maintain_time_blue = 3000
+#bubble_maintain_time_green = 3000
+#bubble_maintain_time_blue = 3000
 
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
@@ -85,6 +85,7 @@ class IdleState:
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
             green.jumping = True
+            green.jump_sound.play()
 
         elif event == UP_UP_p1:
             green.jumping = True
@@ -110,6 +111,7 @@ class IdleState:
         elif event2 == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
             blue.jumping = True
+            blue.jump_sound.play()
 
         elif event2 == UP_UP_p2:
             blue.jumping = True
@@ -219,6 +221,7 @@ class RunState:
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
             green.jumping = True
+            green.jump_sound.play()
 
         elif event == UP_UP_p1:
             green.jumping = True
@@ -254,6 +257,8 @@ class RunState:
         elif event2 == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
             blue.jumping = True
+            blue.jump_sound.play()
+
 
         elif event2 == UP_UP_p2:
             blue.jumping = True
@@ -458,6 +463,7 @@ class InBubbleState:
         blue = main.get_blue()
         if blue.is_in_bubble is False and green.is_in_bubble is True:
             if final_collide(green, blue):
+                green.explosion_sound.play()
                 green.cur_state = GreenDefeatState
                 blue.cur_state = GreenDefeatState
                 print("Blue Win!!")
@@ -498,6 +504,7 @@ class InBubbleState:
         green = main.get_green()
         if green.is_in_bubble is False and blue.is_in_bubble is True:
             if final_collide(green, blue):
+                blue.explosion_sound.play()
                 blue.cur_state = BlueDefeatState
                 green.cur_state = BlueDefeatState
                 print("Green Win!!")
@@ -954,6 +961,12 @@ class Green:
         self.ceremony_time = 0.0
         self.is_in_bubble = False
 
+        self.shot_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\bubble.wav')
+        self.shot_sound.set_volume(32)
+        self.jump_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\jump.wav')
+        self.jump_sound.set_volume(32)
+        self.explosion_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\ddukbaegi.wav')
+        self.explosion_sound.set_volume(32)
 
     def bubble_shot(self):
         # print("Bubble shot")
@@ -964,6 +977,8 @@ class Green:
 
         if bubble.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble.y = grass.y + 40
+
+        self.shot_sound.play()  # 물방울 발사 이펙트 사운드
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -1019,6 +1034,13 @@ class Blue:
         self.ceremony_time = 0.0
         self.is_in_bubble = False
 
+        self.shot_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\bubble.wav')
+        self.shot_sound.set_volume(32)
+        self.jump_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\jump.wav')
+        self.jump_sound.set_volume(32)
+        self.explosion_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\ddukbaegi.wav')
+        self.explosion_sound.set_volume(32)
+
     def bubble_shot(self):
         bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
         grass = Grass()  # grass 객체를 가져옴
@@ -1027,6 +1049,9 @@ class Blue:
 
         if bubble2.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble2.y = grass.y + 40
+        self.shot_sound.play()
+
+
 
     def add_event(self, event):
         self.event_que.insert(0, event)

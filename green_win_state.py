@@ -5,17 +5,22 @@ import title_state
 name = "GreenWinState"
 image = None
 
+bgm_win = None
 
 def enter():
-    global image
+    global image, bgm_win
     image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\ending_green_win.png')
-    pass
+    bgm_win = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy.wav')
+    bgm_win.set_volume(64)
+    bgm_win.repeat_play()
 
 
 def exit():
-    global image
-    del image
+    global image, bgm_win
 
+    bgm_win.stop()
+    del image
+    del bgm_win
 
 def handle_events():
     events = get_events()
