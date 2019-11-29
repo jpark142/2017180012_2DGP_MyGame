@@ -435,11 +435,13 @@ class InBubbleState:
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         bubble_maintain_time_green -= 1
+        green.timer -= 1/1000
+        # time.sleep(1)
 
         # print(player1.vel_x, ' ', player1.vel_y)
         print(bubble_maintain_time_green)
 
-        if bubble_maintain_time_green < 0:  # 만약에 일정 시간이 다 되면
+        if green.timer < 0:  # 만약에 일정 시간이 다 되면
             green.acc_y = PLAYER_GRAVITY
             print(green.vel_x)
             if green.vel_x != 0.0 or green.vel_y != 0.0:
@@ -512,11 +514,11 @@ class InBubbleState:
     def draw_p1(green):
         green.in_bubble.clip_draw(int(green.frame1) * 80, 80, 80, 80, green.x, green.y)
         if 2000 > bubble_maintain_time_green > 1000:
-            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 255, 0))
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (255, 255, 0))
         elif 1000 > bubble_maintain_time_green > 0:
-            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (255, 0, 0))
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (255, 0, 0))
         else:
-            green.font.draw(green.x - 45, green.y + 50, '(Time: %s)' % bubble_maintain_time_green, (0, 255, 0))
+            green.font.draw(green.x - 45, green.y + 50, '(Time: %3.2f)' % green.timer, (0, 255, 0))
 
     @staticmethod
     def draw_p2(blue):
@@ -936,7 +938,7 @@ class Green:
         self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
         self.font = load_font('Baloo-Regular.ttf', 16)
 
-        self.timer = 0
+        self.timer = 10
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter_p1(self, None)
@@ -950,6 +952,7 @@ class Green:
         self.defeat = False
         self.ceremony_time = 0.0
         self.is_in_bubble = False
+
 
     def bubble_shot(self):
         # print("Bubble shot")
