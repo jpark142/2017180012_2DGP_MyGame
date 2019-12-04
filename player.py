@@ -460,6 +460,8 @@ class InBubbleState:
             elif green.vel_x == 0.0 and green.vel_y < 0.0:
                 green.cur_state = IdleState
 
+
+
         blue = main.get_blue()
         if blue.is_in_bubble is False and green.is_in_bubble is True:
             if final_collide(green, blue):
@@ -1020,7 +1022,7 @@ class Green:
         self.jump_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\jump.wav')
         self.jump_sound.set_volume(32)
         self.explosion_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\ddukbaegi.wav')
-        self.explosion_sound.set_volume(32)
+        self.explosion_sound.set_volume(54)
 
     def bubble_shot(self):
         # print("Bubble shot")
@@ -1093,7 +1095,7 @@ class Blue:
         self.jump_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\jump.wav')
         self.jump_sound.set_volume(32)
         self.explosion_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\ddukbaegi.wav')
-        self.explosion_sound.set_volume(32)
+        self.explosion_sound.set_volume(54)
 
     def bubble_shot(self):
         bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
