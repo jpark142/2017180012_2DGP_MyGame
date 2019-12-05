@@ -12,6 +12,7 @@ name = "MainState"
 
 bgm_main = None
 
+
 def get_blue():
     return blue
 

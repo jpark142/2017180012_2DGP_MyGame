@@ -25,9 +25,6 @@ FRAMES_PER_ACTION = 32
 
 STAND_FRAMES_PER_ACTION = 8
 
-#bubble_maintain_time_green = 3000
-#bubble_maintain_time_blue = 3000
-
 
 RIGHT_DOWN_p1, LEFT_DOWN_p1, RIGHT_UP_p1, LEFT_UP_p1, UP_UP_p1, UP_DOWN_p1, BUBBLE_SHOT_p1,\
     RIGHT_DOWN_p2, LEFT_DOWN_p2, RIGHT_UP_p2, LEFT_UP_p2, UP_UP_p2, UP_DOWN_p2, BUBBLE_SHOT_p2,\
@@ -133,8 +130,6 @@ class IdleState:
 
     @staticmethod
     def do_p1(green):
-        global bubble_maintain_time_green
-       # bubble_maintain_time_green = 3000
         green.timer = 10
 
         # 플레이어1
@@ -150,11 +145,8 @@ class IdleState:
             green.isHit = False
             green.is_in_bubble = True
 
-
     @staticmethod
     def do_p2(blue):
-        global bubble_maintain_time_blue
-       # bubble_maintain_time_blue = 3000
         blue.timer = 10
 
         # 플레이어2
@@ -169,10 +161,8 @@ class IdleState:
             blue.isHit = False
             blue.is_in_bubble = True
 
-
     @staticmethod
     def draw_p1(green):
-
         # 플레이어1
         if green.vel_x == 0 and green.dir == -1:  # 왼쪽보고 가만히 있기
 
@@ -202,7 +192,6 @@ class IdleState:
 class RunState:
     @staticmethod
     def enter_p1(green, event):
-        #global bubble_maintain_time_green
         green.isShot = False
         green.is_in_bubble = False
         if event == RIGHT_DOWN_p1:
@@ -231,12 +220,10 @@ class RunState:
         elif event == DOWN_UP_p1:
             pass
 
-        #bubble_maintain_time_green = 3000
         green.timer = 10
 
     @staticmethod
     def enter_p2(blue, event2):
-        #global bubble_maintain_time_blue
         blue.isShot = False
         blue.is_in_bubble = False
 
@@ -259,7 +246,6 @@ class RunState:
             blue.jumping = True
             blue.jump_sound.play()
 
-
         elif event2 == UP_UP_p2:
             blue.jumping = True
 
@@ -268,9 +254,7 @@ class RunState:
         elif event2 == DOWN_UP_p2:
             pass
 
-        #bubble_maintain_time_blue = 3000
         blue.timer = 10
-
 
     @staticmethod
     def exit_p1(green, event):
@@ -370,7 +354,7 @@ class InBubbleState:
             green.vel_y -= 0.5
         elif event == DOWN_UP_p1:
             green.vel_y = PLAYER_GRAVITY
-            #player1.vel_y += 0.5
+
         elif event == UP_DOWN_p1:
             green.vel_y = PLAYER_GRAVITY
 
@@ -378,7 +362,6 @@ class InBubbleState:
 
         elif event == UP_UP_p1:
             green.vel_y = PLAYER_GRAVITY
-            #player1.vel_y -= 0.5
 
         elif event == BUBBLE_SHOT_p1:
             pass
@@ -425,7 +408,6 @@ class InBubbleState:
         elif event == BUBBLE_SHOT_p2_UP:
             pass
 
-
     @staticmethod
     def exit_p1(green, event):
 
@@ -438,10 +420,8 @@ class InBubbleState:
 
     @staticmethod
     def do_p1(green):
-        global bubble_maintain_time_green
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        # bubble_maintain_time_green -= 1
         green.timer -= 1.5/1000
 
         print(green.timer)
@@ -450,17 +430,15 @@ class InBubbleState:
             green.acc_y = PLAYER_GRAVITY
             print(green.vel_x)
             if green.vel_x != 0.0 or green.vel_y != 0.0:
-                green.cur_state = RunState
-                # print('Runstate!') # 물방울에서 빠져나온다. -> Runstate로
+                green.cur_state = RunState  # 물방울에서 빠져나온다. -> RunState
+
             if green.vel_x == 0.0 and green.vel_y == 0.0:
-                green.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
-                # print('idlestate돌아왔습니다')
+                green.cur_state = IdleState  # 물방울에서 빠져나온다. -> IdleState
+
             elif green.vel_x != 0.0 and green.vel_y > 0.0:  # 어쩔 수가 없음(보류)
                 green.cur_state = IdleState
             elif green.vel_x == 0.0 and green.vel_y < 0.0:
                 green.cur_state = IdleState
-
-
 
         blue = main.get_blue()
         if blue.is_in_bubble is False and green.is_in_bubble is True:
@@ -481,10 +459,8 @@ class InBubbleState:
 
     @staticmethod
     def do_p2(blue):
-        global bubble_maintain_time_blue
         # 플레이어2
         blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
-        # bubble_maintain_time_blue -= 1
         blue.timer -= 1.5/1000
 
         print(blue.timer)
@@ -493,11 +469,9 @@ class InBubbleState:
             blue.acc_y = PLAYER_GRAVITY
             print(blue.vel_x)
             if blue.vel_x != 0.0 or blue.vel_y != 0.0:
-                blue.cur_state = RunState
-                print('Runstate!')  # 물방울에서 빠져나온다. -> Runstate로
+                blue.cur_state = RunState  # 물방울에서 빠져나온다. -> RunState
             if blue.vel_x == 0.0 and blue.vel_y == 0.0:
-                blue.cur_state = IdleState  # 물방울에서 빠져나온다. -> Idlestate로
-                print('idlestate돌아왔습니다')
+                blue.cur_state = IdleState  # 물방울에서 빠져나온다. -> IdleState
             elif blue.vel_x != 0.0 and blue.vel_y > 0.0:
                 blue.cur_state = IdleState
             elif blue.vel_x == 0.0 and blue.vel_y < 0.0:
@@ -541,7 +515,6 @@ class InBubbleState:
             blue.font.draw(blue.x - 45, blue.y + 50, '(Time: %3.2f)' % blue.timer, (255, 0, 0))
 
 
-
 class GreenDefeatState:
     @staticmethod
     def enter_p1(green, event):
@@ -565,7 +538,6 @@ class GreenDefeatState:
         green.frame1 = (green.frame1 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 6
         green.y -= 0.2
         green.collide_check = False
-
 
     @staticmethod
     def do_p2(blue):
@@ -610,7 +582,6 @@ class BlueDefeatState:
         green.y -= 0.1
         green.ceremony_time += 0.01
 
-
     @staticmethod
     def do_p2(blue):
         blue.frame2 = (blue.frame2 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 6
@@ -621,7 +592,6 @@ class BlueDefeatState:
     def draw_p1(green):
         green.win_ceremony.clip_draw(int(green.frame1) * 60, 0, 60, 60, green.x, green.y)
         green.font.draw(green.x - 40, green.y + 40, 'So E...Z...', (0, 255, 0))
-
 
     @staticmethod
     def draw_p2(blue):
@@ -1106,8 +1076,6 @@ class Blue:
         if bubble2.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
             bubble2.y = grass.y + 40
         self.shot_sound.play()
-
-
 
     def add_event(self, event):
         self.event_que.insert(0, event)

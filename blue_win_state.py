@@ -7,6 +7,7 @@ image = None
 
 bgm_blue_win = None
 
+
 def enter():
     global image, bgm_blue_win
     image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\ending_blue_win.png')

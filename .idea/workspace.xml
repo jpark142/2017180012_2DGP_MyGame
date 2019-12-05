@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2a7e8c1-2aba-4919-a90d-e0955e30df25" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sound/glory.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
     </list>
@@ -20,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="276" column="35" lean-forward="true" selection-start-line="276" selection-start-column="35" selection-end-line="276" selection-end-column="35" />
+            <state relative-caret-position="332">
+              <caret line="1057" column="24" lean-forward="true" selection-start-line="1057" selection-start-column="24" selection-end-line="1057" selection-end-column="24" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -57,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/green_win_state.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="247">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -173,17 +172,16 @@
         <option value="$PROJECT_DIR$/grass.py" />
         <option value="$PROJECT_DIR$/title_state.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/player.py" />
         <option value="$PROJECT_DIR$/green_win_state.py" />
         <option value="$PROJECT_DIR$/blue_win_state.py" />
+        <option value="$PROJECT_DIR$/player.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="950" />
-    <option name="y" value="-10" />
-    <option name="width" value="979" />
-    <option name="height" value="1059" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1095" />
+    <option name="width" value="835" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -202,11 +200,6 @@
               <item name="2017180012_2DGP_MyGame" type="b2602c69:ProjectViewProjectNode" />
               <item name="2017180012_2DGP_MyGame" type="462c0819:PsiDirectoryNode" />
               <item name="2차 발표 ppt" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2017180012_2DGP_MyGame" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2017180012_2DGP_MyGame" type="462c0819:PsiDirectoryNode" />
-              <item name="sound" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -324,12 +317,12 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18440185" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19762062" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3275488" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2822695" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28798842" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.22978723" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -426,8 +419,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="276" column="35" lean-forward="true" selection-start-line="276" selection-start-column="35" selection-end-line="276" selection-end-column="35" />
+        <state relative-caret-position="332">
+          <caret line="1057" column="24" lean-forward="true" selection-start-line="1057" selection-start-column="24" selection-end-line="1057" selection-end-column="24" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -457,7 +450,7 @@
     <entry file="file://$PROJECT_DIR$/green_win_state.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

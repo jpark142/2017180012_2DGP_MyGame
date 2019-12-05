@@ -7,6 +7,7 @@ image = None
 
 bgm_win = None
 
+
 def enter():
     global image, bgm_win
     image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\ending_green_win.png')
@@ -21,6 +22,7 @@ def exit():
     bgm_win.stop()
     del image
     del bgm_win
+
 
 def handle_events():
     events = get_events()
