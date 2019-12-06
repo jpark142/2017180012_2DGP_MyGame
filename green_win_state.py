@@ -5,23 +5,23 @@ import title_state
 name = "GreenWinState"
 image = None
 
-bgm_win = None
+bgm_green_win = None
 
 
 def enter():
-    global image, bgm_win
+    global image, bgm_green_win
     image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\ending_green_win.png')
-    bgm_win = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy.wav')
-    bgm_win.set_volume(64)
-    bgm_win.repeat_play()
+    bgm_green_win = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy_winner.wav')
+    bgm_green_win.set_volume(64)
+    bgm_green_win.repeat_play()
 
 
 def exit():
-    global image, bgm_win
+    global image, bgm_green_win
 
-    bgm_win.stop()
+    bgm_green_win.stop()
     del image
-    del bgm_win
+    del bgm_green_win
 
 
 def handle_events():
@@ -34,8 +34,6 @@ def handle_events():
                 game_framework.quit()
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
                 game_framework.change_state(title_state)
-
-    pass
 
 
 def draw():

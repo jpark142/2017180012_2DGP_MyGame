@@ -11,17 +11,17 @@ bgm_blue_win = None
 def enter():
     global image, bgm_blue_win
     image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\ending_blue_win.png')
-    bgm_blue_win = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy.wav')
+    bgm_blue_win = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy_winner.wav')
     bgm_blue_win.set_volume(64)
     bgm_blue_win.repeat_play()
 
 
 def exit():
     global image, bgm_blue_win
-
-    bgm_blue_win.stop()
     del image
     del bgm_blue_win
+    bgm_blue_win.stop()
+
 
 
 def handle_events():

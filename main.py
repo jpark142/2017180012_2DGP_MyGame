@@ -263,15 +263,8 @@ def enter():
 
 
 def exit():
-    global background, grass, green, blue, platforms, bgm_main
-    bgm_main.stop()
-    del green
-    del blue
-    del background
-    del platforms
-    del grass
-    del bgm_main
     game_world.clear()
+    bgm_main.stop()
 
 
 def update():
