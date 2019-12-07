@@ -92,6 +92,8 @@ class IdleState:
         elif event == DOWN_UP_p1:
             pass
 
+
+
     @staticmethod
     def enter_p2(blue, event2):
         blue.isShot = False
@@ -117,6 +119,8 @@ class IdleState:
             pass
         elif event2 == DOWN_UP_p2:
             pass
+
+
 
     @staticmethod
     def exit_p1(green, event):
@@ -220,7 +224,6 @@ class RunState:
         elif event == DOWN_UP_p1:
             pass
 
-        green.timer = 10
 
     @staticmethod
     def enter_p2(blue, event2):
@@ -254,7 +257,6 @@ class RunState:
         elif event2 == DOWN_UP_p2:
             pass
 
-        blue.timer = 10
 
     @staticmethod
     def exit_p1(green, event):
@@ -268,6 +270,8 @@ class RunState:
 
     @staticmethod
     def do_p1(green):
+        green.timer = 10
+
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
@@ -282,6 +286,8 @@ class RunState:
 
     @staticmethod
     def do_p2(blue):
+        blue.timer = 10
+
         # 플레이어2
         blue.frame2 = (blue.frame2 + + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 

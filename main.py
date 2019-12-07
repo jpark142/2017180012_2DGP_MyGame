@@ -240,7 +240,7 @@ running = True
 
 
 def enter():
-    global green, blue, grass, background, bubble, bubble2, platforms, bgm_main
+    global green, blue, grass, background, bubble, bubble2, platforms
     green = Green()
     blue = Blue()
     grass = Grass()
