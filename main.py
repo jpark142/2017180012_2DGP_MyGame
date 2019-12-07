@@ -10,8 +10,6 @@ import green_win_state
 
 name = "MainState"
 
-bgm_main = None
-
 
 def get_blue():
     return blue
@@ -257,14 +255,12 @@ def enter():
     game_world.add_object(green, 3)
     game_world.add_object(blue, 4)
 
-    bgm_main = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy2.mp3')
-    bgm_main.set_volume(64)
-    bgm_main.repeat_play()
+
 
 
 def exit():
     game_world.clear()
-    bgm_main.stop()
+    # bgm_main.stop()
 
 
 def update():
