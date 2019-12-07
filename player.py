@@ -1027,6 +1027,7 @@ class Green:
         if self.defeat is False and self.win is False and self.isShot is False:
             self.image.clip_draw(int(self.frame1) * 60, self.sheet_line, 60, 60, self.x, self.y)
         self.cur_state.draw_p1(self)
+        # draw_rectangle(*self.get_bb_green())
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
@@ -1035,7 +1036,7 @@ class Green:
 
     # collide box
     def get_bb_green(self):
-        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
+        return self.x - 25, self.y - 25, self.x + 25, self.y + 25
 
 
 class Blue:
@@ -1106,7 +1107,7 @@ class Blue:
 
     # collide box
     def get_bb_blue(self):
-        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
+        return self.x - 25, self.y - 25, self.x + 25, self.y + 25
 
 
 

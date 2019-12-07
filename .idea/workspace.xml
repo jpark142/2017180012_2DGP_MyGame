@@ -4,7 +4,10 @@
     <bookmark url="file://$PROJECT_DIR$/blue_win_state.py" line="33" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2a7e8c1-2aba-4919-a90d-e0955e30df25" name="Default Changelist" comment="" />
+    <list default="true" id="d2a7e8c1-2aba-4919-a90d-e0955e30df25" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +76,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blue_win_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="285">
+              <caret line="17" selection-start-line="17" selection-end-line="17" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -94,8 +97,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1935">
-              <caret line="980" column="23" lean-forward="true" selection-start-line="980" selection-start-column="23" selection-end-line="980" selection-end-column="23" />
+            <state relative-caret-position="155">
+              <caret line="1030" lean-forward="true" selection-start-line="1030" selection-end-line="1030" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -176,16 +179,15 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="847" />
-    <option name="width" value="1080" />
-    <option name="height" value="1049" />
+    <option name="x" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -202,10 +204,11 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="C:/2017180012 jooyong/2DGP/Labs/Lecture14_Collision" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -312,13 +315,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12557831" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12491738" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3275488" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22411348" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22411348" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.22978723" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -480,6 +484,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/blue_win_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://C:/Program Files/Python37/Lib/site-packages/pico2d/pico2d.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7353">
@@ -501,20 +515,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blue_win_state.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1935">
-          <caret line="980" column="23" lean-forward="true" selection-start-line="980" selection-start-column="23" selection-end-line="980" selection-end-column="23" />
+        <state relative-caret-position="155">
+          <caret line="1030" lean-forward="true" selection-start-line="1030" selection-end-line="1030" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
