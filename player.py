@@ -281,7 +281,7 @@ class RunState:
         if green.isHit is True:
             print("inBubbleState 상태로 바뀌었습니다.")
             green.add_event(BUBBLE_HIT)
-            green.isHit = False
+
             green.is_in_bubble = True
 
     @staticmethod
@@ -297,7 +297,7 @@ class RunState:
         if blue.isHit is True:
             print("inBubbleState 상태로 바뀌었습니다.")
             blue.add_event(BUBBLE_HIT)
-            blue.isHit = False
+
             blue.is_in_bubble = True
 
     @staticmethod
@@ -414,6 +414,7 @@ class InBubbleState:
         elif event == BUBBLE_SHOT_p2_UP:
             pass
 
+
     @staticmethod
     def exit_p1(green, event):
 
@@ -426,6 +427,7 @@ class InBubbleState:
 
     @staticmethod
     def do_p1(green):
+        green.isHit = False
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         green.timer -= 1.5/1000
@@ -465,6 +467,8 @@ class InBubbleState:
 
     @staticmethod
     def do_p2(blue):
+        blue.isHit = False
+
         # 플레이어2
         blue.frame2 = (blue.frame2 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         blue.timer -= 1.5/1000
