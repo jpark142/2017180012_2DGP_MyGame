@@ -17,11 +17,10 @@ def enter():
 
 
 def exit():
-    global image, bgm_green_win
+   pass
 
-    bgm_green_win.stop()
-    del image
-    del bgm_green_win
+# bgm_green_win.stop()
+
 
 
 def handle_events():
@@ -37,7 +36,8 @@ def handle_events():
 
 
 def draw():
-    clear_canvas()
+    global image
+    #clear_canvas()
     image.draw(500, 300)
     update_canvas()
     pass
