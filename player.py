@@ -597,7 +597,7 @@ class BlueDefeatState:
     @staticmethod
     def draw_p1(green):
         green.win_ceremony.clip_draw(int(green.frame1) * 60, 0, 60, 60, green.x, green.y)
-        green.font.draw(green.x - 40, green.y + 40, 'So E...Z...', (0, 255, 0))
+        green.font.draw(green.x - 30, green.y + 40, 'So E...Z...', (0, 255, 0))
 
     @staticmethod
     def draw_p2(blue):
