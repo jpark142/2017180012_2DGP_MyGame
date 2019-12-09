@@ -10,17 +10,14 @@ bgm_green_win = None
 
 def enter():
     global image, bgm_green_win
-    image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\ending_green_win.png')
-    bgm_green_win = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy_winner.wav')
+    image = load_image('res\\ending_green_win.png')
+    bgm_green_win = load_music('sound\\happy_winner.wav')
     bgm_green_win.set_volume(64)
     bgm_green_win.repeat_play()
 
 
 def exit():
-   pass
-
-# bgm_green_win.stop()
-
+    pass
 
 
 def handle_events():

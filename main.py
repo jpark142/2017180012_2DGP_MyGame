@@ -256,7 +256,7 @@ def enter():
     game_world.add_object(green, 3)
     game_world.add_object(blue, 4)
 
-    bgm_main = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\happy2.mp3')
+    bgm_main = load_music('sound\\happy2.mp3')
     bgm_main.set_volume(64)
     bgm_main.repeat_play()
 

@@ -975,11 +975,11 @@ class Green:
         self.acc_x, self.acc_y = 0, PLAYER_GRAVITY
         self.dy = 0
         self.frame1 = 0
-        self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character.png')
-        self.attack = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\attack_p1.png')
-        self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
-        self.win_ceremony = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\green_win_ceremony.png')
-        self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
+        self.image = load_image('res\\character.png')
+        self.attack = load_image('res\\attack_p1.png')
+        self.in_bubble = load_image('res\\in_bubble.png')
+        self.win_ceremony = load_image('res\\green_win_ceremony.png')
+        self.die = load_image('res\\die.png')
         self.font = load_font('Baloo-Regular.ttf', 16)
 
         self.timer = 10
@@ -997,11 +997,11 @@ class Green:
         self.ceremony_time = 0.0
         self.is_in_bubble = False
 
-        self.shot_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\bubble.wav')
+        self.shot_sound = load_wav('sound\\bubble.wav')
         self.shot_sound.set_volume(32)
-        self.jump_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\jump.wav')
+        self.jump_sound = load_wav('sound\\jump.wav')
         self.jump_sound.set_volume(32)
-        self.explosion_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\ddukbaegi.wav')
+        self.explosion_sound = load_wav('sound\\ddukbaegi.wav')
         self.explosion_sound.set_volume(54)
 
     def bubble_shot(self):
@@ -1049,11 +1049,11 @@ class Blue:
         self.vel_x, self.vel_y = 0, 0
         self.acc_x, self.acc_y = 0, PLAYER_GRAVITY
         self.frame2 = 0
-        self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\character2.png')
-        self.in_bubble = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\in_bubble.png')
-        self.attack = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\attack_p2.png')
-        self.win_ceremony = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\blue_win_ceremony.png')
-        self.die = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\die.png')
+        self.image = load_image('res\\character2.png')
+        self.in_bubble = load_image('res\\in_bubble.png')
+        self.attack = load_image('res\\attack_p2.png')
+        self.win_ceremony = load_image('res\\blue_win_ceremony.png')
+        self.die = load_image('res\\die.png')
 
         self.font = load_font('Baloo-Regular.ttf', 16)
         self.timer = 10
@@ -1071,11 +1071,11 @@ class Blue:
         self.ceremony_time = 0.0
         self.is_in_bubble = False
 
-        self.shot_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\bubble.wav')
+        self.shot_sound = load_wav('sound\\bubble.wav')
         self.shot_sound.set_volume(32)
-        self.jump_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\jump.wav')
+        self.jump_sound = load_wav('sound\\jump.wav')
         self.jump_sound.set_volume(32)
-        self.explosion_sound = load_wav('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\ddukbaegi.wav')
+        self.explosion_sound = load_wav('sound\\ddukbaegi.wav')
         self.explosion_sound.set_volume(54)
 
     def bubble_shot(self):

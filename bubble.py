@@ -5,7 +5,7 @@ import game_world
 class Bubble:
     def __init__(self, x = 500, y = 300, velocity = 1):
 
-        self.image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\bubble_p1.png')
+        self.image = load_image('res\\bubble_p1.png')
 
         self.x, self.y, self.velocity = x, y, velocity
         self.updated_x = 0
@@ -35,7 +35,7 @@ class Bubble2:
 
     def __init__(self, x=500, y=300, velocity=1):
         #if self.image2 == None:
-        self.image2 = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\bubble_p2.png')
+        self.image2 = load_image('res\\bubble_p2.png')
 
         self.x, self.y, self.velocity = x, y, velocity
         self.updated_x = 0

@@ -10,7 +10,7 @@ logo_time = 0.0
 
 def enter():
     global image
-    image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\start_img.png')
+    image = load_image('res\\start_img.png')
 
 
 def exit():

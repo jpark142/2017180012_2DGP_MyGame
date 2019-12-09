@@ -9,8 +9,8 @@ bgm_title = None
 
 def enter():
     global image, bgm_title
-    image = load_image('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\res\\my_title.png')
-    bgm_title = load_music('C:\\2017180012 jpark\\2017180012_2DGP_MyGame\\sound\\Christmas synths.ogg')
+    image = load_image('res\\my_title.png')
+    bgm_title = load_music('sound\\Christmas synths.ogg')
     bgm_title.set_volume(64)
     bgm_title.repeat_play()
 
