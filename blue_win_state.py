@@ -17,7 +17,10 @@ def enter():
 
 
 def exit():
-    pass
+    global image, bgm_blue_win
+    bgm_blue_win.stop()
+    del bgm_blue_win
+    del image
 
 
 def handle_events():

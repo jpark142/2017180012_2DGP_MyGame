@@ -262,8 +262,10 @@ def enter():
 
 
 def exit():
+    global bgm_main
     game_world.clear()
-    # bgm_main.stop()
+    bgm_main.stop()
+    del bgm_main
 
 
 def update():
