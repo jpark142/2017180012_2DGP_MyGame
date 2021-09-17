@@ -111,6 +111,7 @@ def collide_p1_pf1(green, platforms):
     if right_p1 < left_pf1: return False
     if top_p1 < bottom_pf1: return False
     if bottom_p1 > top_pf1: return False
+    if green.is_in_bubble is True: return False  # 2021-09-07 추가(green, blue)
     return True
 
 
@@ -123,6 +124,7 @@ def collide_p1_pf2(green, platforms):
     if right_p1 < left_pf2: return False
     if top_p1 < bottom_pf2: return False
     if bottom_p1 > top_pf2: return False
+    if green.is_in_bubble is True: return False
     return True
 
 
@@ -134,6 +136,7 @@ def collide_p1_pf3(green, platforms):
     if right_p1 < left_pf3: return False
     if top_p1 < bottom_pf3: return False
     if bottom_p1 > top_pf3: return False
+    if green.is_in_bubble is True: return False
     return True
 
 
@@ -145,6 +148,7 @@ def collide_p1_pf4(green, platforms):
     if right_p1 < left_pf4: return False
     if top_p1 < bottom_pf4: return False
     if bottom_p1 > top_pf4: return False
+    if green.is_in_bubble is True: return False
     return True
 
 
@@ -156,6 +160,7 @@ def collide_p1_pf5(green, platforms):
     if right_p1 < left_pf5: return False
     if top_p1 < bottom_pf5: return False
     if bottom_p1 > top_pf5: return False
+    if green.is_in_bubble is True: return False
     return True
 
 
@@ -169,6 +174,7 @@ def collide_p2_pf1(blue, platforms):
     if right_p2 < left_pf1: return False
     if top_p2 < bottom_pf1: return False
     if bottom_p2 > top_pf1: return False
+    if blue.is_in_bubble is True: return False
     return True
 
 
@@ -181,6 +187,7 @@ def collide_p2_pf2(blue, platforms):
     if right_p2 < left_pf2: return False
     if top_p2 < bottom_pf2: return False
     if bottom_p2 > top_pf2: return False
+    if blue.is_in_bubble is True: return False
     return True
 
 
@@ -192,6 +199,7 @@ def collide_p2_pf3(blue, platforms):
     if right_p2 < left_pf3: return False
     if top_p2 < bottom_pf3: return False
     if bottom_p2 > top_pf3: return False
+    if blue.is_in_bubble is True: return False
     return True
 
 
@@ -203,6 +211,7 @@ def collide_p2_pf4(blue, platforms):
     if right_p2 < left_pf4: return False
     if top_p2 < bottom_pf4: return False
     if bottom_p2 > top_pf4: return False
+    if blue.is_in_bubble is True: return False
     return True
 
 
@@ -214,6 +223,7 @@ def collide_p2_pf5(blue, platforms):
     if right_p2 < left_pf5: return False
     if top_p2 < bottom_pf5: return False
     if bottom_p2 > top_pf5: return False
+    if blue.is_in_bubble is True: return False
     return True
 
 
