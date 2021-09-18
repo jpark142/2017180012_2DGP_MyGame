@@ -131,7 +131,7 @@ class IdleState:
 
     @staticmethod
     def do_p1(green):
-        #print(green.vel_x, "idlestate")
+        print(green.vel_x, "idlestate")
 
         green.timer = 10
 
@@ -205,11 +205,21 @@ class RunState:
             green.vel_x -= green.run_speed
             green.dir = -1
         elif event == RIGHT_UP_p1:
-            green.vel_x -= green.run_speed
-            green.dir = -1
+            # 다시 시작 에러 수정(2021-09-18)
+            if green.x == 950:
+                green.cur_state = IdleState
+                pass
+            else:
+                green.vel_x -= green.run_speed
+                green.dir = -1
+
         elif event == LEFT_UP_p1:
-            green.vel_x += green.run_speed
-            green.dir = 1
+            # 다시 시작 에러 수정(2021-09-18)
+            if green.x == 950:
+                green.cur_state = IdleState
+            else:
+                green.vel_x += green.run_speed
+                green.dir = 1
 
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
@@ -238,11 +248,21 @@ class RunState:
             blue.dir = -1
 
         elif event2 == RIGHT_UP_p2:
-            blue.vel_x -= blue.run_speed
-            blue.dir = -1
+            # 다시 시작 에러 수정(2021-09-18)
+            if blue.x == 50:
+                blue.cur_state = IdleState
+            else:
+                blue.vel_x -= blue.run_speed
+                blue.dir = -1
+
         elif event2 == LEFT_UP_p2:
-            blue.vel_x += blue.run_speed
-            blue.dir = 1
+            # 다시 시작 에러 수정(2021-09-18)
+            if blue.x == 50:
+                blue.cur_state = IdleState
+            else:
+                blue.vel_x += blue.run_speed
+                blue.dir = 1
+
         elif event2 == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
             blue.jumping = True
@@ -269,7 +289,7 @@ class RunState:
 
     @staticmethod
     def do_p1(green):
-        #print(green.vel_x, "runstate")
+        print(green.vel_x, "runstate")
         green.timer = 10
 
         # 플레이어1
@@ -443,8 +463,8 @@ class InBubbleState:
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         green.timer -= 1.5/1000
-        #print(green.vel_x, "inbubblestate")
-        print(green.timer)
+        print(green.vel_x, "inbubblestate")
+        #print(green.timer)
 
         if green.timer < 0:  # 만약에 일정 시간이 다 되면
 
@@ -472,6 +492,11 @@ class InBubbleState:
         blue = main.get_blue()
         if blue.is_in_bubble is False and green.is_in_bubble is True:
             if final_collide(green, blue):
+                # 수정(2021-09-18)
+                green.run_speed = 0
+                green.bubble_speed = 0
+                blue.run_speed = 0
+                blue.bubble_speed = 0
                 green.explosion_sound.play()
                 green.cur_state = GreenDefeatState
                 blue.cur_state = GreenDefeatState
@@ -500,11 +525,6 @@ class InBubbleState:
             blue.acc_y = PLAYER_GRAVITY
             print(blue.vel_x)
             if blue.vel_x != 0.0 or blue.vel_y != 0.0:
-                # 수정(2021-09-17)
-                if blue.vel_x < 0:
-                    blue.vel_x -= 70
-                elif blue.vel_x > 0:
-                    blue.vel_x += 70
                 blue.cur_state = RunState  # 물방울에서 빠져나온다. -> RunState
             if blue.vel_x == 0.0 and blue.vel_y == 0.0:
                 blue.cur_state = IdleState  # 물방울에서 빠져나온다. -> IdleState
@@ -554,6 +574,7 @@ class InBubbleState:
 class GreenDefeatState:
     @staticmethod
     def enter_p1(green, event):
+
         print("Game Over..")
         pass
 
@@ -571,12 +592,14 @@ class GreenDefeatState:
 
     @staticmethod
     def do_p1(green):
+
         green.frame1 = (green.frame1 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 6
         green.y -= 0.2
         green.collide_check = False
 
     @staticmethod
     def do_p2(blue):
+
         blue.frame2 = (blue.frame2 + 5 * ACTION_PER_TIME * game_framework.frame_time) % 12
         blue.y -= 0.1
 
@@ -596,10 +619,12 @@ class GreenDefeatState:
 class BlueDefeatState:
     @staticmethod
     def enter_p1(green, event):
+
         pass
 
     @staticmethod
     def enter_p2(blue, event):
+
         print("Game Over..")
         pass
 
@@ -707,11 +732,20 @@ class GreenAttackRunState:
             green.vel_x -= green.run_speed
             green.dir = -1
         elif event == RIGHT_UP_p1:
-            green.vel_x -= green.run_speed
-            green.dir = -1
+            # 다시 시작 에러 수정(2021-09-18)
+            if green.x == 950:
+                green.cur_state = IdleState
+            else:
+                green.vel_x -= green.run_speed
+                green.dir = -1
+
         elif event == LEFT_UP_p1:
-            green.vel_x += green.run_speed
-            green.dir = 1
+            # 다시 시작 에러 수정(2021-09-18)
+            if green.x == 950:
+                green.cur_state = IdleState
+            else:
+                green.vel_x += green.run_speed
+                green.dir = 1
 
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
@@ -830,12 +864,21 @@ class BlueAttackRunState:
             blue.vel_x -= blue.run_speed
             blue.dir = -1
         elif event == RIGHT_UP_p2:
-            blue.vel_x -= blue.run_speed
-            blue.dir = -1
-        elif event == LEFT_UP_p2:
-            blue.vel_x += blue.run_speed
-            blue.dir = 1
+            # 다시 시작 에러 수정(2021-09-18)
+            if blue.x == 50:
+                blue.cur_state = IdleState
+            else:
+                blue.vel_x -= blue.run_speed
+                blue.dir = -1
 
+        elif event == LEFT_UP_p2:
+            # 다시 시작 에러 수정(2021-09-18)
+            if blue.x == 50:
+                blue.cur_state = IdleState
+            else:
+                blue.vel_x += blue.run_speed
+                blue.dir = 1
+            
         elif event == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
             blue.jumping = True
@@ -1130,6 +1173,7 @@ class Blue:
             self.cur_state.exit_p2(self, event)
             self.cur_state = next_state_table2[self.cur_state][event]
             self.cur_state.enter_p2(self, event)
+
 
     def draw(self):
         if self.defeat is False and self.win is False and self.isShot is False:
