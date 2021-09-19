@@ -282,6 +282,19 @@ def update():
     global green, bubble2, blue, bubble
     green.update()
     blue.update()
+
+    if green.ingametimer > 0:
+        green.cur_state = IdleState
+        green.vel_x = 0
+        green.vel_y = 0
+
+        blue.cur_state = IdleState
+        blue.vel_x = 0
+        blue.vel_y = 0
+    else:
+        green.can_bubble_shot = True
+        blue.can_bubble_shot = True
+
     for game_object in game_world.all_objects():
         game_object.update()
         collide_check()
@@ -297,10 +310,12 @@ def update():
             game_world.bubble1_objects.remove(b1)
 
     if blue.ceremony_time > 40.0:
+        green.ingametimer = 0  # 공용
         blue.ceremony_time = 0
         game_framework.change_state(blue_win_state)
 
     elif green.ceremony_time > 40.0:
+        green.ingametimer = 0
         green.ceremony_time = 0
         game_framework.change_state(green_win_state)
 

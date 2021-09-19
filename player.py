@@ -70,6 +70,7 @@ class IdleState:
         if event == RIGHT_DOWN_p1:
             green.vel_x += green.run_speed
             green.dir = 1
+
         elif event == LEFT_DOWN_p1:
             green.vel_x -= green.run_speed
             green.dir = -1
@@ -92,6 +93,7 @@ class IdleState:
             pass
         elif event == DOWN_UP_p1:
             pass
+
 
     @staticmethod
     def enter_p2(blue, event2):
@@ -119,6 +121,8 @@ class IdleState:
         elif event2 == DOWN_UP_p2:
             pass
 
+
+
     @staticmethod
     def exit_p1(green, event):
         if event == BUBBLE_SHOT_p1:
@@ -137,7 +141,6 @@ class IdleState:
 
         # 플레이어1
         green.frame1 = (green.frame1 + STAND_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-
         green.x += green.vel_x * game_framework.frame_time
         green.y += green.vel_y
         green.vel_y += green.acc_y
@@ -198,23 +201,23 @@ class RunState:
 
         green.isShot = False
         green.is_in_bubble = False
+
         if event == RIGHT_DOWN_p1:
             green.vel_x += green.run_speed
             green.dir = 1
+
         elif event == LEFT_DOWN_p1:
             green.vel_x -= green.run_speed
             green.dir = -1
+
         elif event == RIGHT_UP_p1:
-            # 다시 시작 에러 수정(2021-09-18)
             if green.x == 950:
                 green.cur_state = IdleState
-                pass
             else:
                 green.vel_x -= green.run_speed
                 green.dir = -1
 
         elif event == LEFT_UP_p1:
-            # 다시 시작 에러 수정(2021-09-18)
             if green.x == 950:
                 green.cur_state = IdleState
             else:
@@ -227,12 +230,16 @@ class RunState:
             green.jump_sound.play()
 
         elif event == UP_UP_p1:
+            # 다시 시작 에러 수정2(2021-09-18)
+            if green.x == 950:
+                green.cur_state = IdleState
             green.jumping = True
 
         elif event == DOWN_DOWN_p1:
             pass
         elif event == DOWN_UP_p1:
             pass
+
 
     @staticmethod
     def enter_p2(blue, event2):
@@ -281,6 +288,7 @@ class RunState:
     def exit_p1(green, event):
         if event == BUBBLE_SHOT_p1:
             green.bubble_shot()
+
 
     @staticmethod
     def exit_p2(blue, event2):
@@ -370,7 +378,6 @@ class InBubbleState:
 
     @staticmethod
     def enter_p1(green, event):
-
         # 플레이어1
         if event == RIGHT_DOWN_p1:
             green.vel_x += green.bubble_speed
@@ -463,7 +470,7 @@ class InBubbleState:
         # 플레이어1
         green.frame1 = (green.frame1 + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 6
         green.timer -= 1.5/1000
-        print(green.vel_x, "inbubblestate")
+        #print(green.vel_x, "inbubblestate")
         #print(green.timer)
 
         if green.timer < 0:  # 만약에 일정 시간이 다 되면
@@ -525,6 +532,10 @@ class InBubbleState:
             blue.acc_y = PLAYER_GRAVITY
             print(blue.vel_x)
             if blue.vel_x != 0.0 or blue.vel_y != 0.0:
+                if blue.vel_x < 0:
+                    blue.vel_x -= 70
+                elif blue.vel_x > 0:
+                    blue.vel_x += 70
                 blue.cur_state = RunState  # 물방울에서 빠져나온다. -> RunState
             if blue.vel_x == 0.0 and blue.vel_y == 0.0:
                 blue.cur_state = IdleState  # 물방울에서 빠져나온다. -> IdleState
@@ -534,6 +545,7 @@ class InBubbleState:
                 blue.cur_state = IdleState
 
         green = main.get_green()
+
         if green.is_in_bubble is False and blue.is_in_bubble is True:
             if final_collide(green, blue):
                 blue.explosion_sound.play()
@@ -878,7 +890,7 @@ class BlueAttackRunState:
             else:
                 blue.vel_x += blue.run_speed
                 blue.dir = 1
-            
+
         elif event == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
             blue.jumping = True
@@ -1035,7 +1047,7 @@ next_state_table2 = {
                          BUBBLE_HIT: InBubbleState}
 }
 
-
+InGameTimer = 0
 class Green:
     def __init__(self):
         self.x, self.y = (950, 600 / 2)
@@ -1049,7 +1061,7 @@ class Green:
         self.in_bubble = load_image('res\\in_bubble.png')
         self.win_ceremony = load_image('res\\green_win_ceremony.png')
         self.die = load_image('res\\die.png')
-        self.font = load_font('Baloo-Regular.ttf', 16)
+        self.font = load_font('test.ttf', 16)
 
         self.timer = 10
         self.event_que = []
@@ -1075,23 +1087,31 @@ class Green:
 
         self.run_speed = 250
         self.bubble_speed = 180
+        self.can_bubble_shot = False
+        #self.can_move = False
+
+        # 공용
+        self.ingametimer = 4
+        self.font_timer = load_font('test.ttf', 50)
+
 
     def bubble_shot(self):
-        # print("Bubble shot")
-        bubble = Bubble(self.x, self.y, self.dir*3)
-        grass = Grass()  # grass 객체를 가져옴
+        if self.can_bubble_shot is True:
+            bubble = Bubble(self.x, self.y, self.dir * 3)
+            grass = Grass()  # grass 객체를 가져옴
 
-        game_world.bubble1_objects.append(bubble)
+            game_world.bubble1_objects.append(bubble)
 
-        if bubble.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
-            bubble.y = grass.y + 40
+            if bubble.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
+                bubble.y = grass.y + 40
 
-        self.shot_sound.play()  # 물방울 발사 이펙트 사운드
+            self.shot_sound.play()  # 물방울 발사 이펙트 사운드
 
     def add_event(self, event):
         self.event_que.insert(0, event)
 
     def update(self):
+        self.ingametimer -= 1/1000
         self.cur_state.do_p1(self)
         if len(self.event_que) > 0:
             event = self.event_que.pop()
@@ -1100,15 +1120,21 @@ class Green:
             self.cur_state.enter_p1(self, event)
 
     def draw(self):
+
         if self.defeat is False and self.win is False and self.isShot is False:
             self.image.clip_draw(int(self.frame1) * 60, self.sheet_line, 60, 60, self.x, self.y)
         self.cur_state.draw_p1(self)
+
+        # 시작 전 타이머 그리기
+        if self.ingametimer > 0:
+            self.font_timer.draw(500, 300, '%d' % self.ingametimer, (0, 0, 0))
         # draw_rectangle(*self.get_bb_green())
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+
 
     # collide box
     def get_bb_green(self):
@@ -1127,7 +1153,7 @@ class Blue:
         self.win_ceremony = load_image('res\\blue_win_ceremony.png')
         self.die = load_image('res\\die.png')
 
-        self.font = load_font('Baloo-Regular.ttf', 16)
+        self.font = load_font('test.ttf', 16)
         self.timer = 10
         self.event_que = []
         self.cur_state = IdleState
@@ -1153,15 +1179,19 @@ class Blue:
         self.run_speed = 250
         self.bubble_speed = 180
 
+        self.can_bubble_shot = False
+
     def bubble_shot(self):
-        bubble2 = Bubble2(self.x, self.y, self.dir*3)  # 발사 시작 위치
-        grass = Grass()  # grass 객체를 가져옴
+        if self.can_bubble_shot is True:
+            bubble2 = Bubble2(self.x, self.y, self.dir * 3)  # 발사 시작 위치
+            grass = Grass()  # grass 객체를 가져옴
 
-        game_world.bubble2_objects.append(bubble2)
+            game_world.bubble2_objects.append(bubble2)
 
-        if bubble2.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
-            bubble2.y = grass.y + 40
-        self.shot_sound.play()
+            if bubble2.y <= grass.y + 40:  # 물방울이 중력때문에 화면 밖으로 내려가지 않게 함
+                bubble2.y = grass.y + 40
+            self.shot_sound.play()
+
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -1173,7 +1203,6 @@ class Blue:
             self.cur_state.exit_p2(self, event)
             self.cur_state = next_state_table2[self.cur_state][event]
             self.cur_state.enter_p2(self, event)
-
 
     def draw(self):
         if self.defeat is False and self.win is False and self.isShot is False:
