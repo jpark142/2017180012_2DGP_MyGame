@@ -310,12 +310,12 @@ def update():
             game_world.bubble1_objects.remove(b1)
 
     if blue.ceremony_time > 40.0:
-        green.ingametimer = 0  # 공용
+        green.ingametimer = 4  # 공용
         blue.ceremony_time = 0
         game_framework.change_state(blue_win_state)
 
     elif green.ceremony_time > 40.0:
-        green.ingametimer = 0
+        green.ingametimer = 4
         green.ceremony_time = 0
         game_framework.change_state(green_win_state)
 

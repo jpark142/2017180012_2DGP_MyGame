@@ -70,16 +70,22 @@ class IdleState:
         if event == RIGHT_DOWN_p1:
             green.vel_x += green.run_speed
             green.dir = 1
+            green.cur_state = RunState
 
         elif event == LEFT_DOWN_p1:
             green.vel_x -= green.run_speed
             green.dir = -1
+            green.cur_state = RunState
 
         elif event == RIGHT_UP_p1:
             green.vel_x -= green.run_speed
 
+            green.cur_state = IdleState
+
         elif event == LEFT_UP_p1:
             green.vel_x += green.run_speed
+
+            green.cur_state = IdleState
 
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
@@ -94,7 +100,6 @@ class IdleState:
         elif event == DOWN_UP_p1:
             pass
 
-
     @staticmethod
     def enter_p2(blue, event2):
         blue.isShot = False
@@ -102,12 +107,24 @@ class IdleState:
 
         if event2 == RIGHT_DOWN_p2:
             blue.vel_x += blue.run_speed
+            blue.dir = 1
+
+            blue.cur_state = RunState
+
         elif event2 == LEFT_DOWN_p2:
             blue.vel_x -= blue.run_speed
+            blue.dir = -1
+
+            blue.cur_state = RunState
+
         elif event2 == RIGHT_UP_p2:
             blue.vel_x -= blue.run_speed
+            blue.cur_state = IdleState
+
         elif event2 == LEFT_UP_p2:
             blue.vel_x += blue.run_speed
+            blue.cur_state = IdleState
+
         elif event2 == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
             blue.jumping = True
@@ -216,6 +233,9 @@ class RunState:
             else:
                 green.vel_x -= green.run_speed
                 green.dir = -1
+                if green.vel_x != 0:
+                    green.vel_x = 0
+                    green.cur_state = RunState
 
         elif event == LEFT_UP_p1:
             if green.x == 950:
@@ -223,6 +243,9 @@ class RunState:
             else:
                 green.vel_x += green.run_speed
                 green.dir = 1
+                if green.vel_x != 0:
+                    green.vel_x = 0
+                    green.cur_state = RunState
 
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
@@ -261,6 +284,9 @@ class RunState:
             else:
                 blue.vel_x -= blue.run_speed
                 blue.dir = -1
+                if blue.vel_x != 0:
+                    blue.vel_x = 0
+                    blue.cur_state = RunState
 
         elif event2 == LEFT_UP_p2:
             # 다시 시작 에러 수정(2021-09-18)
@@ -269,6 +295,9 @@ class RunState:
             else:
                 blue.vel_x += blue.run_speed
                 blue.dir = 1
+                if blue.vel_x != 0:
+                    blue.vel_x = 0
+                    blue.cur_state = RunState
 
         elif event2 == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
@@ -548,6 +577,11 @@ class InBubbleState:
 
         if green.is_in_bubble is False and blue.is_in_bubble is True:
             if final_collide(green, blue):
+                green.run_speed = 0
+                green.bubble_speed = 0
+                blue.run_speed = 0
+                blue.bubble_speed = 0
+
                 blue.explosion_sound.play()
                 blue.cur_state = BlueDefeatState
                 green.cur_state = BlueDefeatState
@@ -678,15 +712,23 @@ class GreenAttackIdleState:
         if event == RIGHT_DOWN_p1:
             green.vel_x += green.run_speed
             green.dir = 1
+            green.cur_state = RunState
+
         elif event == LEFT_DOWN_p1:
             green.vel_x -= green.run_speed
             green.dir = -1
+            green.cur_state = RunState
+
         elif event == RIGHT_UP_p1:
             green.vel_x -= green.run_speed
             green.dir = -1
+            green.cur_state = IdleState
+
         elif event == LEFT_UP_p1:
             green.vel_x += green.run_speed
             green.dir = 1
+            green.cur_state = IdleState
+
 
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
@@ -751,6 +793,10 @@ class GreenAttackRunState:
                 green.vel_x -= green.run_speed
                 green.dir = -1
 
+                if green.vel_x != 0:
+                    green.vel_x = 0
+                    green.cur_state = RunState
+
         elif event == LEFT_UP_p1:
             # 다시 시작 에러 수정(2021-09-18)
             if green.x == 950:
@@ -758,6 +804,10 @@ class GreenAttackRunState:
             else:
                 green.vel_x += green.run_speed
                 green.dir = 1
+
+                if green.vel_x != 0:
+                    green.vel_x = 0
+                    green.cur_state = RunState
 
         elif event == UP_DOWN_p1 and green.jumping is False:
             green.vel_y = 2
@@ -813,15 +863,21 @@ class BlueAttackIdleState:
         if event == RIGHT_DOWN_p2:
             blue.vel_x += blue.run_speed
             blue.dir = 1
+            blue.cur_state = RunState
         elif event == LEFT_DOWN_p2:
             blue.vel_x -= blue.run_speed
             blue.dir = -1
+            blue.cur_state = RunState
+
         elif event == RIGHT_UP_p2:
             blue.vel_x -= blue.run_speed
             blue.dir = -1
+            blue.cur_state = IdleState
+
         elif event == LEFT_UP_p2:
             blue.vel_x += blue.run_speed
             blue.dir = 1
+            blue.cur_state = IdleState
 
         elif event == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
@@ -882,6 +938,9 @@ class BlueAttackRunState:
             else:
                 blue.vel_x -= blue.run_speed
                 blue.dir = -1
+                if blue.vel_x != 0:
+                    blue.vel_x = 0
+                    blue.cur_state = RunState
 
         elif event == LEFT_UP_p2:
             # 다시 시작 에러 수정(2021-09-18)
@@ -890,6 +949,9 @@ class BlueAttackRunState:
             else:
                 blue.vel_x += blue.run_speed
                 blue.dir = 1
+                if blue.vel_x != 0:
+                    blue.vel_x = 0
+                    blue.cur_state = RunState
 
         elif event == UP_DOWN_p2 and blue.jumping is False:
             blue.vel_y = 2
@@ -1047,7 +1109,6 @@ next_state_table2 = {
                          BUBBLE_HIT: InBubbleState}
 }
 
-InGameTimer = 0
 class Green:
     def __init__(self):
         self.x, self.y = (950, 600 / 2)
@@ -1109,6 +1170,7 @@ class Green:
 
     def add_event(self, event):
         self.event_que.insert(0, event)
+
 
     def update(self):
         self.ingametimer -= 1/1000
